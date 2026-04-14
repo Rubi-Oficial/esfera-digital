@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Clock, ArrowRight, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
@@ -64,6 +64,7 @@ const ARTICLES_PER_PAGE = 9;
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState<string>("Todos");
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(blogArticles.map((a) => a.category)));
@@ -71,9 +72,27 @@ const Blog = () => {
   }, []);
 
   const filteredArticles = useMemo(() => {
-    if (activeCategory === "Todos") return blogArticles;
-    return blogArticles.filter((a) => a.category === activeCategory);
-  }, [activeCategory]);
+    let articles = blogArticles;
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      articles = articles.filter(
+        (a) =>
+          a.title.toLowerCase().includes(query) ||
+          a.excerpt.toLowerCase().includes(query) ||
+          a.category.toLowerCase().includes(query) ||
+          a.content.some((p) => p.toLowerCase().includes(query))
+      );
+    }
+
+    // Filter by category
+    if (activeCategory !== "Todos") {
+      articles = articles.filter((a) => a.category === activeCategory);
+    }
+
+    return articles;
+  }, [activeCategory, searchQuery]);
 
   const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
 
@@ -85,6 +104,13 @@ const Blog = () => {
   const handleCategoryChange = useCallback((cat: string) => {
     setActiveCategory(cat);
     setCurrentPage(1);
+  }, []);
+
+  const handleSearchChange = useCallback((value: string) => {
+    if (value.length <= 200) {
+      setSearchQuery(value);
+      setCurrentPage(1);
+    }
   }, []);
 
   const scrollToGrid = () => {
@@ -112,6 +138,31 @@ const Blog = () => {
             title={<>Todos os <span className="text-gradient">Artigos</span></>}
             subtitle="Conteúdo prático e estratégico sobre marketing digital, SEO, design e desenvolvimento web para impulsionar seu negócio."
           />
+
+          {/* Search Bar */}
+          <div className="max-w-xl mx-auto mb-8">
+            <div className="relative">
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                placeholder="Buscar artigos por título ou conteúdo..."
+                maxLength={200}
+                className="w-full pl-11 pr-10 py-3 rounded-xl bg-card border border-border/60 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all text-sm"
+                aria-label="Buscar artigos"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => handleSearchChange("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Limpar busca"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+          </div>
 
           {/* Category Filter */}
           <div className="flex flex-wrap justify-center gap-2 mb-10 max-w-4xl mx-auto">
@@ -149,9 +200,19 @@ const Blog = () => {
           </AnimatePresence>
 
           {filteredArticles.length === 0 && (
-            <p className="text-center text-muted-foreground mt-12">
-              Nenhum artigo encontrado nesta categoria.
-            </p>
+            <div className="text-center mt-12">
+              <p className="text-muted-foreground">
+                {searchQuery ? `Nenhum artigo encontrado para "${searchQuery}".` : "Nenhum artigo encontrado nesta categoria."}
+              </p>
+              {searchQuery && (
+                <button
+                  onClick={() => handleSearchChange("")}
+                  className="mt-3 text-primary text-sm hover:underline"
+                >
+                  Limpar busca
+                </button>
+              )}
+            </div>
           )}
 
           {/* Pagination */}

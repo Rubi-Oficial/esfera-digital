@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import SectionHeader from "./ui/SectionHeader";
+import { staggerContainer, fadeInUp } from "@/lib/animations";
 
 const steps = [
   { num: "01", title: "Diagnóstico e Direcionamento", desc: "Analisamos seu mercado, público e objetivos para definir a melhor estrutura digital." },
@@ -8,44 +10,21 @@ const steps = [
   { num: "05", title: "Preparação para Escala", desc: "Entregamos uma base estruturada para crescimento sustentável." },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
-};
-
-const stepVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.9 },
-  visible: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring" as const, stiffness: 100, damping: 14 },
-  },
-};
-
 const MethodologySection = () => {
   return (
     <section id="metodologia" className="section-padding section-divider" aria-labelledby="methodology-heading">
       <div className="container px-4 md:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">Processo</span>
-          <h2 id="methodology-heading" className="text-3xl md:text-5xl font-bold mb-4">
-            Nossa <span className="text-gradient">Metodologia</span> Estratégica
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Um processo estruturado que transforma sua visão em uma presença digital que vende.
-          </p>
-        </motion.div>
+        <SectionHeader
+          label="Processo"
+          titleId="methodology-heading"
+          title={<>Nossa <span className="text-gradient">Metodologia</span> Estratégica</>}
+          subtitle="Um processo estruturado que transforma sua visão em uma presença digital que vende."
+          className="mb-16"
+        />
 
         <div className="max-w-4xl mx-auto">
           <motion.div
-            variants={containerVariants}
+            variants={staggerContainer(0.1, 0.2)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-60px" }}
@@ -54,7 +33,7 @@ const MethodologySection = () => {
             {steps.map((step, i) => (
               <motion.div
                 key={i}
-                variants={stepVariants}
+                variants={fadeInUp}
                 className="glass-hover rounded-2xl p-6 text-center group relative"
               >
                 <div className="w-14 h-14 rounded-full bg-primary/10 border-2 border-primary/40 flex items-center justify-center mx-auto mb-4 group-hover:border-primary group-hover:bg-primary/20 transition-all">
@@ -62,7 +41,7 @@ const MethodologySection = () => {
                 </div>
                 <h3 className="font-bold text-sm mb-2 leading-tight">{step.title}</h3>
                 <p className="text-muted-foreground text-xs leading-relaxed">{step.desc}</p>
-                
+
                 {i < steps.length - 1 && (
                   <div className="hidden md:block absolute top-1/2 -right-2 w-4 h-px bg-primary/30" aria-hidden="true" />
                 )}

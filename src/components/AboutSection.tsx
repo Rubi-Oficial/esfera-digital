@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { Target, Award, Sparkles, TrendingUp } from "lucide-react";
+import SectionHeader from "./ui/SectionHeader";
+import { staggerContainer, fadeInUpRotate } from "@/lib/animations";
 import aboutImg from "@/assets/about-team.jpg";
 
 const focuses = [
@@ -8,21 +10,6 @@ const focuses = [
   { icon: Sparkles, label: "Experiência do usuário", desc: "Design pensado para o cliente" },
   { icon: TrendingUp, label: "Conversão de visitantes", desc: "Visitantes se tornam clientes" },
 ];
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.3 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, rotateX: 15 },
-  visible: {
-    opacity: 1, y: 0, rotateX: 0,
-    transition: { type: "spring" as const, stiffness: 80, damping: 14 },
-  },
-};
 
 const AboutSection = () => {
   return (
@@ -36,10 +23,12 @@ const AboutSection = () => {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">Quem Somos</span>
-            <h2 id="about-heading" className="text-3xl md:text-5xl font-bold mb-6">
-              Esfera <span className="text-gradient">Soluções Digitais</span>
-            </h2>
+            <SectionHeader
+              label="Quem Somos"
+              titleId="about-heading"
+              title={<>Esfera <span className="text-gradient">Soluções Digitais</span></>}
+              className="text-left mb-6"
+            />
             <p className="text-muted-foreground mb-4 leading-relaxed text-lg">
               Somos especialistas em desenvolvimento de sites e soluções digitais integradas para empresas e profissionais que desejam crescer com consistência.
             </p>
@@ -47,7 +36,6 @@ const AboutSection = () => {
               Atuamos como uma assessoria estratégica digital, construindo bases digitais preparadas para expansão e escala.
             </p>
 
-            {/* Team image */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -67,7 +55,7 @@ const AboutSection = () => {
           </motion.div>
 
           <motion.div
-            variants={containerVariants}
+            variants={staggerContainer(0.12, 0.3)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-60px" }}
@@ -76,7 +64,7 @@ const AboutSection = () => {
             {focuses.map((f, i) => (
               <motion.div
                 key={i}
-                variants={cardVariants}
+                variants={fadeInUpRotate}
                 className="glass-hover rounded-2xl p-6 text-center group"
               >
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">

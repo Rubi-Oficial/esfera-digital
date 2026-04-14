@@ -1,5 +1,9 @@
 import { motion } from "framer-motion";
-import { Check, Star, Zap, ArrowRight } from "lucide-react";
+import { Check, Star, Zap } from "lucide-react";
+import SectionHeader from "./ui/SectionHeader";
+import WhatsAppLink from "./ui/WhatsAppLink";
+import { staggerContainer, fadeInScale } from "@/lib/animations";
+import { WHATSAPP_MESSAGES } from "@/lib/constants";
 
 const plans = [
   {
@@ -17,7 +21,7 @@ const plans = [
       "Entrega rápida",
     ],
     cta: "Quero Garantir Minha Vaga",
-    href: "https://wa.me/5548991061707?text=Olá, quero garantir o Plano Start",
+    message: WHATSAPP_MESSAGES.planStart,
     highlight: false,
     icon: Zap,
   },
@@ -38,7 +42,7 @@ const plans = [
       "Entrega prioritária",
     ],
     cta: "Quero Escalar Meu Negócio",
-    href: "https://wa.me/5548991061707?text=Olá, quero o Plano Premium",
+    message: WHATSAPP_MESSAGES.planPremium,
     highlight: true,
     icon: Star,
     badge: "Recomendado",
@@ -57,50 +61,31 @@ const plans = [
       "Planejamento técnico e estratégico",
     ],
     cta: "Falar com Especialista",
-    href: "https://wa.me/5548991061707?text=Olá, quero o Plano Scale",
+    message: WHATSAPP_MESSAGES.planScale,
     highlight: false,
     icon: Star,
     badge: "Vagas Limitadas",
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.9 },
-  visible: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring" as const, stiffness: 80, damping: 14 },
-  },
-};
-
 const PricingSection = () => {
   return (
     <section id="planos" className="section-padding section-divider" aria-labelledby="pricing-heading">
       <div className="container px-4 md:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center mb-6"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-6">
+        <SectionHeader
+          titleId="pricing-heading"
+          title={<>Escolha seu <span className="text-gradient">plano</span></>}
+          subtitle="Trabalhamos com número limitado de projetos simultâneos para garantir excelência estratégica."
+          className="mb-6"
+        />
+
+        {/* Urgency badge */}
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
             Últimas vagas para desenvolvimento este mês
           </div>
-          <h2 id="pricing-heading" className="text-3xl md:text-5xl font-bold mb-4">
-            Escolha seu <span className="text-gradient">plano</span>
-          </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto text-lg">
-            Trabalhamos com número limitado de projetos simultâneos para garantir excelência estratégica.
-          </p>
-        </motion.div>
+        </div>
 
         {/* Progress bar */}
         <div className="max-w-xs mx-auto mb-16">
@@ -119,7 +104,7 @@ const PricingSection = () => {
         </div>
 
         <motion.div
-          variants={containerVariants}
+          variants={staggerContainer(0.15, 0.3)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
@@ -128,7 +113,7 @@ const PricingSection = () => {
           {plans.map((plan, i) => (
             <motion.div
               key={i}
-              variants={cardVariants}
+              variants={fadeInScale}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 ${
                 plan.highlight
@@ -164,20 +149,15 @@ const PricingSection = () => {
                 ))}
               </ul>
 
-              <a
-                href={plan.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all group ${
-                  plan.highlight
-                    ? "bg-primary text-primary-foreground hover:brightness-110 glow-box"
-                    : "border border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
-                }`}
-                aria-label={`${plan.cta} - Plano ${plan.name}`}
+              <WhatsAppLink
+                message={plan.message}
+                variant={plan.highlight ? "primary" : "outline"}
+                size="md"
+                ariaLabel={`${plan.cta} - Plano ${plan.name}`}
+                className="w-full py-3.5"
               >
                 {plan.cta}
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-              </a>
+              </WhatsAppLink>
             </motion.div>
           ))}
         </motion.div>

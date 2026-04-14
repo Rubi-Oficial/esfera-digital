@@ -55,7 +55,7 @@ const cardVariants = {
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-20 md:py-28 bg-background relative overflow-hidden">
+    <section id="depoimentos" className="py-20 md:py-28 bg-background relative overflow-hidden" aria-labelledby="testimonials-heading">
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[150px] pointer-events-none" />
 
@@ -70,7 +70,7 @@ const TestimonialsSection = () => {
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 border border-primary/20">
             Depoimentos
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 id="testimonials-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             O que nossos{" "}
             <span className="text-primary">clientes dizem</span>
           </h2>
@@ -116,9 +116,11 @@ const TestimonialsSection = () => {
                 <div className="flex items-center gap-4">
                   <img
                     src={t.image}
-                    alt={t.name}
+                    alt={`Foto de ${t.name}, ${t.role} na ${t.company} - cliente da Esfera Digital`}
                     className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20"
                     loading="lazy"
+                    width="48"
+                    height="48"
                   />
                   <div>
                     <p className="font-semibold text-foreground text-sm">

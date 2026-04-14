@@ -1,4 +1,7 @@
 import { motion } from "framer-motion";
+import SectionHeader from "./ui/SectionHeader";
+import WhatsAppLink from "./ui/WhatsAppLink";
+import { staggerContainer, fadeInLeft } from "@/lib/animations";
 import {
   Accordion,
   AccordionContent,
@@ -41,45 +44,19 @@ const faqs = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.2 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1, x: 0,
-    transition: { type: "spring" as const, stiffness: 100, damping: 15 },
-  },
-};
-
 const FAQSection = () => {
   return (
     <section className="section-padding section-divider" aria-labelledby="faq-heading">
       <div className="container px-4 md:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center mb-14"
-        >
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">
-            Dúvidas
-          </span>
-          <h2 id="faq-heading" className="text-3xl md:text-5xl font-bold mb-4">
-            Perguntas <span className="text-gradient">Frequentes</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Tire suas dúvidas sobre nossos serviços e processo de trabalho.
-          </p>
-        </motion.div>
+        <SectionHeader
+          label="Dúvidas"
+          titleId="faq-heading"
+          title={<>Perguntas <span className="text-gradient">Frequentes</span></>}
+          subtitle="Tire suas dúvidas sobre nossos serviços e processo de trabalho."
+        />
 
         <motion.div
-          variants={containerVariants}
+          variants={staggerContainer(0.08, 0.2)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
@@ -87,7 +64,7 @@ const FAQSection = () => {
         >
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, i) => (
-              <motion.div key={i} variants={itemVariants}>
+              <motion.div key={i} variants={fadeInLeft}>
                 <AccordionItem
                   value={`item-${i}`}
                   className="glass-hover rounded-2xl border-none px-6 data-[state=open]:glow-box"

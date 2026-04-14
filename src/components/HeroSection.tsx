@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
+import WhatsAppLink from "./ui/WhatsAppLink";
+import { WHATSAPP_MESSAGES } from "@/lib/constants";
 import heroImg from "@/assets/hero-workspace.jpg";
 
 const benefits = [
@@ -96,16 +98,13 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
           >
-            <a
-              href="https://wa.me/5548991061707?text=Olá, quero estruturar minha presença digital"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary text-primary-foreground font-semibold text-lg hover:brightness-110 transition-all glow-box group"
-              aria-label="Falar via WhatsApp para estruturar sua presença digital"
+            <WhatsAppLink
+              message={WHATSAPP_MESSAGES.presenca}
+              size="lg"
+              ariaLabel="Falar via WhatsApp para estruturar sua presença digital"
             >
               Quero estruturar minha presença digital
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-            </a>
+            </WhatsAppLink>
           </motion.div>
         </motion.div>
       </motion.div>

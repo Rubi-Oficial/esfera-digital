@@ -2,14 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import AnimatedLogo from "./AnimatedLogo";
-
-const navLinks = [
-  { label: "Soluções", href: "#solucoes" },
-  { label: "Metodologia", href: "#metodologia" },
-  { label: "Portfólio", href: "#portfolio" },
-  { label: "Planos", href: "#planos" },
-  { label: "Blog", href: "#blog" },
-];
+import WhatsAppLink from "./ui/WhatsAppLink";
+import { NAV_LINKS, WHATSAPP_MESSAGES } from "@/lib/constants";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -20,7 +14,6 @@ const Navbar = () => {
 
   useMotionValueEvent(scrollY, "change", (y) => {
     setScrolled(y > 50);
-    // Hide on scroll down, show on scroll up
     if (y > lastY && y > 200) {
       setHidden(true);
     } else {
@@ -29,7 +22,6 @@ const Navbar = () => {
     setLastY(y);
   });
 
-  // Smooth scroll for anchor links
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLAnchorElement;
@@ -49,10 +41,7 @@ const Navbar = () => {
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
-      animate={{
-        y: hidden ? -80 : 0,
-        opacity: 1,
-      }}
+      animate={{ y: hidden ? -80 : 0, opacity: 1 }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
@@ -68,7 +57,7 @@ const Navbar = () => {
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -77,19 +66,15 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <a
-            href="https://wa.me/5548991061707?text=Olá, gostaria de falar com um especialista"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-              scrolled
-                ? "bg-primary text-primary-foreground hover:brightness-110 shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
-                : "bg-primary/90 text-primary-foreground hover:bg-primary"
-            }`}
-            aria-label="Falar com especialista via WhatsApp"
+          <WhatsAppLink
+            message={WHATSAPP_MESSAGES.specialist}
+            size="sm"
+            showArrow={false}
+            ariaLabel="Falar com especialista via WhatsApp"
+            className={scrolled ? "shadow-[0_0_20px_hsl(var(--primary)/0.3)]" : "bg-primary/90 hover:bg-primary"}
           >
             Falar com Especialista
-          </a>
+          </WhatsAppLink>
         </div>
 
         <button
@@ -112,7 +97,7 @@ const Navbar = () => {
             className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-t border-border/50"
           >
             <div className="flex flex-col gap-4 p-6">
-              {navLinks.map((link, i) => (
+              {NAV_LINKS.map((link, i) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
@@ -125,15 +110,15 @@ const Navbar = () => {
                   {link.label}
                 </motion.a>
               ))}
-              <a
-                href="https://wa.me/5548991061707?text=Olá, gostaria de falar com um especialista"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-3 rounded-lg bg-primary text-primary-foreground text-sm font-semibold text-center"
-                aria-label="Falar com especialista via WhatsApp"
+              <WhatsAppLink
+                message={WHATSAPP_MESSAGES.specialist}
+                size="md"
+                showArrow={false}
+                ariaLabel="Falar com especialista via WhatsApp"
+                className="text-center"
               >
                 Falar com Especialista
-              </a>
+              </WhatsAppLink>
             </div>
           </motion.div>
         )}

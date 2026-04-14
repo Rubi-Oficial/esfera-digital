@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import WhatsAppLink from "./ui/WhatsAppLink";
+import { WHATSAPP_MESSAGES } from "@/lib/constants";
 
 const CTASection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -11,10 +13,10 @@ const CTASection = () => {
 
   const bgY = useTransform(scrollYProgress, [0, 1], [60, -60]);
   const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.1, 0.9]);
+  const innerY = useTransform(scrollYProgress, [0, 1], [20, -20]);
 
   return (
     <section ref={sectionRef} className="section-padding relative overflow-hidden" aria-label="Chamada para ação">
-      {/* Parallax ambient glow */}
       <motion.div
         className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[140px] pointer-events-none"
         style={{ y: bgY, scale: glowScale }}
@@ -31,7 +33,7 @@ const CTASection = () => {
         >
           <motion.div
             className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.15),transparent_50%)]"
-            style={{ y: useTransform(scrollYProgress, [0, 1], [20, -20]) }}
+            style={{ y: innerY }}
             aria-hidden="true"
           />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(0,0,0,0.1),transparent_50%)]" aria-hidden="true" />
@@ -40,7 +42,7 @@ const CTASection = () => {
               initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.3, type: "spring" as const, stiffness: 100 }}
+              transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
               className="w-16 h-16 rounded-2xl bg-primary-foreground/10 flex items-center justify-center mx-auto mb-8"
             >
               <MessageCircle size={28} className="text-primary-foreground" aria-hidden="true" />
@@ -63,20 +65,21 @@ const CTASection = () => {
             >
               Cada dia sem uma presença digital estratégica é uma oportunidade perdida. Vamos estruturar sua marca com tecnologia, estratégia e visão de crescimento.
             </motion.p>
-            <motion.a
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.6, duration: 0.4 }}
-              href="https://wa.me/5548991061707?text=Olá, quero garantir minha vaga"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-foreground text-primary font-bold text-lg hover:brightness-95 transition-all group shadow-xl"
-              aria-label="Garantir vaga via WhatsApp"
             >
-              Quero garantir minha vaga
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-            </motion.a>
+              <WhatsAppLink
+                message={WHATSAPP_MESSAGES.vaga}
+                size="lg"
+                ariaLabel="Garantir vaga via WhatsApp"
+                className="bg-primary-foreground text-primary hover:brightness-95 shadow-xl font-bold"
+              >
+                Quero garantir minha vaga
+              </WhatsAppLink>
+            </motion.div>
           </div>
         </motion.div>
       </div>

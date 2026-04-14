@@ -10,12 +10,12 @@ const benefits = [
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
       {/* Background effects */}
-      <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
-      <div className="absolute top-20 right-20 w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
-      <div className="absolute bottom-40 left-20 w-3 h-3 rounded-full bg-primary/60 animate-float" />
+      <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} aria-hidden="true" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" aria-hidden="true" />
+      <div className="absolute top-20 right-20 w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
+      <div className="absolute bottom-40 left-20 w-3 h-3 rounded-full bg-primary/60 animate-float" aria-hidden="true" />
 
       <div className="container relative z-10 px-4 md:px-8 py-20">
         <motion.div
@@ -30,7 +30,7 @@ const HeroSection = () => {
             transition={{ delay: 0.2 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-8"
           >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
             Atendimento Consultivo e Projetos Personalizados
           </motion.div>
 
@@ -44,20 +44,20 @@ const HeroSection = () => {
             Desenvolvemos sites profissionais e soluções digitais integradas para empresas que desejam posicionamento sólido, autoridade e geração contínua de clientes.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto mb-10">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto mb-10" aria-label="Benefícios">
             {benefits.map((b, i) => (
-              <motion.div
+              <motion.li
                 key={i}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
                 className="flex items-center gap-2 text-sm text-muted-foreground"
               >
-                <Check size={16} className="text-primary shrink-0" />
+                <Check size={16} className="text-primary shrink-0" aria-hidden="true" />
                 {b}
-              </motion.div>
+              </motion.li>
             ))}
-          </div>
+          </ul>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -69,9 +69,10 @@ const HeroSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary text-primary-foreground font-semibold text-lg hover:brightness-110 transition-all glow-box group"
+              aria-label="Falar via WhatsApp para estruturar sua presença digital"
             >
               Quero estruturar minha presença digital
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </a>
           </motion.div>
         </motion.div>

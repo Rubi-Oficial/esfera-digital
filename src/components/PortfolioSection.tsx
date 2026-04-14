@@ -271,6 +271,84 @@ const PortfolioSection = () => {
           {active !== "Todos" && <> em <span className="text-primary font-medium">{active}</span></>}
         </p>
       </div>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+            onClick={() => { setLightbox(null); resumeAutoPlay(); }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Preview de ${lightbox.name}`}
+          >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-background/90 backdrop-blur-xl" aria-hidden="true" />
+
+            {/* Content */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 30 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              className="relative z-10 w-full max-w-4xl rounded-3xl overflow-hidden border border-border/50 bg-card shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => { setLightbox(null); resumeAutoPlay(); }}
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-background/80 backdrop-blur-md border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all"
+                aria-label="Fechar preview"
+              >
+                <X size={18} />
+              </button>
+
+              {/* Image */}
+              <div className="relative w-full aspect-video overflow-hidden bg-secondary">
+                <img
+                  src={lightbox.img}
+                  alt={`Preview do site ${lightbox.name}`}
+                  className="w-full h-full object-cover"
+                  width={800}
+                  height={512}
+                />
+                {/* Category badge */}
+                <span className="absolute top-4 left-4 px-4 py-1.5 rounded-full bg-background/70 backdrop-blur-md text-sm font-medium text-primary border border-primary/20">
+                  {lightbox.cat}
+                </span>
+              </div>
+
+              {/* Info */}
+              <div className="p-6 md:p-8">
+                <h3 className="text-2xl font-bold text-foreground mb-2">{lightbox.name}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-6">{lightbox.desc}</p>
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a
+                    href={lightbox.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:brightness-110 transition-all shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+                  >
+                    <ExternalLink size={16} aria-hidden="true" />
+                    Visitar Site
+                  </a>
+                  <button
+                    onClick={() => { setLightbox(null); resumeAutoPlay(); }}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all"
+                  >
+                    Fechar
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 const categories = ["Todos", "Indústria", "Agronegócio", "Hotelaria", "Design", "Tecnologia", "Serviços", "Marketing", "Automotivo"];
 
@@ -43,33 +43,72 @@ const PortfolioImage = ({ src, alt }: { src: string; alt: string }) => {
       loading="lazy"
       width="600"
       height="400"
-      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
       onError={() => setFailed(true)}
     />
   );
 };
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.92 },
-  visible: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring" as const, stiffness: 90, damping: 15 },
-  },
-};
+const ITEMS_PER_PAGE = 6;
 
 const PortfolioSection = () => {
   const [active, setActive] = useState("Todos");
+  const [page, setPage] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   const filtered = active === "Todos" ? projects : projects.filter((p) => p.cat === active);
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const currentItems = filtered.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE);
+
+  const handleCategoryChange = (cat: string) => {
+    setActive(cat);
+    setPage(0);
+    setDirection(0);
+  };
+
+  const goToPage = useCallback((newPage: number, dir: number) => {
+    setDirection(dir);
+    setPage(newPage);
+  }, []);
+
+  const nextPage = useCallback(() => {
+    if (totalPages <= 1) return;
+    goToPage((page + 1) % totalPages, 1);
+  }, [page, totalPages, goToPage]);
+
+  const prevPage = useCallback(() => {
+    if (totalPages <= 1) return;
+    goToPage((page - 1 + totalPages) % totalPages, -1);
+  }, [page, totalPages, goToPage]);
+
+  // Auto-play
+  useEffect(() => {
+    if (totalPages <= 1) return;
+    autoPlayRef.current = setInterval(nextPage, 6000);
+    return () => {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    };
+  }, [nextPage, totalPages]);
+
+  // Pause on hover
+  const pauseAutoPlay = () => {
+    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+  };
+  const resumeAutoPlay = () => {
+    if (totalPages <= 1) return;
+    autoPlayRef.current = setInterval(nextPage, 6000);
+  };
+
+  const slideVariants = {
+    enter: (dir: number) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
+  };
 
   return (
-    <section id="portfolio" className="py-24" aria-label="Portfólio de projetos">
+    <section id="portfolio" className="py-24 relative overflow-hidden" aria-label="Portfólio de projetos">
       <div className="container px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
@@ -78,12 +117,16 @@ const PortfolioSection = () => {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="text-center mb-12"
         >
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">Portfólio</span>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Projetos que <span className="text-gradient">Geraram Resultados</span>
           </h2>
-          <p className="text-muted-foreground text-lg">Sites desenvolvidos para empresas de diversos segmentos.</p>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            +87 sites entregues para empresas de diversos segmentos. Navegue pelos nossos cases de sucesso.
+          </p>
         </motion.div>
 
+        {/* Category filters */}
         <motion.nav
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -95,11 +138,11 @@ const PortfolioSection = () => {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActive(cat)}
+              onClick={() => handleCategoryChange(cat)}
               aria-pressed={active === cat}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 active === cat
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-primary text-primary-foreground shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
                   : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
               }`}
             >
@@ -108,47 +151,108 @@ const PortfolioSection = () => {
           ))}
         </motion.nav>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-40px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          role="list"
+        {/* Carousel area */}
+        <div
+          ref={scrollRef}
+          className="relative"
+          onMouseEnter={pauseAutoPlay}
+          onMouseLeave={resumeAutoPlay}
         >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project) => (
-              <motion.a
-                key={project.name}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                variants={cardVariants}
-                layout
-                initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                className="glass rounded-xl overflow-hidden group block"
-                role="listitem"
-                aria-label={`${project.name} - ${project.desc}`}
+          {/* Navigation arrows */}
+          {totalPages > 1 && (
+            <>
+              <button
+                onClick={prevPage}
+                className="absolute -left-2 md:-left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-card/80 backdrop-blur-md border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all shadow-lg"
+                aria-label="Página anterior"
               >
-                <div className="relative aspect-video overflow-hidden">
-                  <PortfolioImage src={project.img} alt={project.name} />
-                  <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
-                      <ExternalLink size={16} aria-hidden="true" /> Visitar Site
-                    </span>
-                  </div>
-                </div>
-                <div className="p-5">
-                  <span className="text-xs text-primary font-medium">{project.cat}</span>
-                  <h3 className="font-bold mt-1 mb-1">{project.name}</h3>
-                  <p className="text-sm text-muted-foreground">{project.desc}</p>
-                </div>
-              </motion.a>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                onClick={nextPage}
+                className="absolute -right-2 md:-right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-card/80 backdrop-blur-md border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all shadow-lg"
+                aria-label="Próxima página"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </>
+          )}
+
+          <div className="overflow-hidden">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={`${active}-${page}`}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+                role="list"
+              >
+                {currentItems.map((project) => (
+                  <motion.a
+                    key={project.name}
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="group block rounded-2xl overflow-hidden border border-border/40 bg-card/50 backdrop-blur-sm hover:border-primary/40 hover:shadow-[0_0_30px_hsl(var(--primary)/0.1)] transition-all duration-500"
+                    role="listitem"
+                    aria-label={`${project.name} - ${project.desc}`}
+                  >
+                    <div className="relative aspect-video overflow-hidden">
+                      <PortfolioImage src={project.img} alt={project.name} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-4">
+                        <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg">
+                          <ExternalLink size={14} aria-hidden="true" /> Visitar Site
+                        </span>
+                      </div>
+                      {/* Category badge */}
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-xs font-medium text-primary border border-primary/20">
+                        {project.cat}
+                      </span>
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{project.name}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{project.desc}</p>
+                    </div>
+                  </motion.a>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Pagination dots */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-8">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToPage(i, i > page ? 1 : -1)}
+                  aria-label={`Ir para página ${i + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    i === page
+                      ? "w-8 bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.5)]"
+                      : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  }`}
+                />
+              ))}
+              <span className="ml-4 text-xs text-muted-foreground">
+                {page + 1} / {totalPages}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Counter */}
+        <p className="text-center text-sm text-muted-foreground mt-6">
+          Mostrando {currentItems.length} de {filtered.length} projetos
+          {active !== "Todos" && <> em <span className="text-primary font-medium">{active}</span></>}
+        </p>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, type LucideIcon } from "lucide-react";
+import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, Stethoscope, Scale, Leaf, Factory, Cannabis, Rocket, Hotel, UtensilsCrossed, SmilePlus, Building2, type LucideIcon } from "lucide-react";
 import blogMarketing from "@/assets/blog-marketing.jpg";
 import blogSeo from "@/assets/blog-seo.jpg";
 import blogDesign from "@/assets/blog-design.jpg";

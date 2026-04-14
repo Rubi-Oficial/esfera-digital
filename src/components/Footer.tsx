@@ -5,6 +5,7 @@ const footerLinks = [
   { label: "Metodologia", href: "#metodologia", title: "Nossa metodologia estratégica de 5 etapas" },
   { label: "Portfólio", href: "#portfolio", title: "Projetos de sites profissionais desenvolvidos" },
   { label: "Planos e Preços", href: "#planos", title: "Planos de criação de sites a partir de R$ 2.000" },
+  { label: "Blog", href: "#blog", title: "Artigos sobre marketing digital e criação de sites" },
   { label: "Depoimentos", href: "#depoimentos", title: "O que nossos clientes dizem sobre nosso trabalho" },
 ];
 

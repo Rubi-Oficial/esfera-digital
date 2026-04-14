@@ -281,6 +281,23 @@ const PortfolioSection = () => {
           const goPrev = () => { if (hasPrev) setLightbox(filtered[lightboxIndex - 1]); };
           const goNext = () => { if (hasNext) setLightbox(filtered[lightboxIndex + 1]); };
 
+          let touchStartX = 0;
+          let touchStartY = 0;
+
+          const handleTouchStart = (e: React.TouchEvent) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+          };
+
+          const handleTouchEnd = (e: React.TouchEvent) => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+              if (dx < 0) goNext();
+              else goPrev();
+            }
+          };
+
           return (
             <motion.div
               key="lightbox-overlay"
@@ -295,6 +312,8 @@ const PortfolioSection = () => {
                 else if (e.key === "ArrowRight") goNext();
                 else if (e.key === "Escape") { setLightbox(null); resumeAutoPlay(); }
               }}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
               tabIndex={0}
               role="dialog"
               aria-modal="true"

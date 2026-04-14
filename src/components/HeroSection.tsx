@@ -66,12 +66,8 @@ const HeroSection = () => {
             Sites Institucionais & Inteligência Artificial
           </motion.div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
-            Criamos{" "}
-            <span className="text-gradient">websites institucionais</span>{" "}
-            com sistemas de{" "}
-            <span className="text-gradient">I.A. integrados</span>{" "}
-            que vendem por você.
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+            <span className="text-gradient">Sites + I.A.</span> que vendem por você.
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">

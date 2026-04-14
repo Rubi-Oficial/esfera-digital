@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
 import WhatsAppLink from "./ui/WhatsAppLink";
@@ -11,6 +11,33 @@ const benefits = [
   "Integração com WhatsApp, CRM e automações",
   "SEO estratégico para dominar o Google",
 ];
+
+const TYPEWRITER_TEXT = "Websites + I.A.";
+const TYPEWRITER_SPEED = 80;
+
+const useTypewriter = (text: string, speed: number, startDelay: number) => {
+  const [displayed, setDisplayed] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    let i = 0;
+    const timeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        i++;
+        setDisplayed(text.slice(0, i));
+        if (i >= text.length) {
+          clearInterval(interval);
+          // Keep cursor blinking for a bit then hide
+          setTimeout(() => setShowCursor(false), 2000);
+        }
+      }, speed);
+      return () => clearInterval(interval);
+    }, startDelay);
+    return () => clearTimeout(timeout);
+  }, [text, speed, startDelay]);
+
+  return { displayed, showCursor };
+};
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,6 +54,8 @@ const HeroSection = () => {
   const dot1Y = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const dot2Y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const dot3Y = useTransform(scrollYProgress, [0, 1], [0, -40]);
+
+  const { displayed, showCursor } = useTypewriter(TYPEWRITER_TEXT, TYPEWRITER_SPEED, 1000);
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
@@ -66,12 +95,20 @@ const HeroSection = () => {
             ESFERA DIGITAL — Websites com Inteligência Artificial
           </motion.div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
-            <span className="text-gradient">Sites + I.A.</span> que vendem por você.
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6">
+            <span className="text-gradient inline-block min-h-[1.2em]">
+              {displayed}
+              {showCursor && (
+                <span className="inline-block w-[3px] h-[0.8em] bg-primary ml-1 align-middle animate-blink" aria-hidden="true" />
+              )}
+            </span>
+            <br />
+            <span className="text-foreground">que vendem por você.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Criamos websites institucionais de alto impacto com inteligência artificial integrada — seu negócio funcionando, vendendo e atendendo <strong className="text-foreground">24 horas por dia</strong>.
+          <p className="text-lg md:text-xl text-muted-foreground/90 max-w-2xl mx-auto mb-10 leading-relaxed tracking-wide">
+            Criamos websites institucionais de alto impacto com inteligência artificial integrada — seu negócio funcionando, vendendo e atendendo{" "}
+            <strong className="text-foreground font-semibold">24 horas por dia</strong>.
           </p>
 
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-12" aria-label="Benefícios">
@@ -81,7 +118,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
-                className="flex items-center gap-3 text-sm text-muted-foreground"
+                className="flex items-center gap-3 text-sm text-muted-foreground/80 tracking-wide"
               >
                 <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                   <Check size={12} className="text-primary" aria-hidden="true" />

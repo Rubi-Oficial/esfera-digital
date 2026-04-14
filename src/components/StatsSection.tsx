@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Briefcase, Building2, ThumbsUp } from "lucide-react";
 
 const stats = [
@@ -52,9 +52,23 @@ const statVariants = {
 };
 
 const StatsSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
   return (
-    <section className="py-20 md:py-28" aria-labelledby="stats-heading">
-      <div className="container px-4 md:px-8">
+    <section ref={sectionRef} className="py-20 md:py-28 relative overflow-hidden" aria-labelledby="stats-heading">
+      {/* Parallax background glow */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none"
+        style={{ y: bgY }}
+        aria-hidden="true"
+      />
+      <div className="container px-4 md:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}

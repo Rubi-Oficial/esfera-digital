@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="container px-4 md:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <a href="#" aria-label="Voltar ao topo - Esfera Soluções Digitais">
-            <img src={logo} alt="Esfera Soluções Digitais - Logotipo" className="h-8 opacity-80 hover:opacity-100 transition-opacity" width="120" height="32" />
+            <AnimatedLogo size="sm" className="opacity-80 hover:opacity-100 transition-opacity" />
           </a>
 
           <nav aria-label="Links do rodapé">

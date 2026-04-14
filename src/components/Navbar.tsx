@@ -63,7 +63,7 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between h-16 px-4 md:px-8">
         <a href="#" aria-label="Esfera Soluções Digitais - Página inicial" className="flex items-center">
-          <img src={logo} alt="Esfera Soluções Digitais - Logotipo" className="h-10" width="150" height="40" />
+          <AnimatedLogo size="sm" />
         </a>
 
         <div className="hidden md:flex items-center gap-8">

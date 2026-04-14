@@ -135,14 +135,14 @@ const Blog = () => {
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeCategory}
+              key={`${activeCategory}-${currentPage}`}
               variants={staggerContainer(0.05, 0.1)}
               initial="hidden"
               animate="visible"
               exit={{ opacity: 0, transition: { duration: 0.15 } }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
             >
-              {filteredArticles.map((article) => (
+              {paginatedArticles.map((article) => (
                 <BlogCard key={article.slug} article={article} />
               ))}
             </motion.div>
@@ -153,6 +153,48 @@ const Blog = () => {
               Nenhum artigo encontrado nesta categoria.
             </p>
           )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-12">
+              <button
+                onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); scrollToGrid(); }}
+                disabled={currentPage === 1}
+                className="p-2 rounded-lg border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Página anterior"
+              >
+                <ChevronLeft size={18} />
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => { setCurrentPage(page); scrollToGrid(); }}
+                  className={`w-10 h-10 rounded-lg text-sm font-medium border transition-all duration-300 ${
+                    currentPage === page
+                      ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
+                      : "border-border/60 text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+
+              <button
+                onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); scrollToGrid(); }}
+                disabled={currentPage === totalPages}
+                className="p-2 rounded-lg border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Próxima página"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
+
+          {/* Article count */}
+          <p className="text-center text-xs text-muted-foreground mt-4">
+            Mostrando {paginatedArticles.length} de {filteredArticles.length} artigos
+          </p>
         </div>
       </main>
       <Footer />

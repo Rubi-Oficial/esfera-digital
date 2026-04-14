@@ -139,6 +139,31 @@ const Blog = () => {
             subtitle="Conteúdo prático e estratégico sobre marketing digital, SEO, design e desenvolvimento web para impulsionar seu negócio."
           />
 
+          {/* Search Bar */}
+          <div className="max-w-xl mx-auto mb-8">
+            <div className="relative">
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                placeholder="Buscar artigos por título ou conteúdo..."
+                maxLength={200}
+                className="w-full pl-11 pr-10 py-3 rounded-xl bg-card border border-border/60 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all text-sm"
+                aria-label="Buscar artigos"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => handleSearchChange("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Limpar busca"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+          </div>
+
           {/* Category Filter */}
           <div className="flex flex-wrap justify-center gap-2 mb-10 max-w-4xl mx-auto">
             {categories.map((cat) => (

@@ -200,9 +200,19 @@ const Blog = () => {
           </AnimatePresence>
 
           {filteredArticles.length === 0 && (
-            <p className="text-center text-muted-foreground mt-12">
-              Nenhum artigo encontrado nesta categoria.
-            </p>
+            <div className="text-center mt-12">
+              <p className="text-muted-foreground">
+                {searchQuery ? `Nenhum artigo encontrado para "${searchQuery}".` : "Nenhum artigo encontrado nesta categoria."}
+              </p>
+              {searchQuery && (
+                <button
+                  onClick={() => handleSearchChange("")}
+                  className="mt-3 text-primary text-sm hover:underline"
+                >
+                  Limpar busca
+                </button>
+              )}
+            </div>
           )}
 
           {/* Pagination */}

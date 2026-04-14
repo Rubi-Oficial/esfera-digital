@@ -66,17 +66,17 @@ const plans = [
 
 const PricingSection = () => {
   return (
-    <section id="planos" className="py-24">
+    <section id="planos" className="section-padding section-divider" aria-labelledby="pricing-heading">
       <div className="container px-4 md:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-6">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
             Últimas vagas para desenvolvimento este mês
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+          <h2 id="pricing-heading" className="text-3xl md:text-5xl font-bold mb-4">
             Escolha seu <span className="text-gradient">plano</span>
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto">
+          <p className="text-muted-foreground max-w-lg mx-auto text-lg">
             Trabalhamos com número limitado de projetos simultâneos para garantir excelência estratégica.
           </p>
         </motion.div>
@@ -87,11 +87,17 @@ const PricingSection = () => {
             <span>3 de 5 preenchidas</span>
           </div>
           <div className="h-2 rounded-full bg-secondary overflow-hidden">
-            <div className="h-full w-3/5 rounded-full bg-primary" />
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: "60%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="h-full rounded-full bg-primary"
+            />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
           {plans.map((plan, i) => (
             <motion.div
               key={i}
@@ -99,33 +105,35 @@ const PricingSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`relative rounded-2xl p-8 flex flex-col ${
+              className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 ${
                 plan.highlight
-                  ? "border-2 border-primary glow-box bg-card"
-                  : "glass"
+                  ? "border-2 border-primary glow-box-strong bg-card lg:scale-105 lg:-my-2"
+                  : "glass-hover"
               }`}
             >
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-lg">
                   {plan.badge}
                 </span>
               )}
 
               <div className="mb-6">
-                <h3 className="font-bold text-lg mb-1">{plan.name}</h3>
+                <h3 className="font-bold text-lg mb-2">{plan.name}</h3>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-bold text-gradient">{plan.price}</span>
+                  <span className="text-4xl font-bold text-gradient">{plan.price}</span>
                   {plan.priceNote && <span className="text-sm text-muted-foreground">{plan.priceNote}</span>}
                 </div>
               </div>
 
               <p className="font-semibold text-sm mb-2">{plan.subtitle}</p>
-              <p className="text-sm text-muted-foreground mb-6">{plan.description}</p>
+              <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{plan.description}</p>
 
-              <ul className="space-y-3 mb-8 flex-1">
+              <ul className="space-y-3 mb-8 flex-1" role="list">
                 {plan.features.map((f, j) => (
-                  <li key={j} className="flex items-start gap-2 text-sm text-secondary-foreground">
-                    <Check size={16} className="text-primary shrink-0 mt-0.5" />
+                  <li key={j} className="flex items-start gap-3 text-sm text-secondary-foreground">
+                    <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <Check size={12} className="text-primary" aria-hidden="true" />
+                    </div>
                     {f}
                   </li>
                 ))}
@@ -135,14 +143,15 @@ const PricingSection = () => {
                 href={plan.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all group ${
+                className={`flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all group ${
                   plan.highlight
-                    ? "bg-primary text-primary-foreground hover:brightness-110"
-                    : "border border-primary text-primary hover:bg-primary/10"
+                    ? "bg-primary text-primary-foreground hover:brightness-110 glow-box"
+                    : "border border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
                 }`}
+                aria-label={`${plan.cta} - Plano ${plan.name}`}
               >
                 {plan.cta}
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </a>
             </motion.div>
           ))}

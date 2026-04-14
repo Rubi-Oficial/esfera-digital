@@ -29,8 +29,10 @@ const PortfolioImage = ({ src, alt }: { src: string; alt: string }) => {
   return (
     <img
       src={src}
-      alt={alt}
+      alt={`Site ${alt} - projeto desenvolvido pela Esfera Soluções Digitais`}
       loading="lazy"
+      width="600"
+      height="400"
       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
       onError={(e) => {
         const target = e.currentTarget;
@@ -52,7 +54,7 @@ const PortfolioSection = () => {
   const filtered = active === "Todos" ? projects : projects.filter((p) => p.cat === active);
 
   return (
-    <section id="portfolio" className="py-24">
+    <section id="portfolio" className="py-24" aria-label="Portfólio de projetos">
       <div className="container px-4 md:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
@@ -61,11 +63,12 @@ const PortfolioSection = () => {
           <p className="text-muted-foreground text-lg">Sites desenvolvidos para empresas de diversos segmentos.</p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <nav aria-label="Filtrar por categoria" className="flex flex-wrap justify-center gap-2 mb-10">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActive(cat)}
+              aria-pressed={active === cat}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 active === cat
                   ? "bg-primary text-primary-foreground"
@@ -75,9 +78,9 @@ const PortfolioSection = () => {
               {cat}
             </button>
           ))}
-        </div>
+        </nav>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" role="list">
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
               <motion.a
@@ -91,12 +94,14 @@ const PortfolioSection = () => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
                 className="glass rounded-xl overflow-hidden group block"
+                role="listitem"
+                aria-label={`${project.name} - ${project.desc}`}
               >
                 <div className="relative aspect-video overflow-hidden">
                   <PortfolioImage src={project.img} alt={project.name} />
                   <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
-                      <ExternalLink size={16} /> Visitar Site
+                      <ExternalLink size={16} aria-hidden="true" /> Visitar Site
                     </span>
                   </div>
                 </div>

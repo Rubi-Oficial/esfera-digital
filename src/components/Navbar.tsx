@@ -19,10 +19,12 @@ const Navbar = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
       className="fixed top-0 left-0 right-0 z-50 glass"
+      role="navigation"
+      aria-label="Navegação principal"
     >
       <div className="container flex items-center justify-between h-16 px-4 md:px-8">
-        <a href="#" className="flex items-center">
-          <img src={logo} alt="Esfera Soluções Digitais" className="h-10" />
+        <a href="#" aria-label="Esfera Soluções Digitais - Página inicial" className="flex items-center">
+          <img src={logo} alt="Esfera Soluções Digitais - Logotipo" className="h-10" width="150" height="40" />
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -40,12 +42,18 @@ const Navbar = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:brightness-110 transition-all"
+            aria-label="Falar com especialista via WhatsApp"
           >
             Falar com Especialista
           </a>
         </div>
 
-        <button onClick={() => setOpen(!open)} className="md:hidden text-foreground">
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-foreground"
+          aria-label={open ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={open}
+        >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -74,6 +82,7 @@ const Navbar = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-3 rounded-lg bg-primary text-primary-foreground text-sm font-semibold text-center"
+                aria-label="Falar com especialista via WhatsApp"
               >
                 Falar com Especialista
               </a>

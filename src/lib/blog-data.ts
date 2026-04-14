@@ -1,4 +1,4 @@
-import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, type LucideIcon } from "lucide-react";
+import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, Stethoscope, Scale, Leaf, Factory, Cannabis, Rocket, Hotel, UtensilsCrossed, SmilePlus, Building2, type LucideIcon } from "lucide-react";
 import blogMarketing from "@/assets/blog-marketing.jpg";
 import blogSeo from "@/assets/blog-seo.jpg";
 import blogDesign from "@/assets/blog-design.jpg";
@@ -8,6 +8,16 @@ import blogAnalytics from "@/assets/blog-analytics.jpg";
 import blogSocialMedia from "@/assets/blog-social-media.jpg";
 import blogEmail from "@/assets/blog-email.jpg";
 import blogPaidTraffic from "@/assets/blog-paid-traffic.jpg";
+import blogSiteMedicos from "@/assets/blog-site-medicos.jpg";
+import blogSiteAdvogados from "@/assets/blog-site-advogados.jpg";
+import blogSiteAgronomos from "@/assets/blog-site-agronomos.jpg";
+import blogSiteSiderurgicas from "@/assets/blog-site-siderurgicas.jpg";
+import blogSiteCannabis from "@/assets/blog-site-cannabis.jpg";
+import blogLandingProjetos from "@/assets/blog-landing-projetos.jpg";
+import blogSitePousadas from "@/assets/blog-site-pousadas.jpg";
+import blogSiteRestaurantes from "@/assets/blog-site-restaurantes.jpg";
+import blogSiteDentistas from "@/assets/blog-site-dentistas.jpg";
+import blogSiteImobiliarias from "@/assets/blog-site-imobiliarias.jpg";
 
 export interface BlogArticle {
   slug: string;
@@ -200,8 +210,203 @@ export const blogArticles: BlogArticle[] = [
       "Métricas essenciais: CPC (custo por clique), CPL (custo por lead), CPA (custo por aquisição), ROAS (retorno sobre investimento em anúncios) e LTV (valor vitalício do cliente). O ROAS mínimo aceitável para a maioria dos negócios é 3:1 — cada R$1 investido deve retornar pelo menos R$3.",
     ],
   },
+  {
+    slug: "site-para-medicos-importancia-presenca-digital",
+    title: "Site para médicos: por que todo profissional da saúde precisa de presença digital",
+    excerpt: "Descubra como um site profissional pode atrair mais pacientes, transmitir credibilidade e diferenciar sua clínica ou consultório da concorrência.",
+    category: "Sites para Saúde",
+    icon: Stethoscope,
+    readTime: "7 min",
+    date: "12 Abr 2026",
+    image: blogSiteMedicos,
+    message: "Olá, sou médico e quero criar um site profissional para meu consultório",
+    content: [
+      "Em 2026, 92% dos pacientes pesquisam médicos e clínicas no Google antes de agendar uma consulta. Se você não tem um site profissional, está literalmente invisível para a maioria dos seus potenciais pacientes — e perdendo espaço para concorrentes que investiram em presença digital.",
+      "Um site médico vai muito além de um cartão de visitas online. Ele funciona como uma central de informações sobre suas especialidades, procedimentos oferecidos, horários de atendimento, convênios aceitos e localização. Isso reduz drasticamente o volume de ligações com perguntas básicas e libera sua equipe para o que realmente importa.",
+      "A credibilidade é o fator mais impactante. Um site com design profissional, depoimentos de pacientes, certificações visíveis e conteúdo educativo sobre saúde posiciona você como autoridade na sua especialidade. Pacientes confiam mais em médicos que demonstram conhecimento e transparência online.",
+      "O agendamento online é uma funcionalidade que transforma a experiência do paciente. Integrar um sistema de marcação de consultas no site elimina filas telefônicas, permite agendamentos fora do horário comercial e reduz faltas — já que lembretes automáticos podem ser configurados.",
+      "SEO local é uma mina de ouro para médicos. Quando alguém busca 'cardiologista em [sua cidade]', um site otimizado aparece nas primeiras posições. Combinado com Google Meu Negócio, seu consultório aparece no mapa com avaliações, fotos e link direto para agendamento.",
+      "O marketing de conteúdo médico educa pacientes e gera confiança. Publicar artigos sobre prevenção, sintomas comuns e novidades da sua área atrai tráfego orgânico e demonstra que você se preocupa com a saúde das pessoas, não apenas com consultas pagas.",
+      "Conformidade com o CFM é essencial. Seu site deve seguir as diretrizes do Conselho Federal de Medicina sobre publicidade médica: não fazer promessas de resultados, não divulgar preços de forma sensacionalista e manter informações precisas e éticas em todo o conteúdo.",
+    ],
+  },
+  {
+    slug: "site-para-advogados-autoridade-juridica-digital",
+    title: "Site para advogados: construa autoridade jurídica e atraia clientes qualificados",
+    excerpt: "Veja como um site estratégico pode posicionar seu escritório como referência, gerar consultas qualificadas e fortalecer sua reputação no mercado jurídico.",
+    category: "Sites Jurídicos",
+    icon: Scale,
+    readTime: "7 min",
+    date: "11 Abr 2026",
+    image: blogSiteAdvogados,
+    message: "Olá, sou advogado e quero criar um site para meu escritório",
+    content: [
+      "O mercado jurídico brasileiro tem mais de 1,3 milhão de advogados. Nesse cenário ultracompetitivo, ter um site profissional não é luxo — é diferenciação. Clientes potenciais julgam a competência de um advogado pela qualidade da sua presença digital antes mesmo do primeiro contato.",
+      "Um site jurídico profissional deve comunicar especialização e experiência. Páginas detalhadas sobre áreas de atuação (direito trabalhista, tributário, empresarial, família) com explicações claras mostram ao cliente que ele encontrou o profissional certo para seu problema específico.",
+      "Cases de sucesso e resultados — dentro dos limites éticos da OAB — são poderosos geradores de confiança. Sem revelar nomes de clientes, você pode descrever situações resolvidas, valores recuperados e vitórias judiciais que demonstram sua competência prática.",
+      "O blog jurídico é a ferramenta mais eficaz para atrair clientes organicamente. Artigos explicando direitos do consumidor, mudanças na legislação e orientações práticas atraem pessoas que estão enfrentando problemas legais — e que precisam de um advogado.",
+      "Formulários de consulta online no site permitem que potenciais clientes descrevam seu caso a qualquer momento. Isso é especialmente valioso para pessoas que trabalham em horário comercial e não conseguem ligar durante o expediente do escritório.",
+      "O design deve transmitir sobriedade, confiança e profissionalismo. Cores escuras como azul-marinho e cinza grafite, tipografia elegante e layout limpo comunicam a seriedade que clientes esperam de um escritório de advocacia.",
+      "Compliance com a OAB é obrigatório. O Código de Ética proíbe publicidade mercantilista, captação de clientela e promessas de resultados. Seu site deve ser informativo e educativo, posicionando-se como fonte de conhecimento jurídico confiável.",
+    ],
+  },
+  {
+    slug: "site-para-agronomos-agronegocio-digital",
+    title: "Site para agrônomos: digitalize sua atuação e alcance mais produtores rurais",
+    excerpt: "Entenda como um site profissional pode expandir sua rede de clientes no agronegócio e posicionar você como referência em consultoria agrícola.",
+    category: "Agronegócio Digital",
+    icon: Leaf,
+    readTime: "6 min",
+    date: "10 Abr 2026",
+    image: blogSiteAgronomos,
+    message: "Olá, sou agrônomo e quero criar um site profissional",
+    content: [
+      "O agronegócio representa mais de 25% do PIB brasileiro, mas a presença digital de profissionais do setor ainda é surpreendentemente baixa. Agrônomos que investem em um site profissional se destacam em um mercado onde a maioria ainda depende exclusivamente de indicações boca a boca.",
+      "Um site permite apresentar seus serviços de forma completa: consultoria de solo, manejo de pragas, planejamento de safra, agricultura de precisão, licenciamento ambiental e assistência técnica. Produtores rurais podem entender exatamente como você pode ajudar antes de entrar em contato.",
+      "Portfólio com resultados reais é o diferencial mais convincente. Mostre fotos de lavouras antes e depois, dados de produtividade alcançada, projetos de irrigação implementados e cases de sucesso. Números concretos convencem muito mais que promessas genéricas.",
+      "O conteúdo técnico educativo atrai produtores que buscam soluções. Artigos sobre manejo integrado de pragas, análise de solo, novas variedades de sementes e tecnologias agropecuárias posicionam você como autoridade e geram tráfego qualificado para o site.",
+      "A cobertura geográfica é um diferencial importante. Produtores rurais frequentemente estão em regiões afastadas dos grandes centros. Um site com informações claras sobre as áreas atendidas, disponibilidade para visitas técnicas e formas de contato facilita a contratação.",
+      "Integração com WhatsApp é fundamental no agronegócio. Produtores rurais usam WhatsApp como ferramenta principal de comunicação. Um botão direto no site conecta o produtor ao agrônomo em segundos, agilizando o processo de contratação.",
+    ],
+  },
+  {
+    slug: "site-para-siderurgicas-industria-digital",
+    title: "Site para siderúrgicas: presença digital que fortalece a imagem industrial",
+    excerpt: "Saiba como um site corporativo pode gerar leads B2B, fortalecer a marca e facilitar negociações no competitivo mercado siderúrgico.",
+    category: "Indústria Digital",
+    icon: Factory,
+    readTime: "6 min",
+    date: "09 Abr 2026",
+    image: blogSiteSiderurgicas,
+    message: "Olá, preciso de um site corporativo para minha siderúrgica",
+    content: [
+      "No setor siderúrgico, onde negociações envolvem milhões de reais, a primeira impressão digital pode definir se um comprador internacional entrará em contato ou escolherá um concorrente. Um site corporativo de alto nível é o cartão de visitas mais poderoso que uma siderúrgica pode ter.",
+      "O catálogo de produtos online é essencial. Compradores B2B querem especificações técnicas detalhadas: tipos de aço, dimensões, normas de qualidade (ABNT, ASTM, ISO), capacidade de produção e certificações. Disponibilizar essas informações no site acelera o ciclo de vendas.",
+      "A institucional forte comunica solidez e confiança. Páginas sobre história da empresa, parque industrial, capacidade produtiva, equipe técnica e certificações de qualidade demonstram que sua siderúrgica é um parceiro confiável para grandes projetos.",
+      "Sustentabilidade e ESG são diferenciais competitivos cada vez mais valorizados. Dedicar uma seção do site às práticas ambientais, reciclagem de materiais, eficiência energética e responsabilidade social atrai compradores que priorizam fornecedores sustentáveis.",
+      "Formulários de cotação online simplificam o processo comercial. Compradores podem especificar o produto desejado, quantidade, prazo e condições de entrega diretamente no site. Isso gera leads qualificados e reduz o tempo entre o primeiro contato e o fechamento.",
+      "O site multilíngue é fundamental para siderúrgicas com atuação no mercado externo. Versões em inglês e espanhol ampliam drasticamente o alcance, permitindo que compradores internacionais encontrem e avaliem sua empresa sem barreiras de idioma.",
+    ],
+  },
+  {
+    slug: "site-para-clinicas-de-cannabis-medicinal",
+    title: "Site para clínicas de cannabis medicinal: credibilidade e educação no mercado que mais cresce",
+    excerpt: "Descubra como um site profissional pode educar pacientes, desmistificar o tratamento e posicionar sua clínica como referência em cannabis medicinal.",
+    category: "Cannabis Medicinal",
+    icon: Cannabis,
+    readTime: "8 min",
+    date: "08 Abr 2026",
+    image: blogSiteCannabis,
+    message: "Olá, tenho uma clínica de cannabis medicinal e quero criar um site",
+    content: [
+      "O mercado de cannabis medicinal no Brasil cresce exponencialmente — com mais de 600 mil pacientes autorizados pela ANVISA em 2026. Nesse setor emergente, um site profissional é a ferramenta mais poderosa para educar, desmistificar e atrair pacientes que buscam tratamentos alternativos.",
+      "A educação é a principal função do site. Muitos pacientes e familiares ainda têm dúvidas e preconceitos sobre cannabis medicinal. Conteúdo claro sobre indicações terapêuticas (dor crônica, epilepsia, ansiedade, insônia), formas de uso e respaldo científico transforma curiosos em pacientes.",
+      "A credibilidade institucional é crucial em um mercado cercado de estigma. Destaque a equipe médica com CRM visível, formações em medicina canabinoide, parcerias com laboratórios credenciados e vínculo com associações médicas reconhecidas.",
+      "O processo de atendimento deve ser explicado passo a passo no site: primeira consulta, avaliação médica, prescrição, orientação sobre obtenção legal do produto via ANVISA e acompanhamento contínuo. Transparência no processo elimina medos e barreiras.",
+      "Depoimentos de pacientes (com autorização) são extremamente poderosos nesse segmento. Histórias reais de melhora na qualidade de vida, redução de medicamentos convencionais e controle de sintomas convencem de forma que nenhum argumento técnico consegue.",
+      "SEO é especialmente valioso porque o volume de buscas por cannabis medicinal cresce mês a mês. Termos como 'tratamento com cannabis medicinal', 'médico prescritor de cannabis' e 'clínica de cannabis [cidade]' atraem pacientes no momento exato da busca por solução.",
+      "Compliance regulatório é essencial. O site deve seguir as normas da ANVISA e do CFM, evitando promessas de cura, divulgação de marcas de produtos e linguagem que possa ser interpretada como apologia ao uso recreativo.",
+    ],
+  },
+  {
+    slug: "landing-page-para-projetos-independentes",
+    title: "Landing page para projetos independentes: valide sua ideia e conquiste seu público",
+    excerpt: "Aprenda como uma landing page estratégica pode transformar seu projeto independente em um negócio real, captando leads e validando demanda.",
+    category: "Projetos Indie",
+    icon: Rocket,
+    readTime: "6 min",
+    date: "07 Abr 2026",
+    image: blogLandingProjetos,
+    message: "Olá, tenho um projeto independente e preciso de uma landing page",
+    content: [
+      "Todo grande negócio começou como uma ideia. A diferença entre ideias que se tornam realidade e as que ficam no papel é a validação — e uma landing page é a ferramenta mais rápida e barata para validar se o mercado realmente quer o que você está criando.",
+      "Uma landing page para projeto independente tem uma missão clara: capturar interesse. Seja um app em desenvolvimento, um curso online, um produto artesanal ou uma startup, a landing page apresenta sua proposta de valor e converte visitantes em leads interessados antes mesmo do lançamento.",
+      "O MVP digital começa aqui. Em vez de gastar meses desenvolvendo um produto completo, crie uma landing page descrevendo o que você vai oferecer, os benefícios e um formulário de interesse. Se pessoas se cadastram, há demanda real. Se não, pivote antes de investir tempo e dinheiro.",
+      "Elementos essenciais: headline magnética que comunica o benefício principal, vídeo ou imagem conceitual do projeto, lista de features/benefícios, prova social (mesmo que inicial) e um CTA irresistível — 'Quero ser o primeiro a saber', 'Garantir meu acesso antecipado'.",
+      "Tráfego para landing pages de projetos indie pode vir de comunidades: Product Hunt, Reddit, grupos do Facebook, LinkedIn, Discord e Twitter/X. Essas plataformas são gold mines para criadores independentes que querem alcançar early adopters sem investir em anúncios.",
+      "Métricas de validação: taxa de conversão acima de 10% indica forte interesse. Número de e-mails coletados, compartilhamentos espontâneos e feedback qualitativo nos formulários são sinais que confirmam se vale a pena avançar com o projeto.",
+    ],
+  },
+  {
+    slug: "site-para-pousadas-turismo-digital",
+    title: "Site para pousadas: encante hóspedes antes mesmo do check-in",
+    excerpt: "Veja como um site com fotos profissionais, reservas online e conteúdo local pode aumentar suas reservas diretas e reduzir dependência de OTAs.",
+    category: "Turismo Digital",
+    icon: Hotel,
+    readTime: "7 min",
+    date: "06 Abr 2026",
+    image: blogSitePousadas,
+    message: "Olá, tenho uma pousada e quero criar um site para aumentar reservas",
+    content: [
+      "Plataformas como Booking e Airbnb cobram comissões de 15% a 25% por reserva. Para uma pousada com diária média de R$350, isso significa perder entre R$50 e R$90 por noite por hóspede. Um site próprio com motor de reservas pode recuperar essa margem e multiplicar seu lucro.",
+      "A fotografia é o elemento mais importante do site de uma pousada. Fotos profissionais dos quartos, áreas comuns, piscina, café da manhã e arredores vendem mais que qualquer texto. Invista em fotos de alta qualidade — esse é o fator que mais influencia a decisão de reserva.",
+      "O motor de reservas integrado ao site permite que hóspedes escolham datas, vejam disponibilidade e reservem diretamente. Sistemas como Omnibees, Cloudbeds e FastHotel se integram ao site e eliminam intermediários, garantindo reservas diretas com pagamento seguro.",
+      "Conteúdo sobre a região atrai turistas que ainda estão planejando a viagem. Guias sobre trilhas, praias, restaurantes, atrações locais e eventos da região posicionam seu site no Google para buscas como 'o que fazer em [destino]' — e sua pousada está ali, esperando a reserva.",
+      "Avaliações e depoimentos de hóspedes no site reforçam a confiança. Integre avaliações do TripAdvisor e Google, e colete depoimentos em vídeo de hóspedes satisfeitos. Prova social é o fator decisivo quando alguém está escolhendo entre sua pousada e a do concorrente.",
+      "Pacotes e promoções exclusivas no site incentivam a reserva direta. Ofereça benefícios que o hóspede não encontra nas OTAs: late checkout, upgrade de quarto, desconto para estadias longas ou experiências inclusas. Isso justifica reservar diretamente com você.",
+      "SEO para turismo é altamente lucrativo. Termos como 'pousada em [destino]', 'onde ficar em [cidade]' e 'pousada com piscina [região]' têm alto volume de busca. Aparecer nas primeiras posições significa reservas gratuitas — sem comissão para intermediários.",
+    ],
+  },
+  {
+    slug: "site-para-restaurantes-cardapio-digital",
+    title: "Site para restaurantes: do cardápio digital ao delivery próprio",
+    excerpt: "Saiba como um site profissional pode aumentar pedidos, fidelizar clientes e reduzir a dependência de aplicativos de entrega com taxas abusivas.",
+    category: "Gastronomia Digital",
+    icon: UtensilsCrossed,
+    readTime: "7 min",
+    date: "05 Abr 2026",
+    image: blogSiteRestaurantes,
+    message: "Olá, tenho um restaurante e quero criar um site com cardápio digital",
+    content: [
+      "iFood e Rappi cobram taxas que variam de 12% a 30% por pedido. Para restaurantes com margem apertada, isso pode significar a diferença entre lucro e prejuízo. Um site próprio com sistema de pedidos online é o caminho para recuperar essa margem e construir relacionamento direto com seus clientes.",
+      "O cardápio digital interativo é a estrela do site. Com fotos profissionais de cada prato, descrições apetitosas, informações de alérgenos e filtros por categoria, seu cardápio online vende por si só. Diferente do cardápio impresso, pode ser atualizado instantaneamente.",
+      "O sistema de delivery próprio integrado ao site permite receber pedidos diretamente, sem intermediários. Soluções como WooCommerce, Goomer e sistemas White Label se integram ao site com gestão de pedidos, rastreamento e pagamento online.",
+      "Reservas online eliminam a frustração do telefone ocupado. Um sistema de reservas no site permite que clientes escolham data, horário e número de pessoas com confirmação automática. Isso reduz no-shows (quando integrado com lembretes) e otimiza a ocupação das mesas.",
+      "Google Meu Negócio é obrigatório para restaurantes. Perfil completo com fotos dos pratos, horário de funcionamento, cardápio e avaliações garante que você apareça quando alguém busca 'restaurante perto de mim' ou 'restaurante japonês em [bairro]'.",
+      "Programa de fidelidade digital integrado ao site incentiva retorno. Sistemas de pontos, cashback ou selos digitais (a cada 10 pratos, ganhe 1) mantêm clientes voltando e escolhendo pedir diretamente pelo seu site em vez de usar aplicativos terceiros.",
+      "E-mail marketing e WhatsApp são canais de ouro para restaurantes. Capture contatos no site e envie promoções de almoço, cardápio da semana, eventos especiais e cupons de desconto exclusivos. Clientes que pedem direto são mais lucrativos e fiéis.",
+    ],
+  },
+  {
+    slug: "site-para-dentistas-consultorio-digital",
+    title: "Site para dentistas: atraia mais pacientes e destaque seu consultório",
+    excerpt: "Entenda como um site profissional com agendamento online pode transformar a presença digital do seu consultório odontológico.",
+    category: "Odontologia Digital",
+    icon: SmilePlus,
+    readTime: "6 min",
+    date: "04 Abr 2026",
+    image: blogSiteDentistas,
+    message: "Olá, sou dentista e quero um site para meu consultório",
+    content: [
+      "Em 2026, a odontologia é um dos setores mais pesquisados no Google. Termos como 'dentista perto de mim', 'clareamento dental preço' e 'implante dentário' recebem milhões de buscas mensais. Sem um site, seu consultório é invisível para todos esses potenciais pacientes.",
+      "Antes e depois são o portfólio mais poderoso da odontologia. Mostrar resultados reais de clareamento, lentes de contato dental, ortodontia e implantes (com autorização do paciente) prova sua competência de forma visual e irrefutável.",
+      "O agendamento online é o recurso que mais impacta na conversão. Pacientes querem marcar consultas às 23h de um domingo, não apenas no horário comercial. Um sistema de agendamento no site com confirmação automática e lembretes por WhatsApp reduz faltas em até 40%.",
+      "Conteúdo educativo sobre saúde bucal atrai pacientes organicamente. Artigos sobre escovação correta, prevenção de cáries, quando trocar a escova, mitos sobre canal e cuidados com aparelho ortodôntico posicionam você como referência e geram confiança.",
+      "A página de procedimentos deve ser detalhada e acessível. Explique cada tratamento (limpeza, restauração, canal, prótese, implante, estética dental) com linguagem simples, fotos e faixas de preço quando possível. Pacientes informados chegam mais preparados e confiantes.",
+      "Depoimentos em vídeo de pacientes satisfeitos são extremamente eficazes para consultórios odontológicos. O medo de dentista ainda é real para muitos adultos, e ver pessoas reais falando sobre uma experiência positiva reduz drasticamente essa barreira.",
+    ],
+  },
+  {
+    slug: "site-para-imobiliarias-mercado-digital",
+    title: "Site para imobiliárias: transforme leads digitais em vendas milionárias",
+    excerpt: "Descubra como um site imobiliário com busca avançada, tours virtuais e integração com portais pode acelerar vendas e locações.",
+    category: "Imobiliário Digital",
+    icon: Building2,
+    readTime: "8 min",
+    date: "03 Abr 2026",
+    image: blogSiteImobiliarias,
+    message: "Olá, tenho uma imobiliária e preciso de um site profissional",
+    content: [
+      "O mercado imobiliário movimenta trilhões de reais anualmente no Brasil, e mais de 90% dos compradores começam a busca por imóveis na internet. Uma imobiliária sem site profissional está literalmente fora do jogo — perdendo clientes para concorrentes mais digitalizados.",
+      "O sistema de busca avançada é o coração do site imobiliário. Filtros por tipo de imóvel, bairro, faixa de preço, número de quartos, vagas de garagem e metragem permitem que o visitante encontre exatamente o que procura em segundos. Usabilidade aqui é sinônimo de vendas.",
+      "Tours virtuais 360° e vídeos dos imóveis são diferenciais que economizam tempo de todos. Compradores visitam virtualmente antes de agendar visita presencial, corretores focam em leads mais qualificados e proprietários têm seus imóveis apresentados 24 horas por dia.",
+      "A integração com portais como ZAP Imóveis, Viva Real e OLX permite sincronizar seu catálogo automaticamente. Gerencie tudo pelo site e distribua para múltiplos canais sem duplicar trabalho. Isso maximiza visibilidade mantendo a gestão centralizada.",
+      "Landing pages por empreendimento são essenciais para lançamentos. Páginas dedicadas com planta baixa, perspectivas, localização, tabela de preços e formulário de interesse geram leads ultra-qualificados para a equipe de vendas.",
+      "CRM integrado ao site transforma o processo comercial. Quando um lead preenche um formulário ou clica em 'Tenho interesse', os dados entram automaticamente no CRM com informações do imóvel desejado, permitindo follow-up imediato e personalizado.",
+      "SEO imobiliário é altamente lucrativo. Uma única venda de um apartamento pode gerar comissões de dezenas de milhares de reais. Ranquear para termos como 'apartamento à venda em [bairro]' ou 'casa para alugar em [cidade]' tem um ROI incomparável.",
+    ],
+  },
 ];
-
 export const getRelatedArticles = (currentSlug: string, count = 3): BlogArticle[] => {
   const current = blogArticles.find((a) => a.slug === currentSlug);
   if (!current) return blogArticles.slice(0, count);

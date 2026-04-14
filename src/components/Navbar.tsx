@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo-esfera.png";
 
 const navLinks = [
   { label: "Soluções", href: "#solucoes" },
@@ -20,9 +21,8 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 glass"
     >
       <div className="container flex items-center justify-between h-16 px-4 md:px-8">
-        <a href="#" className="font-heading text-xl font-bold tracking-tight">
-          <span className="text-foreground">ESFERA</span>
-          <span className="text-gradient ml-1 text-sm font-medium">Soluções Digitais</span>
+        <a href="#" className="flex items-center">
+          <img src={logo} alt="Esfera Soluções Digitais" className="h-10" />
         </a>
 
         <div className="hidden md:flex items-center gap-8">

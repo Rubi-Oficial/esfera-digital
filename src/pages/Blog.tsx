@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Clock, ArrowRight, ArrowLeft } from "lucide-react";
+import { Calendar, Clock, ArrowRight, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
@@ -59,8 +59,11 @@ const BlogCard = ({ article }: { article: BlogArticle }) => (
   </motion.div>
 );
 
+const ARTICLES_PER_PAGE = 9;
+
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState<string>("Todos");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(blogArticles.map((a) => a.category)));
@@ -71,6 +74,22 @@ const Blog = () => {
     if (activeCategory === "Todos") return blogArticles;
     return blogArticles.filter((a) => a.category === activeCategory);
   }, [activeCategory]);
+
+  const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
+
+  const paginatedArticles = useMemo(() => {
+    const start = (currentPage - 1) * ARTICLES_PER_PAGE;
+    return filteredArticles.slice(start, start + ARTICLES_PER_PAGE);
+  }, [filteredArticles, currentPage]);
+
+  const handleCategoryChange = useCallback((cat: string) => {
+    setActiveCategory(cat);
+    setCurrentPage(1);
+  }, []);
+
+  const scrollToGrid = () => {
+    window.scrollTo({ top: 300, behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen">
@@ -99,7 +118,7 @@ const Blog = () => {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategoryChange(cat)}
                 className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${
                   activeCategory === cat
                     ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
@@ -116,14 +135,14 @@ const Blog = () => {
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeCategory}
+              key={`${activeCategory}-${currentPage}`}
               variants={staggerContainer(0.05, 0.1)}
               initial="hidden"
               animate="visible"
               exit={{ opacity: 0, transition: { duration: 0.15 } }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
             >
-              {filteredArticles.map((article) => (
+              {paginatedArticles.map((article) => (
                 <BlogCard key={article.slug} article={article} />
               ))}
             </motion.div>
@@ -134,6 +153,48 @@ const Blog = () => {
               Nenhum artigo encontrado nesta categoria.
             </p>
           )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-12">
+              <button
+                onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); scrollToGrid(); }}
+                disabled={currentPage === 1}
+                className="p-2 rounded-lg border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Página anterior"
+              >
+                <ChevronLeft size={18} />
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => { setCurrentPage(page); scrollToGrid(); }}
+                  className={`w-10 h-10 rounded-lg text-sm font-medium border transition-all duration-300 ${
+                    currentPage === page
+                      ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
+                      : "border-border/60 text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+
+              <button
+                onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); scrollToGrid(); }}
+                disabled={currentPage === totalPages}
+                className="p-2 rounded-lg border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Próxima página"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
+
+          {/* Article count */}
+          <p className="text-center text-xs text-muted-foreground mt-4">
+            Mostrando {paginatedArticles.length} de {filteredArticles.length} artigos
+          </p>
         </div>
       </main>
       <Footer />

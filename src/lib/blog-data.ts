@@ -1,10 +1,13 @@
-import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, type LucideIcon } from "lucide-react";
+import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, type LucideIcon } from "lucide-react";
 import blogMarketing from "@/assets/blog-marketing.jpg";
 import blogSeo from "@/assets/blog-seo.jpg";
 import blogDesign from "@/assets/blog-design.jpg";
 import blogStrategy from "@/assets/blog-strategy.jpg";
 import blogCode from "@/assets/blog-code.jpg";
 import blogAnalytics from "@/assets/blog-analytics.jpg";
+import blogSocialMedia from "@/assets/blog-social-media.jpg";
+import blogEmail from "@/assets/blog-email.jpg";
+import blogPaidTraffic from "@/assets/blog-paid-traffic.jpg";
 
 export interface BlogArticle {
   slug: string;
@@ -134,6 +137,67 @@ export const blogArticles: BlogArticle[] = [
       "O custo por lead (CPL) é calculado dividindo seu investimento total pelo número de leads gerados. Compare esse valor com o CPL de outros canais (anúncios, indicações) para entender a eficiência do seu site como ferramenta de aquisição.",
       "O tempo médio na página e a taxa de rejeição indicam a qualidade do conteúdo e da experiência do usuário. Se visitantes saem rápido, algo no design, conteúdo ou velocidade precisa ser ajustado.",
       "Para calcular o ROI final: (Receita gerada pelo site - Investimento) / Investimento × 100. Considere que um site profissional gera resultados por anos, então o ROI tende a crescer exponencialmente com o tempo.",
+    ],
+  },
+  {
+    slug: "redes-sociais-para-empresas-estrategias-que-funcionam",
+    title: "Redes sociais para empresas: estratégias que realmente funcionam em 2026",
+    excerpt: "Descubra como usar Instagram, LinkedIn e TikTok de forma estratégica para gerar autoridade, engajamento e vendas para sua empresa.",
+    category: "Redes Sociais",
+    icon: Share2,
+    readTime: "7 min",
+    date: "01 Mar 2026",
+    image: blogSocialMedia,
+    message: "Olá, quero melhorar a presença da minha empresa nas redes sociais",
+    content: [
+      "Redes sociais não são apenas vitrines — são canais estratégicos de relacionamento, autoridade e vendas. Em 2026, empresas que tratam redes sociais como 'obrigação' perdem para aquelas que as usam como ferramenta de negócio.",
+      "O erro mais comum é estar em todas as plataformas sem estratégia. O segredo é escolher 2-3 redes onde seu público realmente está e dominar cada uma delas. Para B2B, LinkedIn é indispensável. Para B2C visual, Instagram lidera. TikTok cresce em todos os segmentos com conteúdo autêntico.",
+      "Conteúdo de valor supera conteúdo promocional. A regra 80/20 continua válida: 80% do seu conteúdo deve educar, inspirar ou entreter, e apenas 20% deve vender diretamente. Empresas que só postam sobre si mesmas perdem seguidores rapidamente.",
+      "Consistência é mais importante que frequência. É melhor postar 3 vezes por semana com qualidade do que diariamente com conteúdo genérico. Crie um calendário editorial mensal e mantenha uma identidade visual coerente em todos os posts.",
+      "Stories e Reels são os formatos com maior alcance orgânico atualmente. Vídeos curtos, bastidores, depoimentos de clientes e tutoriais rápidos geram até 3x mais engajamento que posts estáticos no feed.",
+      "Métricas que importam: taxa de engajamento (não apenas curtidas), alcance de não-seguidores, cliques no link da bio, mensagens diretas recebidas e, principalmente, leads e vendas geradas. Número de seguidores é métrica de vaidade — foque em conversão.",
+      "Social selling é a evolução natural: use as redes para iniciar conversas, construir relacionamentos e direcionar prospects para seu site ou WhatsApp. O funil começa no conteúdo e termina na venda consultiva.",
+    ],
+  },
+  {
+    slug: "email-marketing-guia-completo-para-converter-mais",
+    title: "E-mail marketing: guia completo para converter mais em 2026",
+    excerpt: "Aprenda a criar campanhas de e-mail que geram até 4200% de ROI com automação, segmentação e conteúdo estratégico.",
+    category: "E-mail Marketing",
+    icon: Mail,
+    readTime: "8 min",
+    date: "22 Fev 2026",
+    image: blogEmail,
+    message: "Olá, quero implementar e-mail marketing na minha empresa",
+    content: [
+      "O e-mail marketing continua sendo o canal digital com maior ROI: em média, cada R$1 investido gera R$42 de retorno. Em 2026, com a inteligência artificial integrada às plataformas, os resultados são ainda mais expressivos para quem domina a estratégia.",
+      "Tudo começa com a construção da lista. Nunca compre listas de e-mails — além de ser ilegal (LGPD), a taxa de conversão é praticamente zero. Crie iscas digitais de valor: e-books, checklists, webinars, descontos exclusivos. O visitante troca o e-mail por algo que resolve um problema real.",
+      "Segmentação é o que separa e-mail marketing profissional de spam. Divida sua lista por interesses, comportamento de compra, estágio no funil e engajamento. Uma mensagem personalizada para 100 pessoas converte mais que uma genérica para 10.000.",
+      "Automação de e-mails é indispensável. Configure sequências automáticas: boas-vindas para novos inscritos, nutrição de leads, carrinho abandonado, pós-venda e reativação de inativos. Essas automações trabalham 24/7 gerando resultados enquanto você foca em outras áreas.",
+      "O assunto do e-mail determina se ele será aberto. Mantenha entre 30-50 caracteres, use urgência com moderação, personalize com o nome do destinatário e evite palavras que ativam filtros de spam (grátis, promoção, clique aqui). Teste A/B é obrigatório.",
+      "Design responsivo é essencial — 60% dos e-mails são lidos no celular. Use templates limpos, um CTA principal por e-mail, imagens otimizadas e sempre inclua uma versão em texto puro. A simplicidade converte mais que layouts elaborados.",
+      "Métricas-chave: taxa de abertura (média saudável: 20-30%), taxa de clique (2-5%), taxa de conversão, taxa de descadastro (abaixo de 0.5%) e receita por e-mail. Acompanhe semanalmente e ajuste sua estratégia com base nos dados.",
+    ],
+  },
+  {
+    slug: "trafego-pago-como-investir-com-inteligencia",
+    title: "Tráfego pago: como investir com inteligência e maximizar resultados",
+    excerpt: "Guia prático sobre Google Ads e Meta Ads para empresas que querem escalar vendas com anúncios online de forma rentável.",
+    category: "Tráfego Pago",
+    icon: DollarSign,
+    readTime: "9 min",
+    date: "15 Fev 2026",
+    image: blogPaidTraffic,
+    message: "Olá, quero investir em tráfego pago para minha empresa",
+    content: [
+      "Tráfego pago é o acelerador do marketing digital. Enquanto SEO e conteúdo orgânico constroem resultados a longo prazo, anúncios pagos geram leads e vendas desde o primeiro dia — quando bem executados. A chave é investir com estratégia, não com impulso.",
+      "Google Ads é ideal para capturar demanda existente. Quando alguém pesquisa 'dentista em São Paulo' ou 'empresa de contabilidade', essa pessoa já tem intenção de compra. Anúncios de pesquisa colocam sua empresa na frente dessas pessoas no momento exato da decisão.",
+      "Meta Ads (Facebook e Instagram) é perfeito para gerar demanda. Com segmentação por interesses, comportamentos e lookalike audiences, você alcança pessoas que ainda não conhecem sua empresa mas têm o perfil do seu cliente ideal. É o canal mais poderoso para construção de marca e geração de leads.",
+      "O funil de anúncios é crucial: não tente vender para quem nunca ouviu falar de você. Estruture em 3 etapas — Topo (awareness com conteúdo de valor), Meio (consideração com provas sociais e cases) e Fundo (conversão com ofertas diretas). Cada etapa tem criativos e mensagens diferentes.",
+      "Orçamento inicial recomendado: comece com R$30-50/dia por plataforma durante 30 dias para coletar dados. Não julgue resultados na primeira semana — os algoritmos precisam de tempo para otimizar. Após o período de aprendizado, escale o que funciona e pause o que não converte.",
+      "Criativos são responsáveis por 80% do resultado. Vídeos curtos (15-30 segundos) superam imagens estáticas. Use depoimentos reais, demonstrações do produto/serviço e CTAs claros. Teste pelo menos 3-5 variações de criativo por campanha.",
+      "Landing pages dedicadas são obrigatórias para campanhas pagas. Nunca direcione anúncios para a home do site. Crie páginas específicas para cada campanha com mensagem alinhada ao anúncio, formulário simplificado e prova social. Isso pode dobrar sua taxa de conversão.",
+      "Métricas essenciais: CPC (custo por clique), CPL (custo por lead), CPA (custo por aquisição), ROAS (retorno sobre investimento em anúncios) e LTV (valor vitalício do cliente). O ROAS mínimo aceitável para a maioria dos negócios é 3:1 — cada R$1 investido deve retornar pelo menos R$3.",
     ],
   },
 ];

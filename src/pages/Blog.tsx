@@ -106,6 +106,13 @@ const Blog = () => {
     setCurrentPage(1);
   }, []);
 
+  const handleSearchChange = useCallback((value: string) => {
+    if (value.length <= 200) {
+      setSearchQuery(value);
+      setCurrentPage(1);
+    }
+  }, []);
+
   const scrollToGrid = () => {
     window.scrollTo({ top: 300, behavior: "smooth" });
   };

@@ -2,27 +2,46 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
+import imgPousada from "@/assets/portfolio/pousada-rosa.jpg";
+import imgHemptech from "@/assets/portfolio/hemptech.jpg";
+import imgMultiply from "@/assets/portfolio/multiply.jpg";
+import imgSteel from "@/assets/portfolio/steelps.jpg";
+import imgMetalmilk from "@/assets/portfolio/metalmilk.jpg";
+import imgFrigorifico from "@/assets/portfolio/frigorifico.jpg";
+import imgRsmetais from "@/assets/portfolio/rsmetais.jpg";
+import imgInterforte from "@/assets/portfolio/interforte.jpg";
+import imgTimoneiro from "@/assets/portfolio/timoneiro.jpg";
+import imgTerrasol from "@/assets/portfolio/terrasol.jpg";
+import imgStarklar from "@/assets/portfolio/starklar.jpg";
+import imgNobile from "@/assets/portfolio/nobile.jpg";
+import imgAtelier from "@/assets/portfolio/atelier.jpg";
+import imgRodalivre from "@/assets/portfolio/rodalivre.jpg";
+import imgLeduc from "@/assets/portfolio/leduc.jpg";
+import imgRubi from "@/assets/portfolio/rubi.jpg";
+import imgAutoajuda from "@/assets/portfolio/autoajuda.jpg";
+import imgNutri from "@/assets/portfolio/nutri.jpg";
+
 const categories = ["Todos", "Indústria", "Agronegócio", "Hotelaria", "Design", "Tecnologia", "Serviços", "Marketing", "Automotivo"];
 
 const projects = [
-  { name: "Pousada Rosa Paradise", cat: "Hotelaria", desc: "Portal completo com booking engine na Praia do Rosa.", img: "https://pousadarosaparadise.com.br/hero-praia-rosa-paradise.png", url: "https://pousadarosaparadise.com.br/" },
-  { name: "Hemp Tech", cat: "Tecnologia", desc: "E-commerce de genética premium com loja integrada.", img: "https://image.thum.io/get/width/600/crop/400/https://www.hemptech.com.br/", url: "https://www.hemptech.com.br/" },
-  { name: "Multiply Group", cat: "Tecnologia", desc: "Plataforma de investimentos com dashboard interativo.", img: "https://image.thum.io/get/width/600/crop/400/https://multilple-mvp.vercel.app", url: "https://multilple-mvp.vercel.app" },
-  { name: "Steel PS", cat: "Indústria", desc: "Portal de produtos siderúrgicos de alta performance.", img: "https://image.thum.io/get/width/600/crop/400/https://www.steelps.com.br/", url: "https://www.steelps.com.br/" },
-  { name: "MetalMilk", cat: "Indústria", desc: "Soluções em refrigeração industrial para o setor lácteo.", img: "https://image.thum.io/get/width/600/crop/400/https://metalmilk.com.br/", url: "https://metalmilk.com.br/" },
-  { name: "Frigorífico Vale do Oeste", cat: "Indústria", desc: "Site industrial com catálogo e certificações de qualidade.", img: "https://image.thum.io/get/width/600/crop/400/https://www.frigorificovaledooeste.com.br/", url: "https://www.frigorificovaledooeste.com.br/" },
-  { name: "RS Metais", cat: "Indústria", desc: "Comércio de metais ferrosos e não-ferrosos.", img: "https://image.thum.io/get/width/600/crop/400/https://rsmetais.ind.br", url: "https://rsmetais.ind.br" },
-  { name: "Interforte Agro", cat: "Agronegócio", desc: "Implementos agrícolas e rodoviários de alta qualidade.", img: "https://image.thum.io/get/width/600/crop/400/https://interforteagro.com.br/", url: "https://interforteagro.com.br/" },
-  { name: "Agrícola Timoneiro", cat: "Agronegócio", desc: "Soluções completas para o campo brasileiro.", img: "https://image.thum.io/get/width/600/crop/400/https://www.agricolatimoneiro.com.br", url: "https://www.agricolatimoneiro.com.br" },
-  { name: "Terra Sol Madeireira", cat: "Indústria", desc: "Madeireira premium com catálogo de produtos.", img: "https://image.thum.io/get/width/600/crop/400/https://terrasol.com.br/", url: "https://terrasol.com.br/" },
-  { name: "Stark Lar Transportes", cat: "Serviços", desc: "Transporte e logística com frota rastreada.", img: "https://image.thum.io/get/width/600/crop/400/https://starklartransportes.com.br/", url: "https://starklartransportes.com.br/" },
-  { name: "Nobile Premium", cat: "Design", desc: "Móveis de alta decoração com design contemporâneo.", img: "https://image.thum.io/get/width/600/crop/400/https://nobilepremium.com.br", url: "https://nobilepremium.com.br" },
-  { name: "Atelier Casa e Jardim", cat: "Design", desc: "Móveis artesanais exclusivos com materiais naturais.", img: "https://image.thum.io/get/width/600/crop/400/https://www.ateliercasaejardim.com.br/", url: "https://www.ateliercasaejardim.com.br/" },
-  { name: "Roda Livre Rental Car", cat: "Automotivo", desc: "Aluguel de veículos elétricos BYD, Geely e Alma.", img: "https://image.thum.io/get/width/600/crop/400/https://v0-roda-livre-rental-car.vercel.app", url: "https://v0-roda-livre-rental-car.vercel.app" },
-  { name: "Leduc Filho Advogados", cat: "Serviços", desc: "Website de escritório de advocacia profissional.", img: "https://image.thum.io/get/width/600/crop/400/https://leducfilho.com/", url: "https://leducfilho.com/" },
-  { name: "Rubi Agency", cat: "Marketing", desc: "Agência de marketing digital com estratégias criativas.", img: "https://image.thum.io/get/width/600/crop/400/https://www.rubiagency.com.br", url: "https://www.rubiagency.com.br" },
-  { name: "AutoAjuda Pro", cat: "Tecnologia", desc: "Plataforma de IA especializada em desenvolvimento pessoal.", img: "https://image.thum.io/get/width/600/crop/400/https://autoajudapro.com/", url: "https://autoajudapro.com/" },
-  { name: "Gestão Nutri Escolar", cat: "Tecnologia", desc: "Sistema de nutrição escolar com pedidos online.", img: "https://image.thum.io/get/width/600/crop/400/https://gestao-nutri-escolar.vercel.app", url: "https://gestao-nutri-escolar.vercel.app" },
+  { name: "Pousada Rosa Paradise", cat: "Hotelaria", desc: "Portal completo com booking engine na Praia do Rosa.", img: imgPousada, url: "https://pousadarosaparadise.com.br/" },
+  { name: "Hemp Tech", cat: "Tecnologia", desc: "E-commerce de genética premium com loja integrada.", img: imgHemptech, url: "https://www.hemptech.com.br/" },
+  { name: "Multiply Group", cat: "Tecnologia", desc: "Plataforma de investimentos com dashboard interativo.", img: imgMultiply, url: "https://multilple-mvp.vercel.app" },
+  { name: "Steel PS", cat: "Indústria", desc: "Portal de produtos siderúrgicos de alta performance.", img: imgSteel, url: "https://www.steelps.com.br/" },
+  { name: "MetalMilk", cat: "Indústria", desc: "Soluções em refrigeração industrial para o setor lácteo.", img: imgMetalmilk, url: "https://metalmilk.com.br/" },
+  { name: "Frigorífico Vale do Oeste", cat: "Indústria", desc: "Site industrial com catálogo e certificações de qualidade.", img: imgFrigorifico, url: "https://www.frigorificovaledooeste.com.br/" },
+  { name: "RS Metais", cat: "Indústria", desc: "Comércio de metais ferrosos e não-ferrosos.", img: imgRsmetais, url: "https://rsmetais.ind.br" },
+  { name: "Interforte Agro", cat: "Agronegócio", desc: "Implementos agrícolas e rodoviários de alta qualidade.", img: imgInterforte, url: "https://interforteagro.com.br/" },
+  { name: "Agrícola Timoneiro", cat: "Agronegócio", desc: "Soluções completas para o campo brasileiro.", img: imgTimoneiro, url: "https://www.agricolatimoneiro.com.br" },
+  { name: "Terra Sol Madeireira", cat: "Indústria", desc: "Madeireira premium com catálogo de produtos.", img: imgTerrasol, url: "https://terrasol.com.br/" },
+  { name: "Stark Lar Transportes", cat: "Serviços", desc: "Transporte e logística com frota rastreada.", img: imgStarklar, url: "https://starklartransportes.com.br/" },
+  { name: "Nobile Premium", cat: "Design", desc: "Móveis de alta decoração com design contemporâneo.", img: imgNobile, url: "https://nobilepremium.com.br" },
+  { name: "Atelier Casa e Jardim", cat: "Design", desc: "Móveis artesanais exclusivos com materiais naturais.", img: imgAtelier, url: "https://www.ateliercasaejardim.com.br/" },
+  { name: "Roda Livre Rental Car", cat: "Automotivo", desc: "Aluguel de veículos elétricos BYD, Geely e Alma.", img: imgRodalivre, url: "https://v0-roda-livre-rental-car.vercel.app" },
+  { name: "Leduc Filho Advogados", cat: "Serviços", desc: "Website de escritório de advocacia profissional.", img: imgLeduc, url: "https://leducfilho.com/" },
+  { name: "Rubi Agency", cat: "Marketing", desc: "Agência de marketing digital com estratégias criativas.", img: imgRubi, url: "https://www.rubiagency.com.br" },
+  { name: "AutoAjuda Pro", cat: "Tecnologia", desc: "Plataforma de IA especializada em desenvolvimento pessoal.", img: imgAutoajuda, url: "https://autoajudapro.com/" },
+  { name: "Gestão Nutri Escolar", cat: "Tecnologia", desc: "Sistema de nutrição escolar com pedidos online.", img: imgNutri, url: "https://gestao-nutri-escolar.vercel.app" },
 ];
 
 const PortfolioImage = ({ src, alt }: { src: string; alt: string }) => {

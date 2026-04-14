@@ -59,8 +59,11 @@ const BlogCard = ({ article }: { article: BlogArticle }) => (
   </motion.div>
 );
 
+const ARTICLES_PER_PAGE = 9;
+
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState<string>("Todos");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(blogArticles.map((a) => a.category)));
@@ -71,6 +74,22 @@ const Blog = () => {
     if (activeCategory === "Todos") return blogArticles;
     return blogArticles.filter((a) => a.category === activeCategory);
   }, [activeCategory]);
+
+  const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
+
+  const paginatedArticles = useMemo(() => {
+    const start = (currentPage - 1) * ARTICLES_PER_PAGE;
+    return filteredArticles.slice(start, start + ARTICLES_PER_PAGE);
+  }, [filteredArticles, currentPage]);
+
+  const handleCategoryChange = useCallback((cat: string) => {
+    setActiveCategory(cat);
+    setCurrentPage(1);
+  }, []);
+
+  const scrollToGrid = () => {
+    window.scrollTo({ top: 300, behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen">

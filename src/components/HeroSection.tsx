@@ -63,7 +63,7 @@ const HeroSection = () => {
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
-            ESFERA DIGITAL — Website + Inteligência Artificial
+            ESFERA DIGITAL — Websites com Inteligência Artificial
           </motion.div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">

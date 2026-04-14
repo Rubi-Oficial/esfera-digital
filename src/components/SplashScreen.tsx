@@ -83,7 +83,7 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8, duration: 0.5 }}
               >
-                Website + Inteligência Artificial
+                Websites com Inteligência Artificial
               </motion.p>
             </motion.div>
 

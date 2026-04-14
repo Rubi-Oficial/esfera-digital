@@ -8,6 +8,7 @@ const navLinks = [
   { label: "Metodologia", href: "#metodologia" },
   { label: "Portfólio", href: "#portfolio" },
   { label: "Planos", href: "#planos" },
+  { label: "Blog", href: "#blog" },
 ];
 
 const Navbar = () => {

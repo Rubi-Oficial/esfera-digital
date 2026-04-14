@@ -1,4 +1,4 @@
-import logo from "@/assets/logo-esfera.png";
+import AnimatedLogo from "./AnimatedLogo";
 
 const footerLinks = [
   { label: "Soluções", href: "#solucoes" },

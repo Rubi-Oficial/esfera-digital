@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/logo-esfera.png";
+import AnimatedLogo from "./AnimatedLogo";
 
 const navLinks = [
   { label: "Soluções", href: "#solucoes" },

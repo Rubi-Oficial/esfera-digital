@@ -95,16 +95,22 @@ const HeroSection = () => {
             ESFERA DIGITAL — Websites com Inteligência Artificial
           </motion.div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6">
-            <span className="text-gradient inline-block min-h-[1.2em]">
-              {displayed}
-              {showCursor && (
-                <span className="inline-block w-[3px] h-[0.8em] bg-primary ml-1 align-middle animate-blink" aria-hidden="true" />
-              )}
-            </span>
-            <br />
-            <span className="text-foreground">que vendem por você.</span>
-          </h1>
+          <div className="relative mb-6">
+            {/* Glow behind title */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+              <div className="w-[80%] h-[80%] rounded-full bg-primary/15 blur-[80px] animate-pulse" />
+            </div>
+            <h1 className="relative text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight drop-shadow-[0_0_40px_hsl(43_70%_55%/0.3)]">
+              <span className="text-gradient inline-block min-h-[1.2em]">
+                {displayed}
+                {showCursor && (
+                  <span className="inline-block w-[3px] h-[0.8em] bg-primary ml-1 align-middle animate-blink" aria-hidden="true" />
+                )}
+              </span>
+              <br />
+              <span className="text-foreground drop-shadow-[0_0_20px_hsl(43_70%_55%/0.1)]">que vendem por você.</span>
+            </h1>
+          </div>
 
           <p className="text-lg md:text-xl text-muted-foreground/90 max-w-2xl mx-auto mb-10 leading-relaxed tracking-wide">
             Criamos websites institucionais de alto impacto com inteligência artificial integrada — seu negócio funcionando, vendendo e atendendo{" "}

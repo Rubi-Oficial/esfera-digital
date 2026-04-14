@@ -6,6 +6,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 
 // Lazy load below-the-fold sections
 const ProblemSection = lazy(() => import("@/components/ProblemSection"));
+const AIServicesSection = lazy(() => import("@/components/AIServicesSection"));
 const AboutSection = lazy(() => import("@/components/AboutSection"));
 const MethodologySection = lazy(() => import("@/components/MethodologySection"));
 const PortfolioSection = lazy(() => import("@/components/PortfolioSection"));

@@ -57,9 +57,9 @@ const AIServicesSection = () => {
 
       <div className="container relative z-10 px-4 md:px-8">
         <SectionHeader
-          badge="Inteligência Artificial"
+          label="Inteligência Artificial"
           title="Sistemas de I.A. integrados ao seu negócio"
-          description="Transforme a experiência do seu cliente e a eficiência da sua operação com soluções de inteligência artificial sob medida."
+          subtitle="Transforme a experiência do seu cliente e a eficiência da sua operação com soluções de inteligência artificial sob medida."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">

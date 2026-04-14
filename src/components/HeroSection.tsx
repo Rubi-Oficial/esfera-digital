@@ -117,22 +117,32 @@ const HeroSection = () => {
             <strong className="text-foreground font-semibold">24 horas por dia</strong>.
           </p>
 
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-12" aria-label="Benefícios">
+          <motion.ul
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-12"
+            aria-label="Benefícios"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.15, delayChildren: 1.2 } },
+            }}
+          >
             {benefits.map((b, i) => (
               <motion.li
                 key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + i * 0.1 }}
-                className="flex items-center gap-3 text-sm text-muted-foreground/80 tracking-wide"
+                variants={{
+                  hidden: { opacity: 0, y: 20, scale: 0.95 },
+                  visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 12 } },
+                }}
+                className="flex items-center gap-3 text-sm text-muted-foreground/80 tracking-wide glass rounded-lg px-4 py-3"
               >
-                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                  <Check size={12} className="text-primary" aria-hidden="true" />
+                <div className="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
+                  <Check size={13} className="text-primary" aria-hidden="true" />
                 </div>
                 {b}
               </motion.li>
             ))}
-          </ul>
+          </motion.ul>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}

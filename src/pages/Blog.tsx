@@ -118,7 +118,7 @@ const Blog = () => {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategoryChange(cat)}
                 className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${
                   activeCategory === cat
                     ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"

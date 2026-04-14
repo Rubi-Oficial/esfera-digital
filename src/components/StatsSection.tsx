@@ -1,10 +1,39 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
 const stats = [
-  { value: "+87", label: "Projetos Entregues" },
-  { value: "+52", label: "Empresas Atendidas" },
-  { value: "94%", label: "Satisfação" },
+  { value: 87, prefix: "+", suffix: "", label: "Projetos Entregues" },
+  { value: 52, prefix: "+", suffix: "", label: "Empresas Atendidas" },
+  { value: 94, prefix: "", suffix: "%", label: "Satisfação" },
 ];
+
+const CountUp = ({ end, prefix, suffix, duration = 2 }: { end: number; prefix: string; suffix: string; duration?: number }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  useEffect(() => {
+    if (!isInView) return;
+    let start = 0;
+    const step = Math.ceil(end / (duration * 60));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, 1000 / 60);
+    return () => clearInterval(timer);
+  }, [isInView, end, duration]);
+
+  return (
+    <span ref={ref} className="text-5xl md:text-6xl font-bold text-gradient">
+      {prefix}{count}{suffix}
+    </span>
+  );
+};
 
 const StatsSection = () => {
   return (
@@ -24,7 +53,7 @@ const StatsSection = () => {
                 transition={{ delay: i * 0.15 }}
                 className="text-center"
               >
-                <span className="text-5xl md:text-6xl font-bold text-gradient">{s.value}</span>
+                <CountUp end={s.value} prefix={s.prefix} suffix={s.suffix} />
                 <p className="text-muted-foreground mt-2 text-sm font-medium">{s.label}</p>
               </motion.div>
             ))}

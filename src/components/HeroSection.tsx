@@ -134,7 +134,8 @@ const HeroSection = () => {
                   hidden: { opacity: 0, y: 20, scale: 0.95 },
                   visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 12 } },
                 }}
-                className="flex items-center gap-3 text-sm text-muted-foreground/80 tracking-wide glass rounded-lg px-4 py-3"
+                whileHover={{ scale: 1.03, boxShadow: "0 0 20px hsl(43 70% 55% / 0.15)" }}
+                className="flex items-center gap-3 text-sm text-muted-foreground/80 tracking-wide glass-hover rounded-lg px-4 py-3 cursor-default"
               >
                 <div className="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                   <Check size={13} className="text-primary" aria-hidden="true" />

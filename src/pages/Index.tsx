@@ -29,7 +29,8 @@ const Index = () => {
       </main>
       <Footer />
       <WhatsAppButton />
-    </div>
+      </div>
+    </>
   );
 };
 

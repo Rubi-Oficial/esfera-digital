@@ -212,15 +212,13 @@ const PortfolioSection = () => {
                 role="list"
               >
                 {currentItems.map((project) => (
-                  <motion.a
+                  <motion.div
                     key={project.name}
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="group block rounded-2xl overflow-hidden border border-border/40 bg-card/50 backdrop-blur-sm hover:border-primary/40 hover:shadow-[0_0_30px_hsl(var(--primary)/0.1)] transition-all duration-500"
+                    onClick={() => { pauseAutoPlay(); setLightbox(project); }}
+                    className="group block rounded-2xl overflow-hidden border border-border/40 bg-card/50 backdrop-blur-sm hover:border-primary/40 hover:shadow-[0_0_30px_hsl(var(--primary)/0.1)] transition-all duration-500 cursor-pointer"
                     role="listitem"
                     aria-label={`${project.name} - ${project.desc}`}
                   >
@@ -228,10 +226,9 @@ const PortfolioSection = () => {
                       <PortfolioImage src={project.img} alt={project.name} />
                       <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-4">
                         <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg">
-                          <ExternalLink size={14} aria-hidden="true" /> Visitar Site
+                          <Eye size={14} aria-hidden="true" /> Ver Preview
                         </span>
                       </div>
-                      {/* Category badge */}
                       <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-xs font-medium text-primary border border-primary/20">
                         {project.cat}
                       </span>
@@ -240,7 +237,7 @@ const PortfolioSection = () => {
                       <h3 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{project.name}</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">{project.desc}</p>
                     </div>
-                  </motion.a>
+                  </motion.div>
                 ))}
               </motion.div>
             </AnimatePresence>

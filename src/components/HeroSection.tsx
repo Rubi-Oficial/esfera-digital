@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
+import heroImg from "@/assets/hero-workspace.jpg";
 
 const benefits = [
   "Presença digital estruturada desde o início",
@@ -20,14 +21,27 @@ const HeroSection = () => {
   const orbY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const dot1Y = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const dot2Y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const dot3Y = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
-      {/* Parallax background */}
-      <motion.div className="absolute inset-0" style={{ y: bgY, background: "var(--gradient-hero)" }} aria-hidden="true" />
+      {/* Hero background image with parallax */}
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background z-10" />
+        <motion.img
+          src={heroImg}
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover opacity-30"
+          style={{ scale: imgScale }}
+          width={1920}
+          height={1080}
+        />
+      </motion.div>
+
       <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px]" style={{ y: orbY }} aria-hidden="true" />
       <motion.div className="absolute top-20 right-20 w-2 h-2 rounded-full bg-primary animate-pulse-glow" style={{ y: dot1Y }} aria-hidden="true" />
       <motion.div className="absolute bottom-40 left-20 w-3 h-3 rounded-full bg-primary/60 animate-float" style={{ y: dot2Y }} aria-hidden="true" />

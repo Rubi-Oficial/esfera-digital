@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Target, Award, Sparkles, TrendingUp } from "lucide-react";
+import aboutImg from "@/assets/about-team.jpg";
 
 const focuses = [
   { icon: Target, label: "Posicionamento de marca", desc: "Identidade forte e diferenciada" },
@@ -42,9 +43,27 @@ const AboutSection = () => {
             <p className="text-muted-foreground mb-4 leading-relaxed text-lg">
               Somos especialistas em desenvolvimento de sites e soluções digitais integradas para empresas e profissionais que desejam crescer com consistência.
             </p>
-            <p className="text-muted-foreground leading-relaxed text-lg">
+            <p className="text-muted-foreground leading-relaxed text-lg mb-8">
               Atuamos como uma assessoria estratégica digital, construindo bases digitais preparadas para expansão e escala.
             </p>
+
+            {/* Team image */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="rounded-2xl overflow-hidden border border-border/40"
+            >
+              <img
+                src={aboutImg}
+                alt="Equipe da Esfera Digital colaborando em projetos de marketing e desenvolvimento web"
+                className="w-full h-auto object-cover"
+                loading="lazy"
+                width={800}
+                height={800}
+              />
+            </motion.div>
           </motion.div>
 
           <motion.div

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { MessageCircle } from "lucide-react";
+import { Rocket } from "lucide-react";
 import WhatsAppLink from "./ui/WhatsAppLink";
 import { WHATSAPP_MESSAGES } from "@/lib/constants";
 
@@ -45,7 +45,7 @@ const CTASection = () => {
               transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
               className="w-16 h-16 rounded-2xl bg-primary-foreground/10 flex items-center justify-center mx-auto mb-8"
             >
-              <MessageCircle size={28} className="text-primary-foreground" aria-hidden="true" />
+              <Rocket size={28} className="text-primary-foreground" aria-hidden="true" />
             </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -54,7 +54,7 @@ const CTASection = () => {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-3xl md:text-5xl font-bold text-primary-foreground mb-4 leading-tight"
             >
-              Se sua estrutura digital não vende,<br />ela precisa evoluir.
+              Seu próximo cliente está<br />pesquisando agora no Google.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 15 }}
@@ -63,7 +63,7 @@ const CTASection = () => {
               transition={{ delay: 0.5, duration: 0.5 }}
               className="text-primary-foreground/80 text-lg max-w-xl mx-auto mb-10 leading-relaxed"
             >
-              Cada dia sem uma presença digital estratégica é uma oportunidade perdida. Vamos estruturar sua marca com tecnologia, estratégia e visão de crescimento.
+              Cada dia sem um site profissional com I.A. é dinheiro deixado na mesa. Vamos construir sua máquina digital de vendas — com tecnologia, estratégia e resultados reais.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -77,7 +77,7 @@ const CTASection = () => {
                 ariaLabel="Garantir vaga via WhatsApp"
                 className="bg-primary-foreground text-primary hover:brightness-95 shadow-xl font-bold"
               >
-                Quero garantir minha vaga
+                Quero meu site com I.A. agora
               </WhatsAppLink>
             </motion.div>
           </div>

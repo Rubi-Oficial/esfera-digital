@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import WhatsAppLink from "./ui/WhatsAppLink";
 import { WHATSAPP_MESSAGES } from "@/lib/constants";
 import heroImg from "@/assets/hero-workspace.jpg";
 
 const benefits = [
-  "Sites institucionais profissionais e sob medida",
-  "Sistemas de I.A. integrados ao seu negócio",
-  "Automação inteligente e captação de leads",
+  "Sites institucionais sob medida para sua marca",
+  "Sistemas de I.A. que automatizam e vendem",
+  "Integração com WhatsApp, CRM e automações",
   "SEO estratégico para dominar o Google",
 ];
 
@@ -32,12 +32,12 @@ const HeroSection = () => {
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
       {/* Hero background image with parallax */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background z-10" />
         <motion.img
           src={heroImg}
           alt=""
           aria-hidden="true"
-          className="w-full h-full object-cover opacity-30"
+          className="w-full h-full object-cover opacity-40"
           style={{ scale: imgScale }}
           width={1920}
           height={1080}
@@ -60,10 +60,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-8"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-8 backdrop-blur-sm"
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
-            Sites Institucionais & Inteligência Artificial
+            Websites Institucionais & Sistemas de I.A.
           </motion.div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
@@ -71,7 +71,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Desenvolvemos sites profissionais de alta performance com inteligência artificial integrada — automação, atendimento inteligente e captação de clientes 24h por dia.
+            Criamos websites institucionais de alto impacto com inteligência artificial integrada — seu negócio funcionando, vendendo e atendendo <strong className="text-foreground">24 horas por dia</strong>.
           </p>
 
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-12" aria-label="Benefícios">
@@ -95,14 +95,22 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <WhatsAppLink
               message={WHATSAPP_MESSAGES.presenca}
               size="lg"
-              ariaLabel="Falar via WhatsApp para estruturar sua presença digital"
+              ariaLabel="Solicitar orçamento via WhatsApp"
             >
-              Quero estruturar minha presença digital
+              Solicitar Orçamento Gratuito
             </WhatsAppLink>
+            <a
+              href="#portfolio"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors group"
+            >
+              Ver portfólio
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+            </a>
           </motion.div>
         </motion.div>
       </motion.div>

@@ -5,10 +5,10 @@ import { staggerContainer, fadeInUpRotate } from "@/lib/animations";
 import aboutImg from "@/assets/about-team.jpg";
 
 const focuses = [
-  { icon: Target, label: "Posicionamento de marca", desc: "Identidade forte e diferenciada" },
-  { icon: Award, label: "Autoridade online", desc: "Credibilidade que converte" },
-  { icon: Sparkles, label: "Experiência do usuário", desc: "Design pensado para o cliente" },
-  { icon: TrendingUp, label: "Conversão de visitantes", desc: "Visitantes se tornam clientes" },
+  { icon: Target, label: "Posicionamento de Marca", desc: "Identidade forte que diferencia e posiciona", stat: "+87" },
+  { icon: Award, label: "Autoridade Digital", desc: "Credibilidade que gera confiança e vendas", stat: "94%" },
+  { icon: Sparkles, label: "Experiência Premium", desc: "Design pensado para encantar e converter", stat: "5★" },
+  { icon: TrendingUp, label: "Crescimento Real", desc: "Estratégia que escala com seu negócio", stat: "3x" },
 ];
 
 const AboutSection = () => {
@@ -30,10 +30,10 @@ const AboutSection = () => {
               className="text-left mb-6"
             />
             <p className="text-muted-foreground mb-4 leading-relaxed text-lg">
-              Somos especialistas em desenvolvimento de sites e soluções digitais integradas para empresas e profissionais que desejam crescer com consistência.
+              Somos especialistas em <strong className="text-foreground">websites institucionais</strong> e <strong className="text-foreground">sistemas de inteligência artificial</strong> para empresas que querem crescer de verdade no digital.
             </p>
             <p className="text-muted-foreground leading-relaxed text-lg mb-8">
-              Atuamos como uma assessoria estratégica digital, construindo bases digitais preparadas para expansão e escala.
+              Atuamos como parceiros estratégicos — não apenas entregamos um site, construímos uma <strong className="text-foreground">máquina digital de vendas</strong> com tecnologia de ponta e foco em resultados mensuráveis.
             </p>
 
             <motion.div
@@ -41,15 +41,15 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="rounded-2xl overflow-hidden border border-border/40"
+              className="rounded-2xl overflow-hidden border border-border/40 shadow-2xl"
             >
               <img
                 src={aboutImg}
-                alt="Equipe da Esfera Digital colaborando em projetos de marketing e desenvolvimento web"
+                alt="Equipe da Esfera Digital colaborando em projetos de websites e I.A."
                 className="w-full h-auto object-cover"
                 loading="lazy"
-                width={800}
-                height={800}
+                width={1024}
+                height={1024}
               />
             </motion.div>
           </motion.div>
@@ -65,13 +65,18 @@ const AboutSection = () => {
               <motion.div
                 key={i}
                 variants={fadeInUpRotate}
-                className="glass-hover rounded-2xl p-6 text-center group"
+                className="glass-hover rounded-2xl p-6 text-center group relative overflow-hidden"
               >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <f.icon size={24} className="text-primary" aria-hidden="true" />
+                <div className="absolute top-3 right-3 text-2xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors" aria-hidden="true">
+                  {f.stat}
                 </div>
-                <p className="font-semibold text-secondary-foreground mb-1">{f.label}</p>
-                <p className="text-xs text-muted-foreground">{f.desc}</p>
+                <div className="relative z-10">
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <f.icon size={24} className="text-primary" aria-hidden="true" />
+                  </div>
+                  <p className="font-semibold text-secondary-foreground mb-1">{f.label}</p>
+                  <p className="text-xs text-muted-foreground">{f.desc}</p>
+                </div>
               </motion.div>
             ))}
           </motion.div>

@@ -13,9 +13,10 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
       {/* Background effects */}
       <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} aria-hidden="true" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" aria-hidden="true" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px]" aria-hidden="true" />
       <div className="absolute top-20 right-20 w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
       <div className="absolute bottom-40 left-20 w-3 h-3 rounded-full bg-primary/60 animate-float" aria-hidden="true" />
+      <div className="absolute top-1/3 right-1/4 w-1 h-1 rounded-full bg-primary/40 animate-pulse-glow" aria-hidden="true" />
 
       <div className="container relative z-10 px-4 md:px-8 py-20">
         <motion.div
@@ -40,20 +41,22 @@ const HeroSection = () => {
             que cresce e vende junto com você.
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
             Desenvolvemos sites profissionais e soluções digitais integradas para empresas que desejam posicionamento sólido, autoridade e geração contínua de clientes.
           </p>
 
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto mb-10" aria-label="Benefícios">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-12" aria-label="Benefícios">
             {benefits.map((b, i) => (
               <motion.li
                 key={i}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
-                className="flex items-center gap-2 text-sm text-muted-foreground"
+                className="flex items-center gap-3 text-sm text-muted-foreground"
               >
-                <Check size={16} className="text-primary shrink-0" aria-hidden="true" />
+                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <Check size={12} className="text-primary" aria-hidden="true" />
+                </div>
                 {b}
               </motion.li>
             ))}

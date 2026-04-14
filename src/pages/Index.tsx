@@ -12,15 +12,18 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <a href="#solucoes" className="skip-link">Pular para o conteúdo principal</a>
       <Navbar />
-      <HeroSection />
-      <ProblemSection />
-      <AboutSection />
-      <MethodologySection />
-      <PortfolioSection />
-      <StatsSection />
-      <PricingSection />
-      <CTASection />
+      <main>
+        <HeroSection />
+        <ProblemSection />
+        <AboutSection />
+        <MethodologySection />
+        <PortfolioSection />
+        <StatsSection />
+        <PricingSection />
+        <CTASection />
+      </main>
       <Footer />
     </div>
   );

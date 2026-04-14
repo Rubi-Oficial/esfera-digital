@@ -37,9 +37,11 @@
     --radius: 0.75rem;
 
     --glow-primary: 0 0 60px hsl(43 70% 55% / 0.15);
+    --glow-primary-strong: 0 0 80px hsl(43 70% 55% / 0.25), 0 0 120px hsl(43 70% 55% / 0.1);
     --gradient-hero: linear-gradient(135deg, hsl(220 20% 7%) 0%, hsl(225 25% 12%) 50%, hsl(220 20% 7%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(220 18% 12%) 0%, hsl(220 18% 8%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(43 70% 55%) 0%, hsl(35 80% 45%) 100%);
+    --gradient-card-hover: linear-gradient(145deg, hsl(220 18% 14%) 0%, hsl(220 18% 10%) 100%);
 
     --sidebar-background: 220 18% 10%;
     --sidebar-foreground: 210 20% 85%;
@@ -57,12 +59,31 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground font-body antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+  }
+
+  /* Skip link for accessibility */
+  .skip-link {
+    @apply absolute -top-10 left-4 z-[100] px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold text-sm;
+    transition: top 0.2s;
+  }
+  .skip-link:focus {
+    @apply top-4;
+  }
+
+  /* Better focus styles */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+    outline-style: solid;
   }
 }
 
@@ -76,7 +97,31 @@
     box-shadow: var(--glow-primary);
   }
 
+  .glow-box-strong {
+    box-shadow: var(--glow-primary-strong);
+  }
+
   .glass {
     @apply bg-card/60 backdrop-blur-xl border border-border/50;
+  }
+
+  .glass-hover {
+    @apply glass transition-all duration-300;
+  }
+  .glass-hover:hover {
+    @apply border-primary/30 bg-card/80;
+    box-shadow: var(--glow-primary);
+  }
+
+  .section-padding {
+    @apply py-24 md:py-32;
+  }
+
+  .section-divider {
+    @apply relative;
+  }
+  .section-divider::before {
+    content: '';
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent;
   }
 }

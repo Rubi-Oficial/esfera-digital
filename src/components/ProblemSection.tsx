@@ -2,15 +2,15 @@ import { motion } from "framer-motion";
 import { AlertTriangle, TrendingDown, Users, Shield } from "lucide-react";
 
 const problems = [
-  { icon: Shield, text: "Sua marca perde credibilidade" },
-  { icon: Users, text: "Você depende exclusivamente de plataformas de terceiros" },
-  { icon: TrendingDown, text: "Oportunidades são desperdiçadas" },
-  { icon: AlertTriangle, text: "A concorrência ocupa o espaço que poderia ser seu" },
+  { icon: Shield, text: "Sua marca perde credibilidade sem presença digital própria", detail: "Clientes buscam no Google antes de confiar em qualquer empresa." },
+  { icon: Users, text: "Dependência total de plataformas de terceiros", detail: "Redes sociais mudam algoritmos — e seu alcance despenca." },
+  { icon: TrendingDown, text: "Oportunidades são desperdiçadas diariamente", detail: "Sem site, você perde clientes para concorrentes que investem." },
+  { icon: AlertTriangle, text: "A concorrência ocupa o espaço que deveria ser seu", detail: "Quem aparece primeiro no Google leva a maioria dos contatos." },
 ];
 
 const ProblemSection = () => {
   return (
-    <section id="solucoes" className="py-24 relative">
+    <section id="solucoes" className="section-padding section-divider relative" aria-labelledby="problem-heading">
       <div className="container px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -18,16 +18,17 @@ const ProblemSection = () => {
           viewport={{ once: true }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">O Problema</span>
+          <h2 id="problem-heading" className="text-3xl md:text-5xl font-bold mb-6">
             Estar online <span className="text-gradient">não é suficiente.</span><br />
             É preciso ter estratégia.
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg leading-relaxed">
             Muitas empresas possuem redes sociais, mas não têm uma estrutura digital própria que transmita autoridade e gere oportunidades reais.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
           {problems.map((p, i) => (
             <motion.div
               key={i}
@@ -35,12 +36,15 @@ const ProblemSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="glass rounded-xl p-6 flex items-start gap-4 group hover:border-primary/30 transition-colors"
+              className="glass-hover rounded-2xl p-6 flex items-start gap-4 group"
             >
-              <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
-                <p.icon size={20} className="text-destructive" />
+              <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center shrink-0 group-hover:bg-destructive/20 transition-colors">
+                <p.icon size={22} className="text-destructive" aria-hidden="true" />
               </div>
-              <p className="text-secondary-foreground font-medium">{p.text}</p>
+              <div>
+                <p className="text-secondary-foreground font-semibold mb-1">{p.text}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{p.detail}</p>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -49,9 +53,9 @@ const ProblemSection = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center text-muted-foreground mt-10 max-w-xl mx-auto"
+          className="text-center text-muted-foreground mt-12 max-w-xl mx-auto text-lg"
         >
-          Presença digital precisa ser planejada como <span className="text-foreground font-medium">ativo estratégico</span> — não como improviso.
+          Presença digital precisa ser planejada como <span className="text-foreground font-semibold">ativo estratégico</span> — não como improviso.
         </motion.p>
       </div>
     </section>

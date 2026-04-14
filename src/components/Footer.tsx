@@ -9,20 +9,20 @@ const footerLinks = [
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border py-10" role="contentinfo">
+    <footer className="border-t border-border/50 py-12" role="contentinfo">
       <div className="container px-4 md:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <a href="#" aria-label="Voltar ao topo - Esfera Soluções Digitais">
-            <img src={logo} alt="Esfera Soluções Digitais - Logotipo" className="h-8" width="120" height="32" />
+            <img src={logo} alt="Esfera Soluções Digitais - Logotipo" className="h-8 opacity-80 hover:opacity-100 transition-opacity" width="120" height="32" />
           </a>
 
           <nav aria-label="Links do rodapé">
-            <ul className="flex flex-wrap items-center justify-center gap-6">
+            <ul className="flex flex-wrap items-center justify-center gap-8">
               {footerLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {link.label}
                   </a>
@@ -32,7 +32,7 @@ const Footer = () => {
           </nav>
 
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Esfera Soluções Digitais. Todos os direitos reservados.
+            © {new Date().getFullYear()} Esfera Soluções Digitais
           </p>
         </div>
       </div>

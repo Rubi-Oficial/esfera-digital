@@ -8,6 +8,16 @@ import blogAnalytics from "@/assets/blog-analytics.jpg";
 import blogSocialMedia from "@/assets/blog-social-media.jpg";
 import blogEmail from "@/assets/blog-email.jpg";
 import blogPaidTraffic from "@/assets/blog-paid-traffic.jpg";
+import blogSiteMedicos from "@/assets/blog-site-medicos.jpg";
+import blogSiteAdvogados from "@/assets/blog-site-advogados.jpg";
+import blogSiteAgronomos from "@/assets/blog-site-agronomos.jpg";
+import blogSiteSiderurgicas from "@/assets/blog-site-siderurgicas.jpg";
+import blogSiteCannabis from "@/assets/blog-site-cannabis.jpg";
+import blogLandingProjetos from "@/assets/blog-landing-projetos.jpg";
+import blogSitePousadas from "@/assets/blog-site-pousadas.jpg";
+import blogSiteRestaurantes from "@/assets/blog-site-restaurantes.jpg";
+import blogSiteDentistas from "@/assets/blog-site-dentistas.jpg";
+import blogSiteImobiliarias from "@/assets/blog-site-imobiliarias.jpg";
 
 export interface BlogArticle {
   slug: string;

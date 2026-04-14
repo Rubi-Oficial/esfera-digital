@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Briefcase, Building2, ThumbsUp } from "lucide-react";
+import SectionHeader from "./ui/SectionHeader";
+import { staggerContainer, fadeInScale } from "@/lib/animations";
 
 const stats = [
   { value: 87, prefix: "+", suffix: "", label: "Projetos Entregues", icon: Briefcase },
@@ -36,21 +38,6 @@ const CountUp = ({ end, prefix, suffix, duration = 2 }: { end: number; prefix: s
   );
 };
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.2, delayChildren: 0.3 },
-  },
-};
-
-const statVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.9 },
-  visible: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring" as const, stiffness: 80, damping: 14 },
-  },
-};
-
 const StatsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -62,7 +49,6 @@ const StatsSection = () => {
 
   return (
     <section ref={sectionRef} className="py-20 md:py-28 relative overflow-hidden" aria-labelledby="stats-heading">
-      {/* Parallax background glow */}
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none"
         style={{ y: bgY }}
@@ -82,18 +68,14 @@ const StatsSection = () => {
               Números <span className="text-gradient">Reais</span>
             </h2>
             <motion.div
-              variants={containerVariants}
+              variants={staggerContainer(0.2, 0.3)}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
               className="grid grid-cols-1 md:grid-cols-3 gap-10"
             >
               {stats.map((s, i) => (
-                <motion.div
-                  key={i}
-                  variants={statVariants}
-                  className="text-center group"
-                >
+                <motion.div key={i} variants={fadeInScale} className="text-center group">
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/20 transition-colors">
                     <s.icon size={24} className="text-primary" aria-hidden="true" />
                   </div>

@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight, TrendingUp, Search, Palette, Megaphone, Code, BarChart3 } from "lucide-react";
+import blogMarketing from "@/assets/blog-marketing.jpg";
+import blogSeo from "@/assets/blog-seo.jpg";
+import blogDesign from "@/assets/blog-design.jpg";
+import blogStrategy from "@/assets/blog-strategy.jpg";
+import blogCode from "@/assets/blog-code.jpg";
+import blogAnalytics from "@/assets/blog-analytics.jpg";
 
 const articles = [
   {
@@ -9,6 +15,7 @@ const articles = [
     icon: TrendingUp,
     readTime: "5 min",
     date: "10 Abr 2026",
+    image: blogMarketing,
     href: "https://wa.me/5548991061707?text=Olá, quero saber mais sobre criação de sites profissionais",
   },
   {
@@ -18,6 +25,7 @@ const articles = [
     icon: Search,
     readTime: "8 min",
     date: "05 Abr 2026",
+    image: blogSeo,
     href: "https://wa.me/5548991061707?text=Olá, quero saber mais sobre SEO para minha empresa",
   },
   {
@@ -27,6 +35,7 @@ const articles = [
     icon: Palette,
     readTime: "6 min",
     date: "28 Mar 2026",
+    image: blogDesign,
     href: "https://wa.me/5548991061707?text=Olá, quero um site com design que converte",
   },
   {
@@ -36,6 +45,7 @@ const articles = [
     icon: Megaphone,
     readTime: "7 min",
     date: "20 Mar 2026",
+    image: blogStrategy,
     href: "https://wa.me/5548991061707?text=Olá, quero começar no marketing digital",
   },
   {
@@ -45,6 +55,7 @@ const articles = [
     icon: Code,
     readTime: "4 min",
     date: "15 Mar 2026",
+    image: blogCode,
     href: "https://wa.me/5548991061707?text=Olá, quero entender a diferença entre landing page e site",
   },
   {
@@ -54,6 +65,7 @@ const articles = [
     icon: BarChart3,
     readTime: "6 min",
     date: "08 Mar 2026",
+    image: blogAnalytics,
     href: "https://wa.me/5548991061707?text=Olá, quero entender o ROI do meu site",
   },
 ];
@@ -112,21 +124,30 @@ const BlogSection = () => {
               href={article.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative rounded-2xl border border-border/60 bg-card p-6 hover:border-primary/30 transition-colors duration-300 flex flex-col"
+              className="group relative rounded-2xl border border-border/60 bg-card overflow-hidden hover:border-primary/30 transition-colors duration-300 flex flex-col"
               aria-label={`${article.title} - ${article.category}`}
             >
+              {/* Thumbnail */}
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img
+                  src={article.image}
+                  alt={`Ilustração sobre ${article.category} - ${article.title}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  width={800}
+                  height={512}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-background/80 backdrop-blur-sm text-primary text-xs font-medium border border-primary/20">
+                  <article.icon size={12} aria-hidden="true" />
+                  {article.category}
+                </span>
+              </div>
+
               {/* Hover glow */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06),transparent_70%)] pointer-events-none" aria-hidden="true" />
 
-              <div className="relative z-10 flex flex-col flex-1">
-                {/* Category & Meta */}
-                <div className="flex items-center justify-between mb-4">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
-                    <article.icon size={12} aria-hidden="true" />
-                    {article.category}
-                  </span>
-                </div>
-
+              <div className="relative z-10 flex flex-col flex-1 p-6">
                 {/* Title */}
                 <h3 className="font-bold text-foreground mb-3 leading-snug group-hover:text-primary transition-colors duration-300">
                   {article.title}

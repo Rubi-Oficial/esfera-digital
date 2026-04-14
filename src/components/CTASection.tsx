@@ -18,7 +18,7 @@ const CTASection = () => {
   return (
     <section ref={sectionRef} className="section-padding relative overflow-hidden" aria-label="Chamada para ação">
       <motion.div
-        className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[140px] pointer-events-none"
+        className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.08] blur-[140px] pointer-events-none"
         style={{ y: bgY, scale: glowScale }}
         aria-hidden="true"
       />

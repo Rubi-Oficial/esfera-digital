@@ -26,6 +26,16 @@ const projects = [
 ];
 
 const PortfolioImage = ({ src, alt }: { src: string; alt: string }) => {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-secondary text-muted-foreground text-sm font-medium">
+        {alt}
+      </div>
+    );
+  }
+
   return (
     <img
       src={src}
@@ -34,17 +44,7 @@ const PortfolioImage = ({ src, alt }: { src: string; alt: string }) => {
       width="600"
       height="400"
       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-      onError={(e) => {
-        const target = e.currentTarget;
-        target.style.display = "none";
-        const parent = target.parentElement;
-        if (parent) {
-          const fallback = document.createElement("div");
-          fallback.className = "w-full h-full flex items-center justify-center bg-secondary text-muted-foreground text-sm font-medium";
-          fallback.textContent = alt;
-          parent.prepend(fallback);
-        }
-      }}
+      onError={() => setFailed(true)}
     />
   );
 };

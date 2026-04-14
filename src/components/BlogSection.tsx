@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight, TrendingUp, Search, Palette, Megaphone, Code, BarChart3 } from "lucide-react";
+import { whatsappUrl } from "@/lib/constants";
 import SectionHeader from "./ui/SectionHeader";
 import WhatsAppLink from "./ui/WhatsAppLink";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
@@ -28,7 +29,7 @@ const BlogCard = ({ article }: BlogCardProps) => (
   <motion.a
     variants={fadeInUp}
     whileHover={{ y: -6, transition: { duration: 0.25 } }}
-    href={`https://wa.me/5548991061707?text=${encodeURIComponent(article.message)}`}
+    href={whatsappUrl(article.message)}
     target="_blank"
     rel="noopener noreferrer"
     className="group relative rounded-2xl border border-border/60 bg-card overflow-hidden hover:border-primary/30 transition-colors duration-300 flex flex-col"

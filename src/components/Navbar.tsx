@@ -24,9 +24,11 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      const target = e.target as HTMLAnchorElement;
-      if (target.tagName === "A" && target.hash?.startsWith("#")) {
-        const el = document.querySelector(target.hash);
+      const target = (e.target as HTMLElement).closest("a") as HTMLAnchorElement | null;
+      if (!target) return;
+      const href = target.getAttribute("href");
+      if (href?.startsWith("#") && href.length > 1) {
+        const el = document.querySelector(href);
         if (el) {
           e.preventDefault();
           el.scrollIntoView({ behavior: "smooth" });

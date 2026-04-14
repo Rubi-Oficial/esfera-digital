@@ -64,6 +64,7 @@ const ARTICLES_PER_PAGE = 9;
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState<string>("Todos");
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(blogArticles.map((a) => a.category)));
@@ -71,9 +72,27 @@ const Blog = () => {
   }, []);
 
   const filteredArticles = useMemo(() => {
-    if (activeCategory === "Todos") return blogArticles;
-    return blogArticles.filter((a) => a.category === activeCategory);
-  }, [activeCategory]);
+    let articles = blogArticles;
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      articles = articles.filter(
+        (a) =>
+          a.title.toLowerCase().includes(query) ||
+          a.excerpt.toLowerCase().includes(query) ||
+          a.category.toLowerCase().includes(query) ||
+          a.content.some((p) => p.toLowerCase().includes(query))
+      );
+    }
+
+    // Filter by category
+    if (activeCategory !== "Todos") {
+      articles = articles.filter((a) => a.category === activeCategory);
+    }
+
+    return articles;
+  }, [activeCategory, searchQuery]);
 
   const totalPages = Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE);
 

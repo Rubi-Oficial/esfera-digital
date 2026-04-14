@@ -1,13 +1,10 @@
 import { MessageCircle } from "lucide-react";
+import { whatsappUrl, WHATSAPP_MESSAGES } from "@/lib/constants";
 
 const WhatsAppButton = () => {
-  const message = encodeURIComponent(
-    "Olá, acessei o site da Esfera Digital e gostaria de mais informações sobre websites que aparecem nas pesquisas do google..."
-  );
-
   return (
     <a
-      href={`https://wa.me/5548991061707?text=${message}`}
+      href={whatsappUrl(WHATSAPP_MESSAGES.info)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar conosco pelo WhatsApp"

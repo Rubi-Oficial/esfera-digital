@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, ChevronLeft, ChevronRight, X, Maximize2, Eye } from "lucide-react";
 
 import imgPousada from "@/assets/portfolio/pousada-rosa.jpg";
 import imgHemptech from "@/assets/portfolio/hemptech.jpg";
@@ -74,6 +74,7 @@ const PortfolioSection = () => {
   const [active, setActive] = useState("Todos");
   const [page, setPage] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [lightbox, setLightbox] = useState<typeof projects[number] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 

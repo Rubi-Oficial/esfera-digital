@@ -75,6 +75,7 @@ const PortfolioSection = () => {
   const [page, setPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [lightbox, setLightbox] = useState<typeof projects[number] | null>(null);
+  const [lbDirection, setLbDirection] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 

@@ -6,10 +6,10 @@ import { WHATSAPP_MESSAGES } from "@/lib/constants";
 import heroImg from "@/assets/hero-workspace.jpg";
 
 const benefits = [
-  "Presença digital estruturada desde o início",
-  "Sites pensados para conversão",
-  "Integração com WhatsApp e captação de leads",
-  "SEO estratégico para ser encontrado no Google",
+  "Sites institucionais profissionais e sob medida",
+  "Sistemas de I.A. integrados ao seu negócio",
+  "Automação inteligente e captação de leads",
+  "SEO estratégico para dominar o Google",
 ];
 
 const HeroSection = () => {
@@ -63,17 +63,19 @@ const HeroSection = () => {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
-            Atendimento Consultivo e Projetos Personalizados
+            Sites Institucionais & Inteligência Artificial
           </motion.div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
-            Mais do que uma agência digital:{" "}
-            <span className="text-gradient">uma estrutura estratégica</span>{" "}
-            que cresce e vende junto com você.
+            Criamos{" "}
+            <span className="text-gradient">websites institucionais</span>{" "}
+            com sistemas de{" "}
+            <span className="text-gradient">I.A. integrados</span>{" "}
+            que vendem por você.
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Desenvolvemos sites profissionais e soluções digitais integradas para empresas que desejam posicionamento sólido, autoridade e geração contínua de clientes.
+            Desenvolvemos sites profissionais de alta performance com inteligência artificial integrada — automação, atendimento inteligente e captação de clientes 24h por dia.
           </p>
 
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-12" aria-label="Benefícios">

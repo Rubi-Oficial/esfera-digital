@@ -1,10 +1,11 @@
 import AnimatedLogo from "./AnimatedLogo";
 
 const footerLinks = [
-  { label: "Soluções", href: "#solucoes" },
-  { label: "Metodologia", href: "#metodologia" },
-  { label: "Portfólio", href: "#portfolio" },
-  { label: "Planos", href: "#planos" },
+  { label: "Soluções Digitais", href: "#solucoes", title: "Conheça nossas soluções digitais para empresas" },
+  { label: "Metodologia", href: "#metodologia", title: "Nossa metodologia estratégica de 5 etapas" },
+  { label: "Portfólio", href: "#portfolio", title: "Projetos de sites profissionais desenvolvidos" },
+  { label: "Planos e Preços", href: "#planos", title: "Planos de criação de sites a partir de R$ 2.000" },
+  { label: "Depoimentos", href: "#depoimentos", title: "O que nossos clientes dizem sobre nosso trabalho" },
 ];
 
 const Footer = () => {
@@ -22,6 +23,7 @@ const Footer = () => {
                 <li key={link.href}>
                   <a
                     href={link.href}
+                    title={link.title}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {link.label}

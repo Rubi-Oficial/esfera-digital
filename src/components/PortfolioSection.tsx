@@ -75,6 +75,7 @@ const PortfolioSection = () => {
   const [page, setPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [lightbox, setLightbox] = useState<typeof projects[number] | null>(null);
+  const [lbDirection, setLbDirection] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -278,24 +279,13 @@ const PortfolioSection = () => {
           const lightboxIndex = filtered.findIndex((p) => p.name === lightbox.name);
           const hasPrev = lightboxIndex > 0;
           const hasNext = lightboxIndex < filtered.length - 1;
-          const goPrev = () => { if (hasPrev) setLightbox(filtered[lightboxIndex - 1]); };
-          const goNext = () => { if (hasNext) setLightbox(filtered[lightboxIndex + 1]); };
+          const goPrev = () => { if (hasPrev) { setLbDirection(-1); setLightbox(filtered[lightboxIndex - 1]); } };
+          const goNext = () => { if (hasNext) { setLbDirection(1); setLightbox(filtered[lightboxIndex + 1]); } };
 
-          let touchStartX = 0;
-          let touchStartY = 0;
-
-          const handleTouchStart = (e: React.TouchEvent) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-          };
-
-          const handleTouchEnd = (e: React.TouchEvent) => {
-            const dx = e.changedTouches[0].clientX - touchStartX;
-            const dy = e.changedTouches[0].clientY - touchStartY;
-            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-              if (dx < 0) goNext();
-              else goPrev();
-            }
+          const lbSlideVariants = {
+            enter: (d: number) => ({ x: d >= 0 ? 250 : -250, opacity: 0, scale: 0.92 }),
+            center: { x: 0, opacity: 1, scale: 1 },
+            exit: (d: number) => ({ x: d >= 0 ? -250 : 250, opacity: 0, scale: 0.92 }),
           };
 
           return (
@@ -312,8 +302,6 @@ const PortfolioSection = () => {
                 else if (e.key === "ArrowRight") goNext();
                 else if (e.key === "Escape") { setLightbox(null); resumeAutoPlay(); }
               }}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
               tabIndex={0}
               role="dialog"
               aria-modal="true"
@@ -343,15 +331,25 @@ const PortfolioSection = () => {
                 </button>
               )}
 
-              {/* Content */}
-              <AnimatePresence mode="wait">
+              {/* Content with drag */}
+              <AnimatePresence mode="wait" custom={lbDirection}>
                 <motion.div
                   key={lightbox.name}
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.95, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="relative z-10 w-full max-w-4xl rounded-3xl overflow-hidden border border-border/50 bg-card shadow-2xl"
+                  custom={lbDirection}
+                  variants={lbSlideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.18}
+                  onDragEnd={(_e, info) => {
+                    const threshold = 80;
+                    if (info.offset.x < -threshold && hasNext) goNext();
+                    else if (info.offset.x > threshold && hasPrev) goPrev();
+                  }}
+                  className="relative z-10 w-full max-w-4xl rounded-3xl overflow-hidden border border-border/50 bg-card shadow-2xl cursor-grab active:cursor-grabbing"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
@@ -371,9 +369,10 @@ const PortfolioSection = () => {
                     <img
                       src={lightbox.img}
                       alt={`Preview do site ${lightbox.name}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover pointer-events-none"
                       width={800}
                       height={512}
+                      draggable={false}
                     />
                     <span className="absolute top-4 left-4 px-4 py-1.5 rounded-full bg-background/70 backdrop-blur-md text-sm font-medium text-primary border border-primary/20">
                       {lightbox.cat}

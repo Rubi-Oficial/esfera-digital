@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Clock, ArrowRight, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -9,7 +10,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const BlogCard = ({ article }: { article: BlogArticle }) => (
-  <motion.div variants={fadeInUp}>
+  <motion.div variants={fadeInUp} layout>
     <Link
       to={`/blog/${article.slug}`}
       className="group relative rounded-2xl border border-border/60 bg-card overflow-hidden hover:border-primary/30 transition-colors duration-300 flex flex-col h-full block"
@@ -59,6 +60,18 @@ const BlogCard = ({ article }: { article: BlogArticle }) => (
 );
 
 const Blog = () => {
+  const [activeCategory, setActiveCategory] = useState<string>("Todos");
+
+  const categories = useMemo(() => {
+    const cats = Array.from(new Set(blogArticles.map((a) => a.category)));
+    return ["Todos", ...cats];
+  }, []);
+
+  const filteredArticles = useMemo(() => {
+    if (activeCategory === "Todos") return blogArticles;
+    return blogArticles.filter((a) => a.category === activeCategory);
+  }, [activeCategory]);
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -81,16 +94,46 @@ const Blog = () => {
             subtitle="Conteúdo prático e estratégico sobre marketing digital, SEO, design e desenvolvimento web para impulsionar seu negócio."
           />
 
-          <motion.div
-            variants={staggerContainer(0.1, 0.2)}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
-          >
-            {blogArticles.map((article) => (
-              <BlogCard key={article.slug} article={article} />
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10 max-w-4xl mx-auto">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${
+                  activeCategory === cat
+                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
+                    : "bg-card border-border/60 text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                }`}
+              >
+                {cat}
+                {cat === "Todos" && (
+                  <span className="ml-1.5 text-xs opacity-70">({blogArticles.length})</span>
+                )}
+              </button>
             ))}
-          </motion.div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              variants={staggerContainer(0.05, 0.1)}
+              initial="hidden"
+              animate="visible"
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+            >
+              {filteredArticles.map((article) => (
+                <BlogCard key={article.slug} article={article} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          {filteredArticles.length === 0 && (
+            <p className="text-center text-muted-foreground mt-12">
+              Nenhum artigo encontrado nesta categoria.
+            </p>
+          )}
         </div>
       </main>
       <Footer />

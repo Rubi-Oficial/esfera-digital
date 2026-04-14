@@ -8,14 +8,30 @@ const problems = [
   { icon: AlertTriangle, text: "A concorrência ocupa o espaço que deveria ser seu", detail: "Quem aparece primeiro no Google leva a maioria dos contatos." },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: {
+    opacity: 1, y: 0, scale: 1,
+    transition: { type: "spring" as const, stiffness: 100, damping: 15 },
+  },
+};
+
 const ProblemSection = () => {
   return (
     <section id="solucoes" className="section-padding section-divider relative" aria-labelledby="problem-heading">
       <div className="container px-4 md:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">O Problema</span>
@@ -28,14 +44,17 @@ const ProblemSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto"
+        >
           {problems.map((p, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              variants={cardVariants}
               className="glass-hover rounded-2xl p-6 flex items-start gap-4 group"
             >
               <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center shrink-0 group-hover:bg-destructive/20 transition-colors">
@@ -47,12 +66,13 @@ const ProblemSection = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ delay: 0.6, duration: 0.5 }}
           className="text-center text-muted-foreground mt-12 max-w-xl mx-auto text-lg"
         >
           Presença digital precisa ser planejada como <span className="text-foreground font-semibold">ativo estratégico</span> — não como improviso.

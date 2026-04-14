@@ -36,24 +36,48 @@ const CountUp = ({ end, prefix, suffix, duration = 2 }: { end: number; prefix: s
   );
 };
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.2, delayChildren: 0.3 },
+  },
+};
+
+const statVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.9 },
+  visible: {
+    opacity: 1, y: 0, scale: 1,
+    transition: { type: "spring" as const, stiffness: 80, damping: 14 },
+  },
+};
+
 const StatsSection = () => {
   return (
     <section className="py-20 md:py-28" aria-labelledby="stats-heading">
       <div className="container px-4 md:px-8">
-        <div className="glass rounded-3xl p-10 md:p-16 glow-box-strong relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="glass rounded-3xl p-10 md:p-16 glow-box-strong relative overflow-hidden"
+        >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5" aria-hidden="true" />
           <div className="relative z-10">
             <h2 id="stats-heading" className="text-3xl md:text-4xl font-bold text-center mb-14">
               Números <span className="text-gradient">Reais</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-10"
+            >
               {stats.map((s, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 }}
+                  variants={statVariants}
                   className="text-center group"
                 >
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/20 transition-colors">
@@ -63,9 +87,9 @@ const StatsSection = () => {
                   <p className="text-muted-foreground mt-3 text-sm font-medium">{s.label}</p>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

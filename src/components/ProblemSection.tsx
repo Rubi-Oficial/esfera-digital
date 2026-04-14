@@ -1,0 +1,61 @@
+import { motion } from "framer-motion";
+import { AlertTriangle, TrendingDown, Users, Shield } from "lucide-react";
+
+const problems = [
+  { icon: Shield, text: "Sua marca perde credibilidade" },
+  { icon: Users, text: "Você depende exclusivamente de plataformas de terceiros" },
+  { icon: TrendingDown, text: "Oportunidades são desperdiçadas" },
+  { icon: AlertTriangle, text: "A concorrência ocupa o espaço que poderia ser seu" },
+];
+
+const ProblemSection = () => {
+  return (
+    <section id="solucoes" className="py-24 relative">
+      <div className="container px-4 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            Estar online <span className="text-gradient">não é suficiente.</span><br />
+            É preciso ter estratégia.
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Muitas empresas possuem redes sociais, mas não têm uma estrutura digital própria que transmita autoridade e gere oportunidades reais.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+          {problems.map((p, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="glass rounded-xl p-6 flex items-start gap-4 group hover:border-primary/30 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
+                <p.icon size={20} className="text-destructive" />
+              </div>
+              <p className="text-secondary-foreground font-medium">{p.text}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-muted-foreground mt-10 max-w-xl mx-auto"
+        >
+          Presença digital precisa ser planejada como <span className="text-foreground font-medium">ativo estratégico</span> — não como improviso.
+        </motion.p>
+      </div>
+    </section>
+  );
+};
+
+export default ProblemSection;

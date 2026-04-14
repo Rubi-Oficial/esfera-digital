@@ -8,6 +8,21 @@ const focuses = [
   { icon: TrendingUp, label: "Conversão de visitantes", desc: "Visitantes se tornam clientes" },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.3 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, rotateX: 15 },
+  visible: {
+    opacity: 1, y: 0, rotateX: 0,
+    transition: { type: "spring", stiffness: 80, damping: 14 },
+  },
+};
+
 const AboutSection = () => {
   return (
     <section className="section-padding relative" aria-labelledby="about-heading">
@@ -15,9 +30,10 @@ const AboutSection = () => {
       <div className="container relative px-4 md:px-8">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">Quem Somos</span>
             <h2 id="about-heading" className="text-3xl md:text-5xl font-bold mb-6">
@@ -31,14 +47,17 @@ const AboutSection = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="grid grid-cols-2 gap-4"
+          >
             {focuses.map((f, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                variants={cardVariants}
                 className="glass-hover rounded-2xl p-6 text-center group"
               >
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
@@ -48,7 +67,7 @@ const AboutSection = () => {
                 <p className="text-xs text-muted-foreground">{f.desc}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

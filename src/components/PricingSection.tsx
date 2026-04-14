@@ -64,11 +64,32 @@ const plans = [
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.9 },
+  visible: {
+    opacity: 1, y: 0, scale: 1,
+    transition: { type: "spring", stiffness: 80, damping: 14 },
+  },
+};
+
 const PricingSection = () => {
   return (
     <section id="planos" className="section-padding section-divider" aria-labelledby="pricing-heading">
       <div className="container px-4 md:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="text-center mb-6"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-6">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
             Últimas vagas para desenvolvimento este mês
@@ -97,14 +118,18 @@ const PricingSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch"
+        >
           {plans.map((plan, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              variants={cardVariants}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 ${
                 plan.highlight
                   ? "border-2 border-primary glow-box-strong bg-card lg:scale-105 lg:-my-2"
@@ -155,7 +180,7 @@ const PricingSection = () => {
               </a>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

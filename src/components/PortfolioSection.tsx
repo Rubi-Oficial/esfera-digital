@@ -49,6 +49,21 @@ const PortfolioImage = ({ src, alt }: { src: string; alt: string }) => {
   );
 };
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.92 },
+  visible: {
+    opacity: 1, y: 0, scale: 1,
+    transition: { type: "spring", stiffness: 90, damping: 15 },
+  },
+};
+
 const PortfolioSection = () => {
   const [active, setActive] = useState("Todos");
   const filtered = active === "Todos" ? projects : projects.filter((p) => p.cat === active);
@@ -56,14 +71,27 @@ const PortfolioSection = () => {
   return (
     <section id="portfolio" className="py-24" aria-label="Portfólio de projetos">
       <div className="container px-4 md:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="text-center mb-12"
+        >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Projetos que <span className="text-gradient">Geraram Resultados</span>
           </h2>
           <p className="text-muted-foreground text-lg">Sites desenvolvidos para empresas de diversos segmentos.</p>
         </motion.div>
 
-        <nav aria-label="Filtrar por categoria" className="flex flex-wrap justify-center gap-2 mb-10">
+        <motion.nav
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          aria-label="Filtrar por categoria"
+          className="flex flex-wrap justify-center gap-2 mb-10"
+        >
           {categories.map((cat) => (
             <button
               key={cat}
@@ -78,9 +106,16 @@ const PortfolioSection = () => {
               {cat}
             </button>
           ))}
-        </nav>
+        </motion.nav>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" role="list">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-40px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          role="list"
+        >
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
               <motion.a
@@ -88,11 +123,11 @@ const PortfolioSection = () => {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                variants={cardVariants}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                 className="glass rounded-xl overflow-hidden group block"
                 role="listitem"
                 aria-label={`${project.name} - ${project.desc}`}
@@ -113,7 +148,7 @@ const PortfolioSection = () => {
               </motion.a>
             ))}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

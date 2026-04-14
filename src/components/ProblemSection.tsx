@@ -5,10 +5,10 @@ import { staggerContainer, fadeInUp } from "@/lib/animations";
 import problemImg from "@/assets/problem-visual.jpg";
 
 const problems = [
-  { icon: Shield, text: "Sua marca perde credibilidade sem presença digital própria", detail: "Clientes buscam no Google antes de confiar em qualquer empresa." },
-  { icon: Users, text: "Dependência total de plataformas de terceiros", detail: "Redes sociais mudam algoritmos — e seu alcance despenca." },
-  { icon: TrendingDown, text: "Oportunidades são desperdiçadas diariamente", detail: "Sem site, você perde clientes para concorrentes que investem." },
-  { icon: AlertTriangle, text: "A concorrência ocupa o espaço que deveria ser seu", detail: "Quem aparece primeiro no Google leva a maioria dos contatos." },
+  { icon: Shield, text: "Sem site profissional, sua marca perde credibilidade", detail: "87% dos consumidores pesquisam online antes de comprar. Sem presença própria, você é invisível." },
+  { icon: Users, text: "Dependência de redes sociais é um risco real", detail: "Algoritmos mudam, alcance cai. Seu negócio não pode depender de plataformas que você não controla." },
+  { icon: TrendingDown, text: "Cada dia sem site é dinheiro perdido", detail: "Enquanto você hesita, seus concorrentes captam os clientes que deveriam ser seus." },
+  { icon: AlertTriangle, text: "A concorrência já está investindo — e ganhando", detail: "Quem aparece primeiro no Google leva 75% dos cliques. Posição importa." },
 ];
 
 const ProblemSection = () => {
@@ -23,14 +23,14 @@ const ProblemSection = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative"
           >
-            <div className="rounded-2xl overflow-hidden border border-border/30">
+            <div className="rounded-2xl overflow-hidden border border-border/30 shadow-2xl">
               <img
                 src={problemImg}
-                alt="Representação visual de transformação digital com formas geométricas douradas"
+                alt="Empresário analisando presença digital desatualizada"
                 className="w-full h-auto object-cover"
                 loading="lazy"
-                width={800}
-                height={800}
+                width={1024}
+                height={1024}
               />
             </div>
             <div className="absolute -inset-4 bg-primary/5 blur-[60px] rounded-full -z-10" aria-hidden="true" />
@@ -41,7 +41,7 @@ const ProblemSection = () => {
               label="O Problema"
               titleId="problem-heading"
               title={<>Estar online <span className="text-gradient">não é suficiente.</span><br />É preciso ter estratégia.</>}
-              subtitle="Muitas empresas possuem redes sociais, mas não têm uma estrutura digital própria que transmita autoridade e gere oportunidades reais."
+              subtitle="A maioria das empresas perde clientes todos os dias por não ter uma estrutura digital que transmita autoridade e converta visitantes em oportunidades reais."
               className="text-left mb-10"
             />
 
@@ -78,7 +78,7 @@ const ProblemSection = () => {
           transition={{ delay: 0.6, duration: 0.5 }}
           className="text-center text-muted-foreground mt-12 max-w-xl mx-auto text-lg"
         >
-          Presença digital precisa ser planejada como <span className="text-foreground font-semibold">ativo estratégico</span> — não como improviso.
+          Sua presença digital precisa ser um <span className="text-foreground font-semibold">ativo estratégico</span> — não um improviso que custa clientes.
         </motion.p>
       </div>
     </section>

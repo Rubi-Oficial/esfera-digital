@@ -60,6 +60,7 @@ const idealFor = [
 
 const PricingSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const { hours, minutes, seconds, expired } = useCountdown();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const orbY1 = useTransform(scrollYProgress, [0, 1], [50, -50]);
   const orbY2 = useTransform(scrollYProgress, [0, 1], [-30, 60]);

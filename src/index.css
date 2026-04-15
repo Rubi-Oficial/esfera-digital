@@ -36,8 +36,8 @@
 
     --radius: 0.75rem;
 
-    --glow-primary: 0 0 60px hsl(43 70% 55% / 0.15);
-    --glow-primary-strong: 0 0 80px hsl(43 70% 55% / 0.25), 0 0 120px hsl(43 70% 55% / 0.1);
+    --glow-primary: 0 0 40px hsl(43 70% 55% / 0.1);
+    --glow-primary-strong: 0 0 60px hsl(43 70% 55% / 0.15), 0 0 100px hsl(43 70% 55% / 0.05);
     --gradient-hero: linear-gradient(135deg, hsl(220 20% 7%) 0%, hsl(225 25% 12%) 50%, hsl(220 20% 7%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(220 18% 12%) 0%, hsl(220 18% 8%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(43 70% 55%) 0%, hsl(35 80% 45%) 100%);
@@ -61,6 +61,8 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -85,6 +87,17 @@
     @apply outline-2 outline-offset-2 outline-primary;
     outline-style: solid;
   }
+
+  /* Smooth image rendering */
+  img {
+    image-rendering: auto;
+  }
+
+  /* Better selection */
+  ::selection {
+    background: hsl(43 70% 55% / 0.3);
+    color: hsl(210 20% 95%);
+  }
 }
 
 @layer utilities {
@@ -102,14 +115,14 @@
   }
 
   .glass {
-    @apply bg-card/60 backdrop-blur-xl border border-border/50;
+    @apply bg-card/50 backdrop-blur-xl border border-border/40;
   }
 
   .glass-hover {
-    @apply glass transition-all duration-300;
+    @apply glass transition-all duration-500 ease-out;
   }
   .glass-hover:hover {
-    @apply border-primary/30 bg-card/80;
+    @apply border-primary/25 bg-card/70;
     box-shadow: var(--glow-primary);
   }
 
@@ -131,6 +144,12 @@
   }
   .section-divider::before {
     content: '';
-    @apply absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent;
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-16 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent;
+  }
+
+  /* Smooth scroll containers */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 }

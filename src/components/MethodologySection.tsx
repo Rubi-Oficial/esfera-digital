@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import methodBg from "@/assets/methodology-bg.jpg";
@@ -12,10 +13,17 @@ const steps = [
 ];
 
 const MethodologySection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [20, -20]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const dot1Y = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const dot2Y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
   return (
-    <section id="metodologia" className="section-padding section-divider relative overflow-hidden" aria-labelledby="methodology-heading">
-      {/* Background image */}
-      <div className="absolute inset-0" aria-hidden="true">
+    <section ref={sectionRef} id="metodologia" className="section-padding section-divider relative overflow-hidden" aria-labelledby="methodology-heading">
+      {/* Background image with parallax */}
+      <motion.div className="absolute inset-0" style={{ y: bgY }} aria-hidden="true">
         <img
           src={methodBg}
           alt=""
@@ -25,7 +33,11 @@ const MethodologySection = () => {
           height={1080}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
-      </div>
+      </motion.div>
+
+      <motion.div className="absolute w-[350px] h-[350px] rounded-full bg-primary/5 blur-[120px] -left-20 bottom-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-2 h-2 rounded-full bg-primary animate-pulse-glow right-16 top-24 pointer-events-none" style={{ y: dot1Y }} aria-hidden="true" />
+      <motion.div className="absolute w-1 h-1 rounded-full bg-primary/40 animate-pulse-glow left-20 top-1/2 pointer-events-none" style={{ y: dot2Y }} aria-hidden="true" />
 
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader

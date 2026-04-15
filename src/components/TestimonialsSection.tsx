@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 
@@ -61,6 +61,11 @@ const slideVariants = {
 };
 
 const TestimonialsSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const orbY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const dotY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+
   const [[activeIndex, direction], setActiveIndex] = useState([0, 0]);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -81,13 +86,15 @@ const TestimonialsSection = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="depoimentos"
       className="py-20 md:py-28 bg-background relative overflow-hidden"
       aria-labelledby="testimonials-heading"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[150px] pointer-events-none" />
+      <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[150px] pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-2 h-2 rounded-full bg-primary/40 animate-pulse-glow left-16 top-16 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <SectionHeader

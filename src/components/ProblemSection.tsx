@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { AlertTriangle, TrendingDown, Users, Shield } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
@@ -12,9 +13,18 @@ const problems = [
 ];
 
 const ProblemSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const orbY1 = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const orbY2 = useTransform(scrollYProgress, [0, 1], [-30, 50]);
+  const dotY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+
   return (
-    <section id="solucoes" className="section-padding section-divider relative" aria-labelledby="problem-heading">
-      <div className="container px-4 md:px-8">
+    <section ref={sectionRef} id="solucoes" className="section-padding section-divider relative overflow-hidden" aria-labelledby="problem-heading">
+      <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-destructive/5 blur-[140px] -left-40 top-1/3 pointer-events-none" style={{ y: orbY1 }} aria-hidden="true" />
+      <motion.div className="absolute w-[300px] h-[300px] rounded-full bg-primary/5 blur-[100px] right-0 top-0 pointer-events-none" style={{ y: orbY2 }} aria-hidden="true" />
+      <motion.div className="absolute w-2 h-2 rounded-full bg-primary/40 animate-pulse-glow right-20 top-20 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
+      <div className="container px-4 md:px-8 relative z-10">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}

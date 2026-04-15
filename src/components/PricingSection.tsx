@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, Star, Zap } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import WhatsAppLink from "./ui/WhatsAppLink";
@@ -69,9 +70,18 @@ const plans = [
 ];
 
 const PricingSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const orbY1 = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const orbY2 = useTransform(scrollYProgress, [0, 1], [-30, 60]);
+  const dotY = useTransform(scrollYProgress, [0, 1], [0, -70]);
+
   return (
-    <section id="planos" className="section-padding section-divider" aria-labelledby="pricing-heading">
-      <div className="container px-4 md:px-8">
+    <section ref={sectionRef} id="planos" className="section-padding section-divider relative overflow-hidden" aria-labelledby="pricing-heading">
+      <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/5 blur-[140px] -right-40 top-20 pointer-events-none" style={{ y: orbY1 }} aria-hidden="true" />
+      <motion.div className="absolute w-[300px] h-[300px] rounded-full bg-primary/3 blur-[100px] left-0 bottom-0 pointer-events-none" style={{ y: orbY2 }} aria-hidden="true" />
+      <motion.div className="absolute w-2 h-2 rounded-full bg-primary/50 animate-pulse-glow left-16 top-40 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
+      <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
           titleId="pricing-heading"
           title={<>Escolha seu <span className="text-gradient">plano</span></>}

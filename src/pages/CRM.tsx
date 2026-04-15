@@ -92,6 +92,19 @@ const CRMContent = () => {
     refetchOnWindowFocus: false,
   });
 
+  // Referral data
+  const { data: refCodes = [] } = useQuery({
+    queryKey: ["admin-referral-codes"],
+    queryFn: fetchAllReferralCodes,
+    refetchInterval: 15000,
+  });
+
+  const { data: allReferrals = [] } = useQuery({
+    queryKey: ["admin-referrals"],
+    queryFn: fetchAllReferrals,
+    refetchInterval: 15000,
+  });
+
   const moveLeadMutation = useMutation({
     mutationFn: ({ leadId, from, to }: { leadId: string; from: PipelineStage; to: PipelineStage }) =>
       updateLeadStage(leadId, from, to),

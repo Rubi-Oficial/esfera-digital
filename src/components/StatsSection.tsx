@@ -31,7 +31,7 @@ const CountUp = ({ end, prefix, suffix, duration = 2 }: { end: number; prefix: s
   }, [isInView, end, duration]);
 
   return (
-    <span ref={ref} className="text-4xl md:text-5xl font-bold text-gradient tabular-nums">
+    <span ref={ref} className="text-5xl md:text-6xl font-extrabold text-gradient tabular-nums drop-shadow-[0_0_20px_hsl(152_100%_50%/0.3)]">
       {prefix}{count}{suffix}
     </span>
   );

@@ -88,7 +88,7 @@ const Navbar = () => {
             size="sm"
             showArrow={false}
             ariaLabel="Falar com especialista via WhatsApp"
-            className={scrolled ? "shadow-[0_0_15px_hsl(var(--primary)/0.2)]" : "bg-primary/90 hover:bg-primary"}
+            className={`btn-premium ${scrolled ? "shadow-[0_0_15px_hsl(var(--primary)/0.2)]" : ""}`}
           >
             Falar com Especialista
           </WhatsAppLink>

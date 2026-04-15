@@ -17,4 +17,4 @@ Allow: /
 Disallow: /assets/
 Disallow: /src/
 
-Sitemap: https://esferasolucoes.com.br/sitemap.xml
+Sitemap: https://esfera-digital.lovable.app/sitemap.xml

@@ -35,6 +35,10 @@ const faqs = [
     answer: "Entrada de 50% para iniciar e 50% na entrega. Aceitamos PIX, transferência bancária e cartão de crédito.",
   },
   {
+    question: "Posso parcelar?",
+    answer: "Sim, em até 12x no cartão. Você também pode pagar via PIX com desconto especial. Fale conosco para encontrar a melhor condição para o seu caso!",
+  },
+  {
     question: "Vocês oferecem suporte após a entrega?",
     answer: "Sim! Todos os projetos incluem suporte técnico gratuito após a entrega, além de 1 ano de hospedagem incluso no pacote.",
   },

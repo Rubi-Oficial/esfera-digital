@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, Globe, MessageSquare, Sparkles, Zap } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
-import { staggerContainer, fadeInUpRotate } from "@/lib/animations";
+import { staggerContainer, fadeInUpRotate, blurFadeIn } from "@/lib/animations";
 
 const transformations = [
   { icon: Globe, label: "Aparece no Google", desc: "Seus clientes te encontram quando pesquisam" },

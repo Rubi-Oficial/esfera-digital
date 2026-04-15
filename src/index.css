@@ -72,6 +72,11 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
     letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   .skip-link {
@@ -94,6 +99,16 @@
   ::selection {
     background: hsl(152 100% 50% / 0.25);
     color: hsl(0 0% 100%);
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
@@ -164,5 +179,20 @@
   .btn-premium:hover {
     transform: scale(1.03);
     box-shadow: 0 0 30px hsl(152 100% 50% / 0.45);
+  }
+
+  /* Modern scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(152 100% 50% / 0.2);
+    border-radius: 3px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(152 100% 50% / 0.4);
   }
 }

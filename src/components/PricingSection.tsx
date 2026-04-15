@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, Zap, Users, Briefcase, MapPin, Gift, Clock } from "lucide-react";
+import { Check, Zap, Users, Briefcase, MapPin, Gift, Clock, Rocket, BookOpen, UserCheck, TrendingUp, BarChart3 } from "lucide-react";
+import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
 import WhatsAppLink from "./ui/WhatsAppLink";
 import { WHATSAPP_MESSAGES } from "@/lib/constants";
@@ -51,6 +52,23 @@ const bonuses = [
   "Suporte inicial incluso",
 ];
 
+const growthIncluded = [
+  "Tudo do plano Site Profissional",
+  "Base de Conhecimento Interna exclusiva",
+  "Consultoria individual com especialista",
+  "Estratégia de captação de clientes",
+  "Programa de Parcerias (Indique e Ganhe)",
+  "Dashboard de indicações e comissões",
+  "Suporte prioritário por 3 meses",
+  "Relatórios de performance mensais",
+];
+
+const growthBonuses = [
+  "1 sessão de consultoria grátis",
+  "Acesso vitalício à base de conhecimento",
+  "Grupo exclusivo de membros Growth",
+];
+
 const idealFor = [
   { icon: Briefcase, label: "Pequenos empresários" },
   { icon: Users, label: "Autônomos" },
@@ -77,99 +95,181 @@ const PricingSection = () => {
         <SectionHeader
           titleId="pricing-heading"
           label="💰 Oferta Especial"
-          title={<>Site Profissional <span className="text-gradient">Completo</span></>}
-          subtitle="Agora deixa eu ser direto com você: você poderia pagar facilmente R$ 2.000 ou mais. Mas hoje você não precisa."
+          title={<>Escolha o plano <span className="text-gradient">ideal para você</span></>}
+          subtitle="Do site profissional ao ecossistema completo de crescimento. Escolha o que faz mais sentido pro seu negócio."
           className="mb-10"
         />
 
-        {/* Main offer card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7 }}
-          className="max-w-2xl mx-auto"
-        >
-          <div className="relative rounded-3xl border-2 border-primary glow-box-strong bg-card p-8 md:p-12">
-            <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-primary text-primary-foreground text-sm font-bold shadow-lg">
-              🔥 Promoção por tempo limitado
-            </span>
-
-            <div className="text-center mb-8 mt-4">
-              <p className="text-muted-foreground line-through text-lg mb-1">De R$ 2.000</p>
-              <div className="flex items-baseline justify-center gap-2">
-                <span className="text-sm text-muted-foreground">Por apenas</span>
-                <span className="text-6xl md:text-7xl font-bold text-gradient">R$ 1.290</span>
-              </div>
-            </div>
-
-            {/* Countdown Timer */}
-            {!expired && (
-              <div className="mb-8">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Clock size={14} className="text-destructive animate-pulse" />
-                  <p className="text-xs font-semibold uppercase tracking-wider text-destructive">
-                    Oferta expira em
-                  </p>
+        {/* Plans grid */}
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {/* Plan 1 - Site Profissional */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="relative rounded-3xl border border-border/50 bg-card p-6 md:p-8 h-full flex flex-col">
+              <div className="text-center mb-6">
+                <h3 className="text-lg font-bold font-sora mb-1">Site Profissional</h3>
+                <p className="text-xs text-muted-foreground mb-4">Ideal para começar</p>
+                <p className="text-muted-foreground line-through text-sm mb-1">De R$ 2.000</p>
+                <div className="flex items-baseline justify-center gap-2">
+                  <span className="text-4xl md:text-5xl font-bold text-foreground">R$ 1.290</span>
                 </div>
-                <div className="flex justify-center gap-3">
-                  {[
-                    { value: hours, label: "Horas" },
-                    { value: minutes, label: "Min" },
-                    { value: seconds, label: "Seg" },
-                  ].map((unit, i) => (
-                    <div key={i} className="flex flex-col items-center">
-                      <span className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-2xl font-bold text-primary tabular-nums">
-                        {String(unit.value).padStart(2, "0")}
-                      </span>
-                      <span className="text-[10px] text-muted-foreground mt-1 uppercase tracking-wider">
-                        {unit.label}
-                      </span>
-                    </div>
+              </div>
+
+              <div className="mb-6 flex-1">
+                <ul className="space-y-2.5" role="list">
+                  {included.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-secondary-foreground">
+                      <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check size={10} className="text-primary" aria-hidden="true" />
+                      </div>
+                      {item}
+                    </li>
                   ))}
+                </ul>
+              </div>
+
+              {/* Bonuses */}
+              <div className="glass rounded-xl p-3 mb-6 border border-border/30">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">🎁 Bônus</h4>
+                <ul className="space-y-1.5">
+                  {bonuses.map((b, i) => (
+                    <li key={i} className="flex items-center gap-2 text-xs text-secondary-foreground">
+                      <Check size={12} className="text-primary" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <WhatsAppLink
+                message={WHATSAPP_MESSAGES.planStart}
+                variant="primary"
+                size="lg"
+                ariaLabel="Quero meu site por R$ 1.290"
+                className="w-full py-3 text-base"
+              >
+                Quero meu site
+              </WhatsAppLink>
+            </div>
+          </motion.div>
+
+          {/* Plan 2 - Esfera Growth */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+          >
+            <div className="relative rounded-3xl border-2 border-primary glow-box-strong bg-card p-6 md:p-8 h-full flex flex-col">
+              <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-lg whitespace-nowrap">
+                🚀 Mais vendido
+              </span>
+
+              <div className="text-center mb-6 mt-2">
+                <h3 className="text-lg font-bold font-sora mb-1 flex items-center justify-center gap-2">
+                  <Rocket size={20} className="text-primary" />
+                  Esfera Growth
+                </h3>
+                <p className="text-xs text-muted-foreground mb-4">Ecossistema completo de crescimento</p>
+                <p className="text-muted-foreground line-through text-sm mb-1">De R$ 3.500</p>
+                <div className="flex items-baseline justify-center gap-2">
+                  <span className="text-4xl md:text-5xl font-bold text-gradient">R$ 2.490</span>
                 </div>
               </div>
-            )}
-            <div className="mb-8">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4 flex items-center gap-2">
-                <Gift size={16} /> O que está incluso
-              </h3>
-              <ul className="space-y-3" role="list">
-                {included.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-secondary-foreground">
-                    <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check size={12} className="text-primary" aria-hidden="true" />
-                    </div>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* Bonuses */}
-            <div className="glass rounded-xl p-4 mb-8 border border-primary/20">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-3">🎁 Bônus inclusos</h4>
-              <ul className="space-y-2">
-                {bonuses.map((b, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-secondary-foreground">
-                    <Check size={14} className="text-primary" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </div>
+              {/* Countdown Timer */}
+              {!expired && (
+                <div className="mb-6">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Clock size={12} className="text-destructive animate-pulse" />
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-destructive">
+                      Oferta expira em
+                    </p>
+                  </div>
+                  <div className="flex justify-center gap-2">
+                    {[
+                      { value: hours, label: "Hrs" },
+                      { value: minutes, label: "Min" },
+                      { value: seconds, label: "Seg" },
+                    ].map((unit, i) => (
+                      <div key={i} className="flex flex-col items-center">
+                        <span className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-lg font-bold text-primary tabular-nums">
+                          {String(unit.value).padStart(2, "0")}
+                        </span>
+                        <span className="text-[9px] text-muted-foreground mt-0.5 uppercase tracking-wider">
+                          {unit.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-            <WhatsAppLink
-              message={WHATSAPP_MESSAGES.planStart}
-              variant="primary"
-              size="lg"
-              ariaLabel="Quero meu site por R$ 1.290"
-              className="w-full py-4 text-lg"
-            >
-              Quero meu site por R$ 1.290
-            </WhatsAppLink>
-          </div>
-        </motion.div>
+              <div className="mb-6 flex-1">
+                <ul className="space-y-2.5" role="list">
+                  {growthIncluded.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-secondary-foreground">
+                      <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check size={10} className="text-primary" aria-hidden="true" />
+                      </div>
+                      {i === 0 ? <strong className="text-primary">{item}</strong> : item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Growth highlights */}
+              <div className="grid grid-cols-3 gap-2 mb-4">
+                <div className="glass rounded-lg p-2 text-center border border-primary/10">
+                  <BookOpen size={16} className="text-primary mx-auto mb-1" />
+                  <p className="text-[10px] text-muted-foreground leading-tight">Base de Conhecimento</p>
+                </div>
+                <div className="glass rounded-lg p-2 text-center border border-primary/10">
+                  <UserCheck size={16} className="text-primary mx-auto mb-1" />
+                  <p className="text-[10px] text-muted-foreground leading-tight">Consultoria Individual</p>
+                </div>
+                <div className="glass rounded-lg p-2 text-center border border-primary/10">
+                  <BarChart3 size={16} className="text-primary mx-auto mb-1" />
+                  <p className="text-[10px] text-muted-foreground leading-tight">Dashboard Growth</p>
+                </div>
+              </div>
+
+              {/* Bonuses */}
+              <div className="glass rounded-xl p-3 mb-6 border border-primary/20">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-2">🎁 Bônus exclusivos</h4>
+                <ul className="space-y-1.5">
+                  {growthBonuses.map((b, i) => (
+                    <li key={i} className="flex items-center gap-2 text-xs text-secondary-foreground">
+                      <Check size={12} className="text-primary" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <WhatsAppLink
+                message="Olá! Tenho interesse no plano Esfera Growth com base de conhecimento e consultoria individual. Quero saber mais!"
+                variant="primary"
+                size="lg"
+                ariaLabel="Quero o Esfera Growth por R$ 2.490"
+                className="w-full py-3 text-base mb-3"
+              >
+                Quero o Esfera Growth 🚀
+              </WhatsAppLink>
+
+              <Link
+                to="/growth-os"
+                className="text-xs text-center text-primary hover:text-primary/80 transition-colors underline underline-offset-2"
+              >
+                Saiba mais sobre o Growth OS →
+              </Link>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Who is it for */}
         <motion.div
@@ -179,7 +279,7 @@ const PricingSection = () => {
           transition={{ delay: 0.3 }}
           className="max-w-2xl mx-auto mt-12 text-center"
         >
-          <h3 className="text-lg font-bold mb-6">🎯 Pra quem é esse site?</h3>
+          <h3 className="text-lg font-bold mb-6">🎯 Pra quem são esses planos?</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {idealFor.map((item, i) => (
               <div key={i} className="glass-hover rounded-xl p-4 text-center">

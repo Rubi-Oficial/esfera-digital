@@ -30,7 +30,7 @@ type Step =
   | "tipoNegocio"
   | "urgencia"
   | "objetivo"
-  | "duvidas"
+  | "planos"
   | "finalizar";
 
 const BOT_NAME = "Genius AI";

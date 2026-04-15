@@ -88,15 +88,15 @@ const HeroSection = () => {
             Esfera Digital
           </motion.div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6">
-            <span className="text-gradient inline-block min-h-[1.2em]">
+          <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-6">
+            <span className="text-gradient inline-block min-h-[1.2em] drop-shadow-[0_0_30px_hsl(43_70%_55%/0.25)]">
               {displayed}
               {showCursor && (
-                <span className="inline-block w-[3px] h-[0.8em] bg-primary ml-1 align-middle animate-blink" aria-hidden="true" />
+                <span className="inline-block w-[3px] h-[0.85em] bg-primary ml-1 align-middle animate-blink" aria-hidden="true" />
               )}
             </span>
             <br />
-            <span className="text-foreground">que vendem por você.</span>
+            <span className="text-foreground/95">que vendem por você.</span>
           </h1>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed">

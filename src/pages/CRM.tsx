@@ -422,7 +422,7 @@ const CRMContent = () => {
                 </div>
               </motion.div>
             </div>
-          ) : (
+          ) : view === "pipeline" ? (
             /* Pipeline View */
             <div className="overflow-x-auto pb-4">
               <div className="flex gap-4 min-w-max">
@@ -494,6 +494,157 @@ const CRMContent = () => {
                   );
                 })}
               </div>
+            </div>
+          ) : (
+            /* Indicações View */
+            <div className="space-y-6">
+              {/* Referral metrics */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: "Parceiros", value: refCodes.length, icon: Users, color: "text-blue-400" },
+                  { label: "Total Indicações", value: allReferrals.length, icon: Gift, color: "text-cyan-400" },
+                  { label: "Vendas via Indicação", value: allReferrals.filter(r => r.status === "converted" || r.status === "paid").length, icon: TrendingUp, color: "text-green-400" },
+                  { label: "Comissões Pagas", value: `R$${refCodes.reduce((s, c) => s + Number(c.saldo_pago), 0).toFixed(0)}`, icon: DollarSign, color: "text-primary" },
+                ].map((metric, i) => (
+                  <motion.div
+                    key={metric.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="bg-card border border-border/30 rounded-xl p-4"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <metric.icon size={18} className={metric.color} />
+                      <span className="text-xs text-muted-foreground">{metric.label}</span>
+                    </div>
+                    <p className="text-2xl font-bold font-sora">{metric.value}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Top Referrers */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="bg-card border border-border/30 rounded-xl overflow-hidden"
+              >
+                <div className="px-6 py-4 border-b border-border/30 flex items-center gap-2">
+                  <Trophy size={18} className="text-yellow-400" />
+                  <h2 className="text-lg font-semibold font-sora">Ranking de Parceiros</h2>
+                </div>
+                <div className="divide-y divide-border/20">
+                  {refCodes.length === 0 ? (
+                    <div className="px-6 py-10 text-center text-muted-foreground">
+                      <Gift size={32} className="mx-auto mb-2 opacity-40" />
+                      <p className="text-sm">Nenhum parceiro cadastrado ainda.</p>
+                    </div>
+                  ) : (
+                    refCodes.map((rc, i) => (
+                      <div key={rc.id} className="px-6 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-bold text-muted-foreground w-6">{i + 1}.</span>
+                          <div>
+                            <p className="text-sm font-medium">{rc.nome}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {rc.total_clicks} cliques · {rc.total_leads} leads · {rc.total_vendas} vendas
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="text-right">
+                            <p className="text-sm font-semibold text-primary">R${Number(rc.saldo_disponivel).toFixed(0)}</p>
+                            <p className="text-xs text-muted-foreground">disponível</p>
+                          </div>
+                          <div className="flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-muted/20">
+                            <Link2 size={10} />
+                            <span>{rc.code}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Recent referrals */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="bg-card border border-border/30 rounded-xl overflow-hidden"
+              >
+                <div className="px-6 py-4 border-b border-border/30">
+                  <h2 className="text-lg font-semibold font-sora">Indicações Recentes</h2>
+                </div>
+                <div className="divide-y divide-border/20">
+                  {allReferrals.length === 0 ? (
+                    <div className="px-6 py-10 text-center text-muted-foreground">
+                      <Users size={32} className="mx-auto mb-2 opacity-40" />
+                      <p className="text-sm">Nenhuma indicação recebida ainda.</p>
+                    </div>
+                  ) : (
+                    allReferrals.slice(0, 20).map((ref) => {
+                      const statusConfig: Record<string, { label: string; color: string }> = {
+                        pending: { label: "Pendente", color: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" },
+                        converted: { label: "Convertido", color: "bg-green-500/20 text-green-400 border-green-500/30" },
+                        paid: { label: "Pago", color: "bg-primary/20 text-primary border-primary/30" },
+                        expired: { label: "Expirado", color: "bg-red-500/20 text-red-400 border-red-500/30" },
+                      };
+                      const sc = statusConfig[ref.status] || statusConfig.pending;
+                      return (
+                        <div key={ref.id} className="px-6 py-3 flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium">{ref.lead_nome || "Lead"}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {new Date(ref.created_at).toLocaleDateString("pt-BR")}
+                              {ref.lead_telefone && ` · ${ref.lead_telefone}`}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-sm font-semibold">R${Number(ref.comissao).toFixed(0)}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full border ${sc.color}`}>{sc.label}</span>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Leads via indicação */}
+              {(() => {
+                const indicacaoLeads = leads.filter(l => l.origem === "indicacao");
+                if (indicacaoLeads.length === 0) return null;
+                return (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    className="bg-card border border-primary/20 rounded-xl p-5"
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <Gift size={18} className="text-primary" />
+                      <h2 className="text-sm font-semibold">Leads via Indicação no CRM</h2>
+                      <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full">{indicacaoLeads.length}</span>
+                    </div>
+                    <div className="space-y-2">
+                      {indicacaoLeads.slice(0, 10).map(lead => (
+                        <div key={lead.id} className="flex items-center justify-between bg-muted/10 rounded-lg px-4 py-2.5">
+                          <div className="flex items-center gap-3">
+                            <TempIcon temp={lead.temperatura} />
+                            <span className="text-sm font-medium">{lead.nome}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full border ${STAGE_CONFIG[lead.stage].color}`}>
+                              {STAGE_CONFIG[lead.stage].label}
+                            </span>
+                          </div>
+                          <span className="text-xs text-muted-foreground">{lead.telefone}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                );
+              })()}
             </div>
           )}
         </main>

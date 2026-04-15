@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, ArrowRight } from "lucide-react";
 import { WHATSAPP_PHONE } from "@/lib/constants";
 import { createLead, updateLeadStage } from "@/lib/crm";
+import { lookupRefCode, recordRefClick, createReferral, type ReferralCode } from "@/lib/referral";
 
 type Message = {
   id: string;

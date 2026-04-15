@@ -16,6 +16,7 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
@@ -55,9 +56,19 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      toast.error(error.message);
+    if (isSignUp) {
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success("Conta criada! Verifique seu e-mail para confirmar.");
+        setIsSignUp(false);
+      }
+    } else {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        toast.error(error.message);
+      }
     }
     setAuthLoading(false);
   };
@@ -139,7 +150,14 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
                   disabled={authLoading}
                   className="w-full bg-primary text-primary-foreground rounded-lg py-2.5 text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
                 >
-                  {authLoading ? "Entrando..." : "Entrar"}
+                  {authLoading ? (isSignUp ? "Criando..." : "Entrando...") : (isSignUp ? "Criar conta" : "Entrar")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsSignUp(!isSignUp)}
+                  className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {isSignUp ? "Já tem conta? Entrar" : "Criar nova conta"}
                 </button>
               </form>
             )}

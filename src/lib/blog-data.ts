@@ -1,4 +1,4 @@
-import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, Stethoscope, Scale, Leaf, Factory, Cannabis, Rocket, Hotel, UtensilsCrossed, SmilePlus, Building2, type LucideIcon } from "lucide-react";
+import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, Stethoscope, Scale, Leaf, Factory, Cannabis, Rocket, Hotel, UtensilsCrossed, SmilePlus, Building2, ShoppingCart, Bot, Target, MessageCircle, User, Zap, type LucideIcon } from "lucide-react";
 import blogMarketing from "@/assets/blog-marketing.jpg";
 import blogSeo from "@/assets/blog-seo.jpg";
 import blogDesign from "@/assets/blog-design.jpg";
@@ -18,6 +18,12 @@ import blogSitePousadas from "@/assets/blog-site-pousadas.jpg";
 import blogSiteRestaurantes from "@/assets/blog-site-restaurantes.jpg";
 import blogSiteDentistas from "@/assets/blog-site-dentistas.jpg";
 import blogSiteImobiliarias from "@/assets/blog-site-imobiliarias.jpg";
+import blogEcommerce from "@/assets/blog-ecommerce.jpg";
+import blogAutomacaoIA from "@/assets/blog-automacao-ia.jpg";
+import blogConversao from "@/assets/blog-conversao.jpg";
+import blogChatbot from "@/assets/blog-chatbot.jpg";
+import blogMarcaPessoal from "@/assets/blog-marca-pessoal.jpg";
+import blogVelocidade from "@/assets/blog-velocidade.jpg";
 
 export interface BlogArticle {
   slug: string;

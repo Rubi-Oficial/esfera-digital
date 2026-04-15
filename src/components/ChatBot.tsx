@@ -265,7 +265,7 @@ const ChatBot = () => {
           break;
       }
     },
-    [addBotMessage, addUserMessage, lead]
+    [addBotMessage, addUserMessage, lead, crmLeadId]
   );
 
   const handleSend = () => {

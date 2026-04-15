@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, ArrowRight, ArrowDown } from "lucide-react";
-import WhatsAppLink from "./ui/WhatsAppLink";
-import { WHATSAPP_MESSAGES } from "@/lib/constants";
+import ChatbotTrigger from "./ui/ChatbotTrigger";
 import NetworkBackground from "./NetworkBackground";
 import heroImg from "@/assets/hero-workspace.jpg";
 
@@ -53,15 +52,11 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
-      {/* Network particles background */}
       <NetworkBackground />
-
-      {/* Subtle green glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[150px]" aria-hidden="true" />
 
       <motion.div className="container relative z-10 px-4 md:px-8 py-20" style={{ y: contentY, opacity: contentOpacity }}>
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Copy */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -130,14 +125,13 @@ const HeroSection = () => {
               transition={{ delay: 0.8 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center"
             >
-              <WhatsAppLink
-                message={WHATSAPP_MESSAGES.presenca}
+              <ChatbotTrigger
                 size="lg"
-                ariaLabel="Quero um site com IA para meu negócio"
+                ariaLabel="Comece agora — nosso sistema entende seu negócio"
                 className="btn-premium"
               >
-                Quero um site com IA
-              </WhatsAppLink>
+                Comece agora
+              </ChatbotTrigger>
               <a
                 href="#planos"
                 className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors group"
@@ -148,7 +142,6 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right: Mockup */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -157,7 +150,6 @@ const HeroSection = () => {
             className="relative hidden lg:block"
           >
             <div className="relative">
-              {/* Glow behind mockup */}
               <div className="absolute inset-0 rounded-2xl bg-primary/10 blur-[60px] scale-90" aria-hidden="true" />
               <div className="relative rounded-2xl overflow-hidden border border-border/40 shadow-2xl">
                 <img
@@ -169,7 +161,6 @@ const HeroSection = () => {
                   fetchPriority="high"
                   decoding="async"
                 />
-                {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
               </div>
             </div>

@@ -2,7 +2,7 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import { blogArticles, getRelatedArticles, type BlogArticle } from "@/lib/blog-data";
-import WhatsAppLink from "@/components/ui/WhatsAppLink";
+import ChatbotTrigger from "@/components/ui/ChatbotTrigger";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
@@ -160,12 +160,11 @@ const BlogArticlePage = () => {
             <p className="text-muted-foreground mb-6">
               Fale com nossos especialistas e descubra como aplicar essas estratégias no seu negócio.
             </p>
-            <WhatsAppLink
-              message={article.message}
+            <ChatbotTrigger
               ariaLabel="Falar com especialista sobre este assunto"
             >
               Falar com Especialista
-            </WhatsAppLink>
+            </ChatbotTrigger>
           </motion.div>
         </article>
 

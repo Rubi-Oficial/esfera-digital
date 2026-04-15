@@ -3,8 +3,8 @@ import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-
 import { Menu, X, Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedLogo from "./AnimatedLogo";
-import WhatsAppLink from "./ui/WhatsAppLink";
-import { NAV_LINKS, WHATSAPP_MESSAGES } from "@/lib/constants";
+import ChatbotTrigger from "./ui/ChatbotTrigger";
+import { NAV_LINKS } from "@/lib/constants";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -96,15 +96,14 @@ const Navbar = () => {
               {specialLink.label}
             </Link>
           )}
-          <WhatsAppLink
-            message={WHATSAPP_MESSAGES.specialist}
+          <ChatbotTrigger
             size="sm"
             showArrow={false}
-            ariaLabel="Falar com especialista via WhatsApp"
+            ariaLabel="Falar com especialista agora"
             className={`btn-premium ${scrolled ? "shadow-[0_0_15px_hsl(var(--primary)/0.2)]" : ""}`}
           >
             Falar com Especialista
-          </WhatsAppLink>
+          </ChatbotTrigger>
         </div>
 
         <button
@@ -166,15 +165,14 @@ const Navbar = () => {
                   </motion.div>
                 )}
                 <div className="pt-4 mt-2 border-t border-border/20">
-                  <WhatsAppLink
-                    message={WHATSAPP_MESSAGES.specialist}
+                  <ChatbotTrigger
                     size="md"
                     showArrow={false}
-                    ariaLabel="Falar com especialista via WhatsApp"
+                    ariaLabel="Falar com especialista agora"
                     className="w-full text-center"
                   >
                     Falar com Especialista
-                  </WhatsAppLink>
+                  </ChatbotTrigger>
                 </div>
               </div>
             </motion.div>

@@ -2,8 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { MessageSquare, Smartphone, CalendarDays, TrendingUp, Bot, Shield } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
-import WhatsAppLink from "./ui/WhatsAppLink";
-import { WHATSAPP_MESSAGES } from "@/lib/constants";
+import ChatbotTrigger from "./ui/ChatbotTrigger";
 
 const benefits = [
   {
@@ -103,13 +102,12 @@ const AIServicesSection = () => {
           transition={{ delay: 0.5 }}
           className="flex justify-center mt-12"
         >
-          <WhatsAppLink
-            message={WHATSAPP_MESSAGES.presenca}
+          <ChatbotTrigger
             size="lg"
-            ariaLabel="Quero um site com IA para meu negócio"
+            ariaLabel="Quero meu sistema — falar agora"
           >
-            Quero um site com IA
-          </WhatsAppLink>
+            Quero meu sistema
+          </ChatbotTrigger>
         </motion.div>
       </div>
     </section>

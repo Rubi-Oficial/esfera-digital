@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Rocket } from "lucide-react";
-import WhatsAppLink from "./ui/WhatsAppLink";
-import { WHATSAPP_MESSAGES } from "@/lib/constants";
+import ChatbotTrigger from "./ui/ChatbotTrigger";
 
 const CTASection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -96,14 +95,13 @@ const CTASection = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.6, duration: 0.4 }}
             >
-              <WhatsAppLink
-                message={WHATSAPP_MESSAGES.planStart}
+              <ChatbotTrigger
                 size="lg"
-                ariaLabel="Quero meu site agora"
+                ariaLabel="Comece agora — fale com nosso sistema"
                 className="bg-primary-foreground text-primary hover:brightness-95 shadow-xl font-bold rounded-xl"
               >
-                Quero meu site por R$ 1.290
-              </WhatsAppLink>
+                Comece agora — descubra o melhor caminho
+              </ChatbotTrigger>
             </motion.div>
           </div>
         </motion.div>

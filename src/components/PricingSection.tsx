@@ -3,8 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, Zap, Users, Briefcase, MapPin, Gift, Clock, Rocket, BookOpen, UserCheck, TrendingUp, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
-import WhatsAppLink from "./ui/WhatsAppLink";
-import { WHATSAPP_MESSAGES } from "@/lib/constants";
+import ChatbotTrigger from "./ui/ChatbotTrigger";
 
 const useCountdown = () => {
   const getTarget = () => {
@@ -147,15 +146,14 @@ const PricingSection = () => {
                 </ul>
               </div>
 
-              <WhatsAppLink
-                message={WHATSAPP_MESSAGES.planStart}
+              <ChatbotTrigger
                 variant="primary"
                 size="lg"
                 ariaLabel="Quero meu site por R$ 997"
                 className="w-full py-3 text-base"
               >
                 Quero meu site
-              </WhatsAppLink>
+              </ChatbotTrigger>
             </div>
           </motion.div>
 
@@ -253,15 +251,14 @@ const PricingSection = () => {
                 </ul>
               </div>
 
-              <WhatsAppLink
-                message="Olá! Tenho interesse no plano Esfera Growth com base de conhecimento e consultoria individual. Quero saber mais!"
+              <ChatbotTrigger
                 variant="primary"
                 size="lg"
                 ariaLabel="Quero o Esfera Growth por R$ 1.997"
                 className="w-full py-3 text-base mb-3"
               >
                 Quero o Esfera Growth 🚀
-              </WhatsAppLink>
+              </ChatbotTrigger>
 
               <Link
                 to="/growth-os"

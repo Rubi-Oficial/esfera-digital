@@ -3,9 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
-import WhatsAppLink from "./ui/WhatsAppLink";
 import { staggerContainer, blurFadeIn } from "@/lib/animations";
-import { WHATSAPP_MESSAGES } from "@/lib/constants";
 import { blogArticles } from "@/lib/blog-data";
 
 const BlogSection = () => {

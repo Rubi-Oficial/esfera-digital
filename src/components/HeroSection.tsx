@@ -1,15 +1,14 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, ArrowDown } from "lucide-react";
 import WhatsAppLink from "./ui/WhatsAppLink";
 import { WHATSAPP_MESSAGES } from "@/lib/constants";
 import heroImg from "@/assets/hero-workspace.jpg";
 
 const benefits = [
-  "Sites institucionais sob medida",
-  "I.A. que automatiza e vende",
-  "WhatsApp, CRM e automações",
-  "SEO para dominar o Google",
+  "Sem complicação",
+  "Sem depender de redes sociais",
+  "Pronto para gerar clientes",
 ];
 
 const TYPEWRITER_TEXT = "Websites + I.A.";
@@ -54,7 +53,6 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
-      {/* Background image with strong overlay for readability */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/80 to-background z-10" />
         <motion.img
@@ -68,7 +66,6 @@ const HeroSection = () => {
         />
       </motion.div>
 
-      {/* Single subtle glow — no floating dots */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" aria-hidden="true" />
 
       <motion.div className="container relative z-10 px-4 md:px-8 py-20" style={{ y: contentY, opacity: contentOpacity }}>
@@ -82,10 +79,10 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-medium mb-8 tracking-widest uppercase"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-destructive/30 bg-destructive/5 text-destructive text-xs font-medium mb-8 tracking-widest uppercase"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
-            Esfera Digital
+            <span className="w-1.5 h-1.5 rounded-full bg-destructive animate-pulse" aria-hidden="true" />
+            Seu negócio está perdendo clientes
           </motion.div>
 
           <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-6">
@@ -99,9 +96,14 @@ const HeroSection = () => {
             <span className="text-foreground/95">que vendem por você.</span>
           </h1>
 
+          <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-4 leading-relaxed">
+            Enquanto você depende do Instagram…{" "}
+            <strong className="text-foreground font-semibold">seus concorrentes estão aparecendo no Google</strong> e fechando vendas.
+          </p>
+
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed">
-            Websites de alto impacto com inteligência artificial integrada — seu negócio vendendo e atendendo{" "}
-            <strong className="text-foreground font-semibold">24h por dia</strong>.
+            Nós criamos seu site completo com inteligência artificial em poucos dias —{" "}
+            <strong className="text-foreground font-semibold">pronto para atrair clientes e vender automaticamente</strong>.
           </p>
 
           <motion.ul
@@ -138,16 +140,16 @@ const HeroSection = () => {
             <WhatsAppLink
               message={WHATSAPP_MESSAGES.presenca}
               size="lg"
-              ariaLabel="Solicitar orçamento via WhatsApp"
+              ariaLabel="Quero um site com IA para meu negócio"
             >
-              Solicitar Orçamento Gratuito
+              Quero um site com IA
             </WhatsAppLink>
             <a
-              href="#portfolio"
+              href="#planos"
               className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors group"
             >
-              Ver portfólio
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+              Ver oferta especial
+              <ArrowDown size={16} className="group-hover:translate-y-1 transition-transform" aria-hidden="true" />
             </a>
           </motion.div>
         </motion.div>

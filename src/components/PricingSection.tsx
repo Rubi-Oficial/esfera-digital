@@ -1,72 +1,31 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, Star, Zap } from "lucide-react";
+import { Check, Zap, Users, Briefcase, MapPin, Gift } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import WhatsAppLink from "./ui/WhatsAppLink";
-import { staggerContainer, fadeInScale } from "@/lib/animations";
 import { WHATSAPP_MESSAGES } from "@/lib/constants";
 
-const plans = [
-  {
-    name: "Entrada Estratégica",
-    price: "R$ 2.000",
-    subtitle: "Sua Presença Digital Profissional em Tempo Recorde",
-    description: "Ideal para empresas que precisam sair do amadorismo e ter uma presença estratégica, moderna e otimizada para conversão.",
-    features: [
-      "Site One Page estratégico",
-      "Design profissional personalizado",
-      "Estrutura persuasiva básica",
-      "Integração direta com WhatsApp",
-      "SEO essencial",
-      "Versão mobile otimizada",
-      "Entrega rápida",
-    ],
-    cta: "Quero Garantir Minha Vaga",
-    message: WHATSAPP_MESSAGES.planStart,
-    highlight: false,
-    icon: Zap,
-  },
-  {
-    name: "Mais Escolhido",
-    price: "R$ 5.000",
-    priceNote: "Até 5 páginas",
-    subtitle: "Posicionamento Premium + Estrutura Para Escalar",
-    description: "Para empresas que querem autoridade, geração de leads e estrutura preparada para tráfego pago.",
-    features: [
-      "Até 5 páginas estratégicas",
-      "Copywriting persuasivo completo",
-      "Design premium exclusivo",
-      "Estrutura SEO avançada",
-      "Integração WhatsApp e formulários inteligentes",
-      "Estrutura pronta para anúncios",
-      "Performance otimizada",
-      "Entrega prioritária",
-    ],
-    cta: "Quero Escalar Meu Negócio",
-    message: WHATSAPP_MESSAGES.planPremium,
-    highlight: true,
-    icon: Star,
-    badge: "Recomendado",
-  },
-  {
-    name: "Projetos Limitados",
-    price: "Sob Consulta",
-    subtitle: "Estrutura Completa com IA e Automação",
-    description: "Para empresas que desejam dominar o digital com automação, funis estratégicos e inteligência artificial integrada.",
-    features: [
-      "Estrutura personalizada avançada",
-      "Integração com IA (chatbot + automações)",
-      "Integração com CRM",
-      "Estrutura de funil digital",
-      "Estratégia completa de crescimento",
-      "Planejamento técnico e estratégico",
-    ],
-    cta: "Falar com Especialista",
-    message: WHATSAPP_MESSAGES.planScale,
-    highlight: false,
-    icon: Star,
-    badge: "Vagas Limitadas",
-  },
+const included = [
+  "Site profissional (One Page estratégico)",
+  "Design moderno e personalizado",
+  "Copy pronta para vender",
+  "Integração com WhatsApp",
+  "SEO básico (para aparecer no Google)",
+  "1 ano de hospedagem incluso",
+  "Entrega rápida",
+];
+
+const bonuses = [
+  "Entrega em até 7 dias",
+  "Setup prioritário",
+  "Suporte inicial incluso",
+];
+
+const idealFor = [
+  { icon: Briefcase, label: "Pequenos empresários" },
+  { icon: Users, label: "Autônomos" },
+  { icon: Zap, label: "Prestadores de serviço" },
+  { icon: MapPin, label: "Negócios locais" },
 ];
 
 const PricingSection = () => {
@@ -74,102 +33,120 @@ const PricingSection = () => {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const orbY1 = useTransform(scrollYProgress, [0, 1], [50, -50]);
   const orbY2 = useTransform(scrollYProgress, [0, 1], [-30, 60]);
-  const dotY = useTransform(scrollYProgress, [0, 1], [0, -70]);
 
   return (
     <section ref={sectionRef} id="planos" className="section-padding section-divider relative overflow-hidden" aria-labelledby="pricing-heading">
       <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/5 blur-[140px] -right-40 top-20 pointer-events-none" style={{ y: orbY1 }} aria-hidden="true" />
       <motion.div className="absolute w-[300px] h-[300px] rounded-full bg-primary/3 blur-[100px] left-0 bottom-0 pointer-events-none" style={{ y: orbY2 }} aria-hidden="true" />
-      <motion.div className="absolute w-2 h-2 rounded-full bg-primary/50 animate-pulse-glow left-16 top-40 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
+
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
           titleId="pricing-heading"
-          title={<>Escolha seu <span className="text-gradient">plano</span></>}
-          subtitle="Trabalhamos com número limitado de projetos simultâneos para garantir excelência estratégica."
-          className="mb-6"
+          label="💰 Oferta Especial"
+          title={<>Site Profissional <span className="text-gradient">Completo</span></>}
+          subtitle="Agora deixa eu ser direto com você: você poderia pagar facilmente R$ 2.000 ou mais. Mas hoje você não precisa."
+          className="mb-10"
         />
 
-        {/* Urgency badge */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
-            Últimas vagas para desenvolvimento este mês
-          </div>
-        </div>
-
-        {/* Progress bar */}
-        <div className="max-w-xs mx-auto mb-16">
-          <div className="flex justify-between text-xs text-muted-foreground mb-2">
-            <span>3 de 5 preenchidas</span>
-          </div>
-          <div className="h-2 rounded-full bg-secondary overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: "60%" }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="h-full rounded-full bg-primary"
-            />
-          </div>
-        </div>
-
+        {/* Main offer card */}
         <motion.div
-          variants={staggerContainer(0.15, 0.3)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch"
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+          className="max-w-2xl mx-auto"
         >
-          {plans.map((plan, i) => (
-            <motion.div
-              key={i}
-              variants={fadeInScale}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 ${
-                plan.highlight
-                  ? "border-2 border-primary glow-box-strong bg-card lg:scale-105 lg:-my-2"
-                  : "glass-hover"
-              }`}
-            >
-              {plan.badge && (
-                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-lg">
-                  {plan.badge}
-                </span>
-              )}
+          <div className="relative rounded-3xl border-2 border-primary glow-box-strong bg-card p-8 md:p-12">
+            <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-primary text-primary-foreground text-sm font-bold shadow-lg">
+              🔥 Promoção por tempo limitado
+            </span>
 
-              <div className="mb-6">
-                <h3 className="font-bold text-lg mb-2">{plan.name}</h3>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-bold text-gradient">{plan.price}</span>
-                  {plan.priceNote && <span className="text-sm text-muted-foreground">{plan.priceNote}</span>}
-                </div>
+            <div className="text-center mb-8 mt-4">
+              <p className="text-muted-foreground line-through text-lg mb-1">De R$ 2.000</p>
+              <div className="flex items-baseline justify-center gap-2">
+                <span className="text-sm text-muted-foreground">Por apenas</span>
+                <span className="text-6xl md:text-7xl font-bold text-gradient">R$ 1.290</span>
               </div>
+            </div>
 
-              <p className="font-semibold text-sm mb-2">{plan.subtitle}</p>
-              <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{plan.description}</p>
-
-              <ul className="space-y-3 mb-8 flex-1" role="list">
-                {plan.features.map((f, j) => (
-                  <li key={j} className="flex items-start gap-3 text-sm text-secondary-foreground">
+            {/* What's included */}
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4 flex items-center gap-2">
+                <Gift size={16} /> O que está incluso
+              </h3>
+              <ul className="space-y-3" role="list">
+                {included.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-secondary-foreground">
                     <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
                       <Check size={12} className="text-primary" aria-hidden="true" />
                     </div>
-                    {f}
+                    {item}
                   </li>
                 ))}
               </ul>
+            </div>
 
-              <WhatsAppLink
-                message={plan.message}
-                variant={plan.highlight ? "primary" : "outline"}
-                size="md"
-                ariaLabel={`${plan.cta} - Plano ${plan.name}`}
-                className="w-full py-3.5"
-              >
-                {plan.cta}
-              </WhatsAppLink>
-            </motion.div>
-          ))}
+            {/* Bonuses */}
+            <div className="glass rounded-xl p-4 mb-8 border border-primary/20">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-3">🎁 Bônus inclusos</h4>
+              <ul className="space-y-2">
+                {bonuses.map((b, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-secondary-foreground">
+                    <Check size={14} className="text-primary" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <WhatsAppLink
+              message={WHATSAPP_MESSAGES.planStart}
+              variant="primary"
+              size="lg"
+              ariaLabel="Quero meu site por R$ 1.290"
+              className="w-full py-4 text-lg"
+            >
+              Quero meu site por R$ 1.290
+            </WhatsAppLink>
+          </div>
+        </motion.div>
+
+        {/* Who is it for */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="max-w-2xl mx-auto mt-12 text-center"
+        >
+          <h3 className="text-lg font-bold mb-6">🎯 Pra quem é esse site?</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {idealFor.map((item, i) => (
+              <div key={i} className="glass-hover rounded-xl p-4 text-center">
+                <item.icon size={20} className="text-primary mx-auto mb-2" aria-hidden="true" />
+                <p className="text-sm font-medium text-secondary-foreground">{item.label}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-sm text-muted-foreground mt-4">
+            👉 Que querem mais clientes <strong className="text-foreground">sem depender de redes sociais</strong>
+          </p>
+        </motion.div>
+
+        {/* Urgency */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="max-w-lg mx-auto mt-10"
+        >
+          <div className="glass rounded-xl p-5 border border-destructive/20 text-center">
+            <p className="text-sm font-semibold text-destructive mb-1">⚠️ Vagas limitadas</p>
+            <p className="text-xs text-muted-foreground">
+              Trabalhamos com número limitado de projetos por mês. Quando fechar, só no próximo ciclo.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>

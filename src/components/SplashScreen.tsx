@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import logoIcon from "@/assets/logo-icon.png";
 
 const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [show, setShow] = useState(true);
@@ -29,42 +30,17 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
           />
 
           <div className="relative flex flex-col items-center gap-6">
-            {/* Animated sphere/logo */}
-            <motion.div
-              className="relative w-20 h-20"
+            {/* Logo sphere */}
+            <motion.img
+              src={logoIcon}
+              alt="Esfera Digital"
+              className="w-20 h-20 object-contain drop-shadow-[0_0_20px_hsl(var(--primary)/0.6)]"
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            >
-              {/* Outer ring */}
-              <motion.div
-                className="absolute inset-0 rounded-full border-2 border-primary/60"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              />
-              {/* Inner ring */}
-              <motion.div
-                className="absolute inset-2 rounded-full border-2 border-primary/40"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              />
-              {/* Core sphere */}
-              <motion.div
-                className="absolute inset-4 rounded-full bg-gradient-to-br from-primary to-primary/60"
-                animate={{ scale: [1, 1.15, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              />
-              {/* Orbital dot */}
-              <motion.div
-                className="absolute w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary))]"
-                style={{ top: "50%", left: "50%", marginTop: -4, marginLeft: -4 }}
-                animate={{
-                  x: [0, 32, 0, -32, 0],
-                  y: [-32, 0, 32, 0, -32],
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              />
-            </motion.div>
+              width={80}
+              height={80}
+            />
 
             {/* Brand text */}
             <motion.div
@@ -74,8 +50,8 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
               transition={{ delay: 0.4, duration: 0.6 }}
             >
               <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-                <span className="text-primary">Esfera</span>
-                <span className="text-foreground"> Digital</span>
+                <span className="text-foreground">ESFERA</span>
+                <span className="text-primary ml-2" style={{ letterSpacing: "0.15em" }}>DIGITAL</span>
               </h1>
               <motion.p
                 className="text-xs text-muted-foreground tracking-[0.3em] uppercase"

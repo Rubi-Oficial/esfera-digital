@@ -57,7 +57,7 @@ type AIAnalysis = {
 };
 
 const CRMContent = () => {
-  const [view, setView] = useState<"pipeline" | "dashboard">("dashboard");
+  const [view, setView] = useState<"pipeline" | "dashboard" | "indicacoes">("dashboard");
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
   const queryClient = useQueryClient();
 

@@ -50,7 +50,7 @@ const slideVariants = {
     x: 0,
     opacity: 1,
     scale: 1,
-    transition: { type: "spring", stiffness: 200, damping: 25 },
+    transition: { type: "spring" as const, stiffness: 200, damping: 25 },
   },
   exit: (direction: number) => ({
     x: direction < 0 ? 300 : -300,

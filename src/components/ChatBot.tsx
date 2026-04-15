@@ -248,11 +248,13 @@ const ChatBot = () => {
             // "Não tenho dúvidas" or free text
             setTimeout(() => {
               const finalLead = { ...lead, objetivo: lead.objetivo || userInput };
+              if (crmLeadId) {
+                updateLeadStage(crmLeadId, "qualificado", "proposta_apresentada").catch(console.error);
+              }
               addBotMessage(
                 `Maravilha, **${lead.nome}**! 🎉\n\nResumo das suas informações:\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n⏰ **Urgência:** ${lead.urgencia}\n🎯 **Objetivo:** ${lead.objetivo}\n\nVou te encaminhar para o nosso WhatsApp para darmos continuidade ao seu atendimento. Clique no botão abaixo! 👇`
               );
               setStep("finalizar");
-              // Auto-send to WhatsApp after a short delay
               setTimeout(() => sendToWhatsApp(finalLead), 2000);
             }, 600);
           }

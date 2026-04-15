@@ -252,56 +252,53 @@ const ChatBot = () => {
 
         case "objetivo":
           setLead((prev) => ({ ...prev, objetivo: userInput }));
+          if (crmLeadId) {
+            updateLeadStage(crmLeadId, "engajado", "qualificado").catch(console.error);
+          }
           setTimeout(() => {
-            addBotMessage(
-              `Excelente! 🚀\n\nAntes de finalizar, você tem alguma **dúvida**?`,
-              DUVIDAS_OPTIONS
-            );
-            setStep("duvidas");
+            const finalLead = { ...lead, objetivo: userInput };
+            const highIntent = isHighIntent(finalLead);
+
+            if (highIntent) {
+              // High intent → recommend Growth directly with anchoring
+              addBotMessage(
+                `Já entendi seu cenário, **${lead.nome}**! 👍\n\nCom base no que você me disse, seu perfil é de alguém que precisa de **resultados rápidos**.\n\nTemos 3 opções para você:\n\n💎 **Premium** — R$ 5.000\nSolução enterprise completa com consultoria dedicada\n\n🚀 **Esfera Growth** — R$ 1.997 ⭐ *Recomendado pra você*\nSite + ecossistema de crescimento + consultoria + programa de indicações\n\n⚡ **Site Profissional** — R$ 997\nSite completo com IA, SEO e design personalizado\n\nQual faz mais sentido pro seu negócio?`,
+                PLANO_OPTIONS
+              );
+            } else {
+              // Normal lead → present all plans with anchoring
+              addBotMessage(
+                `Maravilha, **${lead.nome}**! 🎉\n\nCom base no que você me contou, preparei as melhores opções:\n\n💎 **Premium** — R$ 5.000\nSolução enterprise com consultoria dedicada e suporte VIP\n\n🚀 **Esfera Growth** — R$ 1.997 ⭐ *Mais vendido*\nSite + ecossistema de crescimento + consultoria individual + programa de indicações\n\n⚡ **Site Profissional** — R$ 997\nSite completo com IA, SEO, design personalizado e entrega em 7 dias\n\nQual opção combina mais com o momento do seu negócio?`,
+                PLANO_OPTIONS
+              );
+            }
+            setStep("planos");
           }, 600);
           break;
 
-        case "duvidas": {
-          const faqAnswer = FAQ[userInput];
-          if (faqAnswer) {
-            setTimeout(() => {
-              addBotMessage(faqAnswer);
-              setTimeout(() => {
-                addBotMessage(
-                  `Tem mais alguma dúvida? 😊`,
-                  [...DUVIDAS_OPTIONS]
-                );
-              }, 800);
-            }, 600);
-          } else {
-            // "Não tenho dúvidas" or free text → smart routing
-            setTimeout(() => {
-              const finalLead = { ...lead, objetivo: lead.objetivo || userInput };
-              if (crmLeadId) {
-                updateLeadStage(crmLeadId, "qualificado", "proposta_apresentada").catch(console.error);
-              }
-
-              const highIntent = isHighIntent(finalLead);
-
-              if (highIntent) {
-                // High intent → connect to human specialist
-                addBotMessage(
-                  `Já entendi seu cenário, **${lead.nome}**! 👍\n\nVocê tem um caso com bastante potencial. Vou te direcionar da forma mais rápida para um especialista que pode te ajudar agora.\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n⏰ **Urgência:** ${lead.urgencia}\n🎯 **Objetivo:** ${lead.objetivo}\n\nPosso te conectar com um especialista agora 👇`
-                );
-              } else {
-                // Normal lead → show proposal then offer WhatsApp
-                addBotMessage(
-                  `Maravilha, **${lead.nome}**! 🎉\n\nJá entendi seu cenário. Com base no que você me disse, temos a solução ideal para o seu negócio!\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n⏰ **Urgência:** ${lead.urgencia}\n🎯 **Objetivo:** ${lead.objetivo}\n\nNosso time vai preparar uma proposta personalizada. Clique abaixo para falar com nosso especialista e receber os detalhes! 👇`
-                );
-              }
-
-              setStep("finalizar");
-              // Auto-open WhatsApp after delay only for high-intent
-              if (highIntent) {
-                setTimeout(() => sendToWhatsApp(finalLead), 3000);
-              }
-            }, 600);
+        case "planos": {
+          if (crmLeadId) {
+            updateLeadStage(crmLeadId, "qualificado", "proposta_apresentada").catch(console.error);
           }
+
+          let planoMsg = "";
+          if (userInput.includes("5.000") || userInput.includes("Premium")) {
+            planoMsg = `Excelente escolha, **${lead.nome}**! 💎\n\nO plano **Premium** é nossa solução mais completa. Vou te conectar com um especialista que vai montar uma proposta sob medida para o seu negócio.\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n💰 **Plano:** Premium — R$ 5.000`;
+          } else if (userInput.includes("1.997") || userInput.includes("Growth")) {
+            planoMsg = `Ótima decisão, **${lead.nome}**! 🚀\n\nO **Esfera Growth** é o nosso carro-chefe — site profissional + ecossistema completo de crescimento com consultoria, programa de indicações e dashboard exclusivo.\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n💰 **Plano:** Esfera Growth — R$ 1.997`;
+          } else {
+            planoMsg = `Perfeito, **${lead.nome}**! ⚡\n\nO **Site Profissional** é ideal pra começar com o pé direito — site completo com IA, SEO otimizado, design personalizado e entrega em até 7 dias!\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n💰 **Plano:** Site Profissional — R$ 997`;
+          }
+
+          setTimeout(() => {
+            addBotMessage(planoMsg + `\n\nClique abaixo para falar com nosso especialista e garantir sua vaga! 👇`);
+            setStep("finalizar");
+
+            // Auto-open WhatsApp for high intent
+            if (isHighIntent(lead)) {
+              setTimeout(() => sendToWhatsApp(lead), 3000);
+            }
+          }, 600);
           break;
         }
 

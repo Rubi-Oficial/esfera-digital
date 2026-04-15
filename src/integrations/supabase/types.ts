@@ -106,6 +106,146 @@ export type Database = {
         }
         Relationships: []
       }
+      referral_clicks: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: string | null
+          referral_code_id: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          referral_code_id: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          referral_code_id?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referral_clicks_referral_code_id_fkey"
+            columns: ["referral_code_id"]
+            isOneToOne: false
+            referencedRelation: "referral_codes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referral_codes: {
+        Row: {
+          ativo: boolean
+          code: string
+          comissao_por_venda: number
+          created_at: string
+          id: string
+          nome: string
+          saldo_disponivel: number
+          saldo_pago: number
+          telefone: string | null
+          total_clicks: number
+          total_leads: number
+          total_vendas: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ativo?: boolean
+          code: string
+          comissao_por_venda?: number
+          created_at?: string
+          id?: string
+          nome: string
+          saldo_disponivel?: number
+          saldo_pago?: number
+          telefone?: string | null
+          total_clicks?: number
+          total_leads?: number
+          total_vendas?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ativo?: boolean
+          code?: string
+          comissao_por_venda?: number
+          created_at?: string
+          id?: string
+          nome?: string
+          saldo_disponivel?: number
+          saldo_pago?: number
+          telefone?: string | null
+          total_clicks?: number
+          total_leads?: number
+          total_vendas?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      referrals: {
+        Row: {
+          comissao: number
+          created_at: string
+          data_conversao: string | null
+          data_pagamento: string | null
+          expires_at: string
+          id: string
+          lead_id: string | null
+          lead_nome: string | null
+          lead_telefone: string | null
+          referral_code_id: string
+          status: string
+        }
+        Insert: {
+          comissao?: number
+          created_at?: string
+          data_conversao?: string | null
+          data_pagamento?: string | null
+          expires_at?: string
+          id?: string
+          lead_id?: string | null
+          lead_nome?: string | null
+          lead_telefone?: string | null
+          referral_code_id: string
+          status?: string
+        }
+        Update: {
+          comissao?: number
+          created_at?: string
+          data_conversao?: string | null
+          data_pagamento?: string | null
+          expires_at?: string
+          id?: string
+          lead_id?: string | null
+          lead_nome?: string | null
+          lead_telefone?: string | null
+          referral_code_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referral_code_id_fkey"
+            columns: ["referral_code_id"]
+            isOneToOne: false
+            referencedRelation: "referral_codes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string

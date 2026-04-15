@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Briefcase, Building2, ThumbsUp } from "lucide-react";
-import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, fadeInScale } from "@/lib/animations";
 
 const stats = [
@@ -32,7 +31,7 @@ const CountUp = ({ end, prefix, suffix, duration = 2 }: { end: number; prefix: s
   }, [isInView, end, duration]);
 
   return (
-    <span ref={ref} className="text-5xl md:text-6xl font-bold text-gradient tabular-nums">
+    <span ref={ref} className="text-4xl md:text-5xl font-bold text-gradient tabular-nums">
       {prefix}{count}{suffix}
     </span>
   );
@@ -45,42 +44,41 @@ const StatsSection = () => {
     offset: ["start end", "end start"],
   });
 
-  const bgY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-28 relative overflow-hidden" aria-labelledby="stats-heading">
+    <section ref={sectionRef} className="py-16 md:py-24 relative overflow-hidden" aria-labelledby="stats-heading">
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/3 blur-[120px] pointer-events-none"
         style={{ y: bgY }}
         aria-hidden="true"
       />
       <div className="container px-4 md:px-8 relative z-10">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="glass rounded-3xl p-10 md:p-16 glow-box-strong relative overflow-hidden"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="glass rounded-2xl p-8 md:p-14 glow-box relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5" aria-hidden="true" />
           <div className="relative z-10">
-            <h2 id="stats-heading" className="text-3xl md:text-4xl font-bold text-center mb-14">
+            <h2 id="stats-heading" className="text-2xl md:text-3xl font-bold text-center mb-12">
               Números <span className="text-gradient">Reais</span>
             </h2>
             <motion.div
-              variants={staggerContainer(0.2, 0.3)}
+              variants={staggerContainer(0.15, 0.2)}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-10"
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6"
             >
               {stats.map((s, i) => (
-                <motion.div key={i} variants={fadeInScale} className="text-center group">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/20 transition-colors">
-                    <s.icon size={24} className="text-primary" aria-hidden="true" />
+                <motion.div key={i} variants={fadeInScale} className="text-center">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <s.icon size={22} className="text-primary" aria-hidden="true" />
                   </div>
                   <CountUp end={s.value} prefix={s.prefix} suffix={s.suffix} />
-                  <p className="text-muted-foreground mt-3 text-sm font-medium">{s.label}</p>
+                  <p className="text-muted-foreground mt-2 text-sm">{s.label}</p>
                 </motion.div>
               ))}
             </motion.div>

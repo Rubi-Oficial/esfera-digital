@@ -2,82 +2,56 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
-import methodBg from "@/assets/methodology-bg.jpg";
 
 const steps = [
-  { num: "01", title: "Diagnóstico Estratégico", desc: "Analisamos mercado, público e concorrência para definir a melhor arquitetura digital para seu negócio.", color: "from-primary/20 to-primary/5" },
-  { num: "02", title: "Arquitetura de Conversão", desc: "Planejamos páginas, fluxos e elementos persuasivos com foco em gerar leads e vendas.", color: "from-primary/25 to-primary/5" },
-  { num: "03", title: "Design & Desenvolvimento", desc: "Criamos um site premium, responsivo e veloz — alinhado à identidade e posicionamento da sua marca.", color: "from-primary/30 to-primary/5" },
-  { num: "04", title: "Integrações & I.A.", desc: "Conectamos WhatsApp, chatbots, CRM, automações e sistemas de I.A. para maximizar resultados.", color: "from-primary/35 to-primary/5" },
-  { num: "05", title: "Lançamento & Escala", desc: "Entregamos uma estrutura preparada para tráfego pago, SEO e crescimento sustentável.", color: "from-primary/40 to-primary/5" },
+  { num: "01", title: "Diagnóstico Estratégico", desc: "Analisamos mercado, público e concorrência para definir a melhor arquitetura digital." },
+  { num: "02", title: "Arquitetura de Conversão", desc: "Planejamos páginas, fluxos e elementos persuasivos com foco em leads e vendas." },
+  { num: "03", title: "Design & Desenvolvimento", desc: "Criamos um site premium, responsivo e veloz — alinhado à sua marca." },
+  { num: "04", title: "Integrações & I.A.", desc: "Conectamos WhatsApp, chatbots, CRM e sistemas de I.A. para maximizar resultados." },
+  { num: "05", title: "Lançamento & Escala", desc: "Entregamos estrutura preparada para tráfego pago, SEO e crescimento." },
 ];
 
 const MethodologySection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const bgY = useTransform(scrollYProgress, [0, 1], [20, -20]);
   const orbY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const dot1Y = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const dot2Y = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   return (
     <section ref={sectionRef} id="metodologia" className="section-padding section-divider relative overflow-hidden" aria-labelledby="methodology-heading">
-      {/* Background image with parallax */}
-      <motion.div className="absolute inset-0" style={{ y: bgY }} aria-hidden="true">
-        <img
-          src={methodBg}
-          alt=""
-          className="w-full h-full object-cover opacity-10"
-          loading="lazy"
-          width={1920}
-          height={1080}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
-      </motion.div>
-
-      <motion.div className="absolute w-[350px] h-[350px] rounded-full bg-primary/5 blur-[120px] -left-20 bottom-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
-      <motion.div className="absolute w-2 h-2 rounded-full bg-primary animate-pulse-glow right-16 top-24 pointer-events-none" style={{ y: dot1Y }} aria-hidden="true" />
-      <motion.div className="absolute w-1 h-1 rounded-full bg-primary/40 animate-pulse-glow left-20 top-1/2 pointer-events-none" style={{ y: dot2Y }} aria-hidden="true" />
+      <motion.div className="absolute w-[350px] h-[350px] rounded-full bg-primary/3 blur-[120px] -left-20 bottom-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
 
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
           label="Processo"
           titleId="methodology-heading"
-          title={<>Do diagnóstico ao <span className="text-gradient">resultado</span> em 5 etapas</>}
-          subtitle="Um processo validado por +87 projetos que transforma sua visão em uma máquina digital de vendas."
-          className="mb-16"
+          title={<>Do diagnóstico ao <span className="text-gradient">resultado</span></>}
+          subtitle="Um processo validado por +87 projetos que transforma sua visão em resultados reais."
+          className="mb-14"
         />
 
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            variants={staggerContainer(0.12, 0.2)}
+            variants={staggerContainer(0.1, 0.2)}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-60px" }}
-            className="space-y-4"
+            className="space-y-3"
           >
             {steps.map((step, i) => (
               <motion.div
                 key={i}
                 variants={fadeInUp}
-                className="glass-hover rounded-2xl p-6 md:p-8 flex items-start gap-6 group relative overflow-hidden"
+                className="glass-hover rounded-xl p-5 md:p-6 flex items-start gap-5 group relative overflow-hidden"
               >
-                {/* Progress gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} aria-hidden="true" />
-
-                <div className="relative z-10 flex items-start gap-6 w-full">
-                  <div className="w-16 h-16 rounded-2xl bg-primary/10 border-2 border-primary/30 flex items-center justify-center shrink-0 group-hover:border-primary group-hover:bg-primary/20 transition-all duration-300">
-                    <span className="text-primary font-bold text-lg">{step.num}</span>
+                <div className="relative z-10 flex items-start gap-5 w-full">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:border-primary/40 group-hover:bg-primary/15 transition-all duration-300">
+                    <span className="text-primary font-bold text-sm">{step.num}</span>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg mb-2 text-foreground group-hover:text-primary transition-colors">{step.title}</h3>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-base mb-1 text-foreground group-hover:text-primary transition-colors duration-300">{step.title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
-
-                {i < steps.length - 1 && (
-                  <div className="absolute bottom-0 left-[3.25rem] w-px h-4 bg-primary/20 translate-y-full" aria-hidden="true" />
-                )}
               </motion.div>
             ))}
           </motion.div>

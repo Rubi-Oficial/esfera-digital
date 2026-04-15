@@ -31,6 +31,7 @@ const SEOHead = ({
   path,
   image,
   type = "website",
+  breadcrumbs,
   articleSchema,
 }: SEOHeadProps) => {
   const fullUrl = `${SITE_URL}${path}`;

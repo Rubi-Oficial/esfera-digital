@@ -69,6 +69,11 @@ const BlogArticlePage = () => {
         path={`/blog/${article.slug}`}
         image={article.image}
         type="article"
+        breadcrumbs={[
+          { name: "Início", url: "https://criarmeusiteagora.esferamarketing.com/" },
+          { name: "Blog", url: "https://criarmeusiteagora.esferamarketing.com/blog" },
+          { name: article.title, url: `https://criarmeusiteagora.esferamarketing.com/blog/${article.slug}` },
+        ]}
         articleSchema={{
           title: article.title,
           description: article.excerpt,

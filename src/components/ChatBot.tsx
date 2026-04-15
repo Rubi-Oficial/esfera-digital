@@ -83,8 +83,23 @@ const ChatBot = () => {
   const [showPulse, setShowPulse] = useState(true);
   const [hasGreeted, setHasGreeted] = useState(false);
   const [crmLeadId, setCrmLeadId] = useState<string | null>(null);
+  const [refCodeData, setRefCodeData] = useState<ReferralCode | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Track referral code from URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) {
+      lookupRefCode(ref).then((code) => {
+        if (code) {
+          setRefCodeData(code);
+          recordRefClick(code.id).catch(() => {});
+        }
+      });
+    }
+  }, []);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

@@ -7,9 +7,9 @@ export const whatsappUrl = (message: string) =>
 
 export const WHATSAPP_MESSAGES = {
   specialist: "Olá, gostaria de falar com um especialista",
-  presenca: "Olá, quero estruturar minha presença digital",
+  presenca: "Olá, quero um site com IA para o meu negócio!",
   vaga: "Olá, quero garantir minha vaga",
-  planStart: "Olá, quero garantir o Plano Start",
+  planStart: "Olá, quero meu site profissional por R$ 1.290!",
   planPremium: "Olá, quero o Plano Premium",
   planScale: "Olá, quero o Plano Scale",
   info: "Olá, acessei o site da Esfera Digital e gostaria de mais informações sobre websites que aparecem nas pesquisas do google...",
@@ -17,18 +17,18 @@ export const WHATSAPP_MESSAGES = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: "Soluções", href: "#solucoes" },
-  { label: "Metodologia", href: "#metodologia" },
+  { label: "O Problema", href: "#solucoes" },
+  { label: "Como Funciona", href: "#metodologia" },
   { label: "Portfólio", href: "#portfolio" },
-  { label: "Planos", href: "#planos" },
+  { label: "Oferta", href: "#planos" },
   { label: "Blog", href: "#blog" },
 ] as const;
 
 export const FOOTER_LINKS = [
-  { label: "Soluções Digitais", href: "#solucoes", title: "Conheça nossas soluções digitais para empresas" },
-  { label: "Metodologia", href: "#metodologia", title: "Nossa metodologia estratégica de 5 etapas" },
-  { label: "Portfólio", href: "#portfolio", title: "Projetos de sites profissionais desenvolvidos" },
-  { label: "Planos e Preços", href: "#planos", title: "Planos de criação de sites a partir de R$ 2.000" },
+  { label: "O Problema", href: "#solucoes", title: "Por que você precisa de um site profissional" },
+  { label: "Como Funciona", href: "#metodologia", title: "Nosso processo simples em 4 passos" },
+  { label: "Portfólio", href: "#portfolio", title: "Projetos reais que geraram resultados" },
+  { label: "Oferta Especial", href: "#planos", title: "Site profissional completo por R$ 1.290" },
   { label: "Blog", href: "#blog", title: "Artigos sobre marketing digital e criação de sites" },
   { label: "Depoimentos", href: "#depoimentos", title: "O que nossos clientes dizem sobre nosso trabalho" },
 ] as const;

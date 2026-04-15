@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeader from "./ui/SectionHeader";
-import WhatsAppLink from "./ui/WhatsAppLink";
 import { staggerContainer, fadeInLeft } from "@/lib/animations";
 import {
   Accordion,
@@ -12,36 +11,36 @@ import {
 
 const faqs = [
   {
-    question: "Quanto tempo leva para desenvolver meu site?",
-    answer: "O prazo varia de acordo com o plano escolhido. Sites One Page são entregues em até 7 dias úteis. Projetos com múltiplas páginas levam de 15 a 30 dias. Projetos personalizados com IA e automações têm prazos definidos após o diagnóstico inicial.",
+    question: "\"Ah, mas eu não entendo de tecnologia…\"",
+    answer: "Não precisa! Fazemos tudo pra você — do design ao conteúdo, da programação à publicação. Você só precisa nos enviar as informações básicas do seu negócio.",
   },
   {
-    question: "O site será responsivo e otimizado para celular?",
-    answer: "Sim! Todos os nossos projetos são desenvolvidos com abordagem mobile-first, garantindo experiência perfeita em smartphones, tablets e desktops. Também otimizamos para velocidade de carregamento.",
+    question: "\"E se eu não tiver conteúdo?\"",
+    answer: "Sem problemas. Criamos a copy e toda a estrutura completa do seu site. Textos persuasivos, chamadas para ação e conteúdo otimizado para Google.",
   },
   {
-    question: "Vocês fazem integração com WhatsApp?",
-    answer: "Sim. Todos os planos incluem integração com WhatsApp via botão flutuante, links diretos e formulários inteligentes que enviam leads diretamente para seu WhatsApp Business.",
+    question: "\"Vai funcionar para o meu negócio?\"",
+    answer: "Se seus clientes pesquisam no Google, sim! Nossos sites são ideais para pequenos empresários, autônomos, prestadores de serviço e negócios locais de qualquer segmento.",
   },
   {
-    question: "O que está incluso no SEO dos planos?",
-    answer: "O SEO essencial inclui meta tags otimizadas, sitemap, robots.txt e estrutura semântica. No plano Premium, adicionamos SEO avançado com pesquisa de palavras-chave, dados estruturados (JSON-LD), otimização de Core Web Vitals e estratégia de conteúdo.",
+    question: "Quanto tempo leva para ficar pronto?",
+    answer: "Sites One Page são entregues em até 7 dias úteis. Tudo é feito de forma ágil para que você comece a gerar clientes o mais rápido possível.",
   },
   {
-    question: "Preciso fornecer conteúdo e imagens?",
-    answer: "Idealmente sim, mas não se preocupe se não tiver tudo pronto. Oferecemos suporte na curadoria de conteúdo e utilizamos bancos de imagens profissionais quando necessário. No plano Premium, incluímos copywriting persuasivo completo.",
+    question: "O site funciona bem no celular?",
+    answer: "Sim! Todos os sites são desenvolvidos com design responsivo e mobile-first, garantindo experiência perfeita em smartphones, tablets e desktops.",
   },
   {
     question: "Como funciona o pagamento?",
-    answer: "Trabalhamos com entrada de 50% para iniciar o projeto e 50% na entrega. Aceitamos PIX, transferência bancária e cartão de crédito. Para projetos sob consulta, as condições são definidas após o diagnóstico.",
+    answer: "Entrada de 50% para iniciar e 50% na entrega. Aceitamos PIX, transferência bancária e cartão de crédito.",
   },
   {
     question: "Vocês oferecem suporte após a entrega?",
-    answer: "Sim! Todos os planos incluem 30 dias de suporte técnico gratuito após a entrega. Também oferecemos planos de manutenção mensal para atualizações contínuas, monitoramento e melhorias.",
+    answer: "Sim! Todos os projetos incluem suporte técnico gratuito após a entrega, além de 1 ano de hospedagem incluso no pacote.",
   },
   {
-    question: "Posso solicitar alterações durante o desenvolvimento?",
-    answer: "Claro! Nosso processo inclui rodadas de revisão em cada etapa. Você acompanha o progresso e pode solicitar ajustes antes da entrega final, garantindo que o resultado esteja 100% alinhado às suas expectativas.",
+    question: "Posso solicitar alterações?",
+    answer: "Claro! Nosso processo inclui rodadas de revisão. Você acompanha o progresso e pode solicitar ajustes antes da entrega final.",
   },
 ];
 
@@ -49,18 +48,16 @@ const FAQSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const orbY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const dotY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
     <section ref={sectionRef} className="section-padding section-divider relative overflow-hidden" aria-labelledby="faq-heading">
       <motion.div className="absolute w-[400px] h-[400px] rounded-full bg-primary/5 blur-[130px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
-      <motion.div className="absolute w-2 h-2 rounded-full bg-primary/40 animate-pulse-glow right-20 bottom-32 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
-          label="Dúvidas"
+          label="💬 Objeções"
           titleId="faq-heading"
-          title={<>Perguntas <span className="text-gradient">Frequentes</span></>}
-          subtitle="Tire suas dúvidas sobre nossos serviços e processo de trabalho."
+          title={<>Ainda tem <span className="text-gradient">dúvidas?</span></>}
+          subtitle="Respondemos as perguntas mais comuns sobre nosso serviço."
         />
 
         <motion.div

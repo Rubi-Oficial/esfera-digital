@@ -150,7 +150,14 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
                   disabled={authLoading}
                   className="w-full bg-primary text-primary-foreground rounded-lg py-2.5 text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
                 >
-                  {authLoading ? "Entrando..." : "Entrar"}
+                  {authLoading ? (isSignUp ? "Criando..." : "Entrando...") : (isSignUp ? "Criar conta" : "Entrar")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsSignUp(!isSignUp)}
+                  className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {isSignUp ? "Já tem conta? Entrar" : "Criar nova conta"}
                 </button>
               </form>
             )}

@@ -28,7 +28,9 @@ const SEOHead = ({
   articleSchema,
 }: SEOHeadProps) => {
   const fullUrl = `${SITE_URL}${path}`;
-  const ogImage = image || DEFAULT_OG_IMAGE;
+  // Ensure og:image is always an absolute URL
+  const rawImage = image || DEFAULT_OG_IMAGE;
+  const ogImage = rawImage.startsWith("http") ? rawImage : `${SITE_URL}${rawImage}`;
   const fullTitle = `${title} | Esfera Digital`;
 
   useEffect(() => {

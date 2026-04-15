@@ -5,7 +5,7 @@ import { blogArticles, getRelatedArticles, type BlogArticle } from "@/lib/blog-d
 import WhatsAppLink from "@/components/ui/WhatsAppLink";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import SEOHead from "@/components/SEOHead";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const RelatedCard = ({ article }: { article: BlogArticle }) => (
@@ -51,8 +51,32 @@ const BlogArticlePage = () => {
 
   const related = getRelatedArticles(article.slug, 3);
 
+  // Parse date string to ISO format
+  const dateMap: Record<string, string> = {
+    "Jan": "01", "Fev": "02", "Mar": "03", "Abr": "04", "Mai": "05", "Jun": "06",
+    "Jul": "07", "Ago": "08", "Set": "09", "Out": "10", "Nov": "11", "Dez": "12",
+  };
+  const dateParts = article.date.split(" ");
+  const isoDate = dateParts.length === 3
+    ? `${dateParts[2]}-${dateMap[dateParts[1]] || "01"}-${dateParts[0].padStart(2, "0")}`
+    : "2026-01-01";
+
   return (
     <div className="min-h-screen">
+      <SEOHead
+        title={article.title}
+        description={article.excerpt}
+        path={`/blog/${article.slug}`}
+        image={article.image}
+        type="article"
+        articleSchema={{
+          title: article.title,
+          description: article.excerpt,
+          image: article.image,
+          datePublished: isoDate,
+          category: article.category,
+        }}
+      />
       <Navbar />
       <main className="pt-24 pb-20">
         <article className="container px-4 md:px-8 max-w-3xl mx-auto">
@@ -178,7 +202,6 @@ const BlogArticlePage = () => {
         </section>
       </main>
       <Footer />
-      <WhatsAppButton />
     </div>
   );
 };

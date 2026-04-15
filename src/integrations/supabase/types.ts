@@ -269,6 +269,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_chatbot_lead: {
+        Args: {
+          _dor_principal?: string
+          _interesse?: string
+          _nome: string
+          _objetivo?: string
+          _origem?: string
+          _telefone: string
+          _tipo_negocio?: string
+          _urgencia?: string
+        }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

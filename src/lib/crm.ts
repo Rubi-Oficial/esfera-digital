@@ -36,13 +36,18 @@ const SCORE_MAP: Record<string, number> = {
 };
 
 export async function createLead(data: LeadInsert) {
-  const { data: lead, error } = await supabase
-    .from("leads")
-    .insert(data)
-    .select()
-    .single();
+  const { data: leadId, error } = await supabase.rpc("create_chatbot_lead", {
+    _nome: data.nome,
+    _telefone: data.telefone,
+    _origem: data.origem || "chatbot",
+    _interesse: data.interesse || null,
+    _tipo_negocio: data.tipo_negocio || null,
+    _urgencia: data.urgencia || null,
+    _objetivo: data.objetivo || null,
+    _dor_principal: data.dor_principal || null,
+  });
   if (error) throw error;
-  return lead;
+  return { id: leadId as string, ...data } as any;
 }
 
 export async function updateLeadStage(leadId: string, fromStage: PipelineStage, toStage: PipelineStage) {

@@ -149,15 +149,19 @@ const CRMContent = () => {
               <h1 className="text-lg font-bold font-sora">Esfera Growth CRM</h1>
             </div>
             <div className="flex gap-1 bg-muted/30 rounded-lg p-1">
-              {(["dashboard", "pipeline"] as const).map(v => (
+              {([
+                { key: "dashboard", label: "Dashboard" },
+                { key: "pipeline", label: "Pipeline" },
+                { key: "indicacoes", label: "Indicações" },
+              ] as const).map(v => (
                 <button
-                  key={v}
-                  onClick={() => setView(v)}
+                  key={v.key}
+                  onClick={() => setView(v.key)}
                   className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                    view === v ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                    view === v.key ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {v === "dashboard" ? "Dashboard" : "Pipeline"}
+                  {v.label}
                 </button>
               ))}
             </div>

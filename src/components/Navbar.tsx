@@ -46,8 +46,11 @@ const Navbar = () => {
         const el = document.querySelector(href);
         if (el) {
           e.preventDefault();
-          el.scrollIntoView({ behavior: "smooth" });
           setOpen(false);
+          // Delay scroll to allow menu close and body overflow restore
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: "smooth" });
+          }, 350);
         }
       }
     };

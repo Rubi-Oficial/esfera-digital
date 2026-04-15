@@ -186,9 +186,23 @@ const ChatBot = () => {
         case "telefone":
           setLead((prev) => ({ ...prev, telefone: userInput }));
           // Create lead in CRM
-          createLead({ nome: lead.nome || "Lead", telefone: userInput, origem: "chatbot" })
+          createLead({
+            nome: lead.nome || "Lead",
+            telefone: userInput,
+            origem: refCodeData ? "indicacao" : "chatbot",
+          })
             .then((newLead) => {
               setCrmLeadId(newLead.id);
+              // If referred, create referral entry
+              if (refCodeData) {
+                createReferral(
+                  refCodeData.id,
+                  newLead.id,
+                  lead.nome || "Lead",
+                  userInput,
+                  Number(refCodeData.comissao_por_venda)
+                ).catch(console.error);
+              }
             })
             .catch(console.error);
           setTimeout(() => {

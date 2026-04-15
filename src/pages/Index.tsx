@@ -52,6 +52,7 @@ const Index = () => {
           <Footer />
         </Suspense>
         <WhatsAppButton />
+        <ChatBot />
       </div>
     </>
   );

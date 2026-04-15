@@ -123,6 +123,10 @@ const Blog = () => {
         title="Blog - Artigos sobre Marketing Digital, SEO e Criação de Sites"
         description="Conteúdo prático e estratégico sobre marketing digital, SEO, design e desenvolvimento web para impulsionar seu negócio."
         path="/blog"
+        breadcrumbs={[
+          { name: "Início", url: "https://criarmeusiteagora.esferamarketing.com/" },
+          { name: "Blog", url: "https://criarmeusiteagora.esferamarketing.com/blog" },
+        ]}
       />
       <Navbar />
       <main className="pt-24 pb-20">

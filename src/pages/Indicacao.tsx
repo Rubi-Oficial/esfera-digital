@@ -389,7 +389,7 @@ const IndicacaoContent = () => {
 };
 
 const Indicacao = () => (
-  <AuthGuard>
+  <AuthGuard requireAdmin={false}>
     <IndicacaoContent />
   </AuthGuard>
 );

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, ArrowRight } from "lucide-react";
 import { WHATSAPP_PHONE } from "@/lib/constants";
 import { createLead, updateLeadStage } from "@/lib/crm";
+import { lookupRefCode, recordRefClick, createReferral, type ReferralCode } from "@/lib/referral";
 
 type Message = {
   id: string;
@@ -82,8 +83,23 @@ const ChatBot = () => {
   const [showPulse, setShowPulse] = useState(true);
   const [hasGreeted, setHasGreeted] = useState(false);
   const [crmLeadId, setCrmLeadId] = useState<string | null>(null);
+  const [refCodeData, setRefCodeData] = useState<ReferralCode | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Track referral code from URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) {
+      lookupRefCode(ref).then((code) => {
+        if (code) {
+          setRefCodeData(code);
+          recordRefClick(code.id).catch(() => {});
+        }
+      });
+    }
+  }, []);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -170,9 +186,23 @@ const ChatBot = () => {
         case "telefone":
           setLead((prev) => ({ ...prev, telefone: userInput }));
           // Create lead in CRM
-          createLead({ nome: lead.nome || "Lead", telefone: userInput, origem: "chatbot" })
+          createLead({
+            nome: lead.nome || "Lead",
+            telefone: userInput,
+            origem: refCodeData ? "indicacao" : "chatbot",
+          })
             .then((newLead) => {
               setCrmLeadId(newLead.id);
+              // If referred, create referral entry
+              if (refCodeData) {
+                createReferral(
+                  refCodeData.id,
+                  newLead.id,
+                  lead.nome || "Lead",
+                  userInput,
+                  Number(refCodeData.comissao_por_venda)
+                ).catch(console.error);
+              }
             })
             .catch(console.error);
           setTimeout(() => {

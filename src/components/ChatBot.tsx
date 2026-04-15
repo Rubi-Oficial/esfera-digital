@@ -169,6 +169,12 @@ const ChatBot = () => {
 
         case "telefone":
           setLead((prev) => ({ ...prev, telefone: userInput }));
+          // Create lead in CRM
+          createLead({ nome: lead.nome || "Lead", telefone: userInput, origem: "chatbot" })
+            .then((newLead) => {
+              setCrmLeadId(newLead.id);
+            })
+            .catch(console.error);
           setTimeout(() => {
             addBotMessage(
               `Perfeito! 📱\n\nQual é o seu principal **interesse**?`,
@@ -180,6 +186,9 @@ const ChatBot = () => {
 
         case "interesse":
           setLead((prev) => ({ ...prev, interesse: userInput }));
+          if (crmLeadId) {
+            updateLeadStage(crmLeadId, "novo_lead", "engajado").catch(console.error);
+          }
           setTimeout(() => {
             addBotMessage(
               `Ótima escolha! 🎯\n\nPara te atender melhor, qual é o **tipo do seu negócio**? (ex: clínica, restaurante, loja, consultoria, etc.)`
@@ -190,6 +199,9 @@ const ChatBot = () => {
 
         case "tipoNegocio":
           setLead((prev) => ({ ...prev, tipoNegocio: userInput }));
+          if (crmLeadId) {
+            updateLeadStage(crmLeadId, "engajado", "qualificado").catch(console.error);
+          }
           setTimeout(() => {
             addBotMessage(
               `Entendi! 📋\n\nQual a sua **urgência** para o projeto?`,

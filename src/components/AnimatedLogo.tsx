@@ -1,4 +1,5 @@
-import logoIcon from "@/assets/logo-icon.png";
+import { motion } from "framer-motion";
+import logoSphere from "@/assets/logo-sphere.png";
 
 interface AnimatedLogoProps {
   size?: "sm" | "md";
@@ -7,16 +8,19 @@ interface AnimatedLogoProps {
 }
 
 const AnimatedLogo = ({ size = "md", showText = true, className = "" }: AnimatedLogoProps) => {
-  const imgSize = size === "sm" ? "w-8 h-8" : "w-10 h-10";
+  const imgSize = size === "sm" ? 32 : 40;
 
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
-      <img
-        src={logoIcon}
+      <motion.img
+        src={logoSphere}
         alt="Esfera Digital"
-        className={`${imgSize} object-contain drop-shadow-[0_0_8px_hsl(var(--primary)/0.5)]`}
-        width={size === "sm" ? 32 : 40}
-        height={size === "sm" ? 32 : 40}
+        className="object-contain drop-shadow-[0_0_10px_hsl(var(--primary)/0.6)]"
+        style={{ width: imgSize, height: imgSize }}
+        width={imgSize}
+        height={imgSize}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />
       {showText && (
         <span className="text-lg font-bold tracking-tight" style={{ letterSpacing: "-0.02em" }}>

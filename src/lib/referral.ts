@@ -88,16 +88,16 @@ export async function getMyReferrals(codeId: string): Promise<Referral[]> {
   return (data || []) as Referral[];
 }
 
-// Look up a referral code by code string (for landing page)
+// Look up a referral code by code string (for landing page) — uses secure RPC
 export async function lookupRefCode(code: string): Promise<ReferralCode | null> {
-  const { data } = await supabase
-    .from("referral_codes")
-    .select("*")
-    .eq("code", code)
-    .eq("ativo", true)
-    .maybeSingle();
-
-  return data as ReferralCode | null;
+  const { data, error } = await supabase.rpc("lookup_referral_code", { _code: code });
+  if (error || !data || data.length === 0) return null;
+  // Return partial data — only id, code, comissao_por_venda
+  return {
+    id: data[0].id,
+    code: data[0].code,
+    comissao_por_venda: Number(data[0].comissao_por_venda),
+  } as ReferralCode;
 }
 
 // Record a click

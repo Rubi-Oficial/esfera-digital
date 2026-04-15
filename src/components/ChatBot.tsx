@@ -49,24 +49,11 @@ const URGENCIA_OPTIONS = [
   "Estou pesquisando ainda",
 ];
 
-const DUVIDAS_OPTIONS = [
-  "Quanto custa?",
-  "Qual o prazo de entrega?",
-  "Quais funcionalidades incluem?",
-  "Quais os diferenciais?",
-  "Não tenho dúvidas, quero começar!",
+const PLANO_OPTIONS = [
+  "💎 Premium — R$ 5.000",
+  "🚀 Esfera Growth — R$ 1.997",
+  "⚡ Site Profissional — R$ 997",
 ];
-
-const FAQ: Record<string, string> = {
-  "Quanto custa?":
-    "Nossos planos começam a partir de **R$ 997** para um site profissional completo com IA integrada, SEO otimizado e design personalizado. O investimento varia conforme as funcionalidades que você precisa. Quer que eu te mostre os detalhes? 😊",
-  "Qual o prazo de entrega?":
-    "Trabalhamos com prazos de **7 a 15 dias úteis** para entregas, dependendo da complexidade do projeto. Sites mais simples podem ficar prontos em até 5 dias! ⚡",
-  "Quais funcionalidades incluem?":
-    "Nossos sites incluem: ✅ Design responsivo (celular, tablet e desktop)\n✅ SEO otimizado para Google\n✅ Integração com WhatsApp\n✅ Painel administrativo\n✅ Certificado SSL\n✅ Hospedagem inclusa\n✅ Inteligência Artificial integrada",
-  "Quais os diferenciais?":
-    "O que nos diferencia: 🚀 **IA integrada** em todos os projetos\n📊 **Foco em resultados** e conversão\n🎨 **Design premium** personalizado\n⚡ **Entrega rápida** sem perder qualidade\n🤝 **Suporte dedicado** pós-entrega",
-};
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -20,11 +20,13 @@ const consequences = [
 const ProblemSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbY1 = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const orbY1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.7, 1, 0.7, 0.2]);
+  const orbScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.15, 0.8]);
 
   return (
     <section ref={sectionRef} id="solucoes" className="section-padding section-divider relative overflow-hidden" aria-labelledby="problem-heading">
-      <motion.div className="absolute w-[400px] h-[400px] rounded-full bg-destructive/3 blur-[140px] -left-40 top-1/3 pointer-events-none" style={{ y: orbY1 }} aria-hidden="true" />
+      <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-destructive/5 blur-[140px] -left-40 top-1/3 pointer-events-none" style={{ y: orbY1, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
       <div className="container px-4 md:px-8 relative z-10">
         {/* Pattern interrupt */}
         <motion.div

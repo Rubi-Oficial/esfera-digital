@@ -11,9 +11,9 @@ const CTASection = () => {
     offset: ["start end", "end start"],
   });
 
-  const bgY = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.1, 0.9]);
-  const innerY = useTransform(scrollYProgress, [0, 1], [20, -20]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [120, -120]);
+  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.75, 1.2, 0.8]);
+  const innerY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <section ref={sectionRef} className="section-padding relative overflow-hidden" aria-label="Chamada para ação">

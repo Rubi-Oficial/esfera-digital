@@ -13,11 +13,12 @@ const steps = [
 const MethodologySection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.7, 1, 0.7, 0.2]);
 
   return (
     <section ref={sectionRef} id="metodologia" className="section-padding section-divider relative overflow-hidden" aria-labelledby="methodology-heading">
-      <motion.div className="absolute w-[350px] h-[350px] rounded-full bg-primary/3 blur-[120px] -left-20 bottom-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-[450px] h-[450px] rounded-full bg-primary/5 blur-[120px] -left-20 bottom-0 pointer-events-none" style={{ y: orbY, opacity: orbOpacity }} aria-hidden="true" />
 
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader

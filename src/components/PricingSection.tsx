@@ -62,13 +62,16 @@ const PricingSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { hours, minutes, seconds, expired } = useCountdown();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbY1 = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const orbY2 = useTransform(scrollYProgress, [0, 1], [-30, 60]);
+  const orbY1 = useTransform(scrollYProgress, [0, 1], [120, -120]);
+  const orbY2 = useTransform(scrollYProgress, [0, 1], [-60, 120]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.7, 1, 0.7, 0.2]);
+  const orbScale1 = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.2, 0.85]);
+  const orbScale2 = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1.1, 0.9]);
 
   return (
     <section ref={sectionRef} id="planos" className="section-padding section-divider relative overflow-hidden" aria-labelledby="pricing-heading">
-      <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/5 blur-[140px] -right-40 top-20 pointer-events-none" style={{ y: orbY1 }} aria-hidden="true" />
-      <motion.div className="absolute w-[300px] h-[300px] rounded-full bg-primary/3 blur-[100px] left-0 bottom-0 pointer-events-none" style={{ y: orbY2 }} aria-hidden="true" />
+      <motion.div className="absolute w-[600px] h-[600px] rounded-full bg-primary/6 blur-[140px] -right-40 top-20 pointer-events-none" style={{ y: orbY1, opacity: orbOpacity, scale: orbScale1 }} aria-hidden="true" />
+      <motion.div className="absolute w-[400px] h-[400px] rounded-full bg-primary/4 blur-[100px] left-0 bottom-0 pointer-events-none" style={{ y: orbY2, opacity: orbOpacity, scale: orbScale2 }} aria-hidden="true" />
 
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader

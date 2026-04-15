@@ -44,13 +44,15 @@ const StatsSection = () => {
     offset: ["start end", "end start"],
   });
 
-  const bgY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const bgOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.7, 1, 0.7, 0.2]);
+  const bgScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.2, 0.85]);
 
   return (
     <section ref={sectionRef} className="py-16 md:py-24 relative overflow-hidden" aria-labelledby="stats-heading">
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/3 blur-[120px] pointer-events-none"
-        style={{ y: bgY }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none"
+        style={{ y: bgY, opacity: bgOpacity, scale: bgScale }}
         aria-hidden="true"
       />
       <div className="container px-4 md:px-8 relative z-10">

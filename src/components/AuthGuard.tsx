@@ -16,6 +16,7 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {

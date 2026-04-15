@@ -17,4 +17,4 @@ Allow: /
 Disallow: /assets/
 Disallow: /src/
 
-Sitemap: https://esfera-digital.lovable.app/sitemap.xml
+Sitemap: https://esferamarketing.com/sitemap.xml

@@ -42,6 +42,7 @@ const included = [
   "Copy pronta para vender",
   "Integração com WhatsApp",
   "SEO básico (para aparecer no Google)",
+  "Certificado SSL grátis",
   "1 ano de hospedagem incluso",
   "Entrega rápida",
 ];
@@ -67,6 +68,7 @@ const growthBonuses = [
   "1 sessão de consultoria grátis",
   "Acesso vitalício à base de conhecimento",
   "Grupo exclusivo de membros Growth",
+  "Acesso ao grupo VIP no Telegram",
 ];
 
 const idealFor = [
@@ -113,9 +115,9 @@ const PricingSection = () => {
               <div className="text-center mb-6">
                 <h3 className="text-lg font-bold font-sora mb-1">Site Profissional</h3>
                 <p className="text-xs text-muted-foreground mb-4">Ideal para começar</p>
-                <p className="text-muted-foreground line-through text-sm mb-1">De R$ 2.000</p>
+                <p className="text-muted-foreground line-through text-sm mb-1">De R$ 1.500</p>
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-4xl md:text-5xl font-bold text-foreground">R$ 1.290</span>
+                  <span className="text-4xl md:text-5xl font-bold text-foreground">R$ 997</span>
                 </div>
               </div>
 
@@ -149,7 +151,7 @@ const PricingSection = () => {
                 message={WHATSAPP_MESSAGES.planStart}
                 variant="primary"
                 size="lg"
-                ariaLabel="Quero meu site por R$ 1.290"
+                ariaLabel="Quero meu site por R$ 997"
                 className="w-full py-3 text-base"
               >
                 Quero meu site
@@ -175,9 +177,9 @@ const PricingSection = () => {
                   Esfera Growth
                 </h3>
                 <p className="text-xs text-muted-foreground mb-4">Ecossistema completo de crescimento</p>
-                <p className="text-muted-foreground line-through text-sm mb-1">De R$ 3.500</p>
+                <p className="text-muted-foreground line-through text-sm mb-1">De R$ 3.000</p>
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-4xl md:text-5xl font-bold text-gradient">R$ 2.490</span>
+                  <span className="text-4xl md:text-5xl font-bold text-gradient">R$ 1.997</span>
                 </div>
               </div>
 
@@ -255,7 +257,7 @@ const PricingSection = () => {
                 message="Olá! Tenho interesse no plano Esfera Growth com base de conhecimento e consultoria individual. Quero saber mais!"
                 variant="primary"
                 size="lg"
-                ariaLabel="Quero o Esfera Growth por R$ 2.490"
+                ariaLabel="Quero o Esfera Growth por R$ 1.997"
                 className="w-full py-3 text-base mb-3"
               >
                 Quero o Esfera Growth 🚀

@@ -2,7 +2,6 @@ import { useState, lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SplashScreen from "@/components/SplashScreen";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import ChatBot from "@/components/ChatBot";
 
 // Lazy load below-the-fold sections
@@ -51,7 +50,6 @@ const Index = () => {
         <Suspense fallback={null}>
           <Footer />
         </Suspense>
-        <WhatsAppButton />
         <ChatBot />
       </div>
     </>

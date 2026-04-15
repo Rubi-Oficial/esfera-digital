@@ -30,7 +30,7 @@ type Step =
   | "duvidas"
   | "finalizar";
 
-const BOT_NAME = "Esfera IA";
+const BOT_NAME = "Genius AI";
 
 const INTERESSE_OPTIONS = [
   "Criação de Site",

@@ -7,7 +7,7 @@ import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { blogArticles, type BlogArticle } from "@/lib/blog-data";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import SEOHead from "@/components/SEOHead";
 
 const BlogCard = ({ article }: { article: BlogArticle }) => (
   <motion.div variants={fadeInUp} layout>
@@ -119,6 +119,11 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead
+        title="Blog - Artigos sobre Marketing Digital, SEO e Criação de Sites"
+        description="Conteúdo prático e estratégico sobre marketing digital, SEO, design e desenvolvimento web para impulsionar seu negócio."
+        path="/blog"
+      />
       <Navbar />
       <main className="pt-24 pb-20">
         <div className="container px-4 md:px-8">
@@ -259,7 +264,6 @@ const Blog = () => {
         </div>
       </main>
       <Footer />
-      <WhatsAppButton />
     </div>
   );
 };

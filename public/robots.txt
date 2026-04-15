@@ -17,4 +17,4 @@ Allow: /
 Disallow: /assets/
 Disallow: /src/
 
-Sitemap: https://esferamarketing.com/sitemap.xml
+Sitemap: https://criarmeusiteagora.esferamarketing.com/sitemap.xml

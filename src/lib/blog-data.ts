@@ -1,4 +1,4 @@
-import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, Stethoscope, Scale, Leaf, Factory, Cannabis, Rocket, Hotel, UtensilsCrossed, SmilePlus, Building2, type LucideIcon } from "lucide-react";
+import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, Stethoscope, Scale, Leaf, Factory, Cannabis, Rocket, Hotel, UtensilsCrossed, SmilePlus, Building2, ShoppingCart, Bot, Target, MessageCircle, User, Zap, type LucideIcon } from "lucide-react";
 import blogMarketing from "@/assets/blog-marketing.jpg";
 import blogSeo from "@/assets/blog-seo.jpg";
 import blogDesign from "@/assets/blog-design.jpg";
@@ -18,6 +18,12 @@ import blogSitePousadas from "@/assets/blog-site-pousadas.jpg";
 import blogSiteRestaurantes from "@/assets/blog-site-restaurantes.jpg";
 import blogSiteDentistas from "@/assets/blog-site-dentistas.jpg";
 import blogSiteImobiliarias from "@/assets/blog-site-imobiliarias.jpg";
+import blogEcommerce from "@/assets/blog-ecommerce.jpg";
+import blogAutomacaoIA from "@/assets/blog-automacao-ia.jpg";
+import blogConversao from "@/assets/blog-conversao.jpg";
+import blogChatbot from "@/assets/blog-chatbot.jpg";
+import blogMarcaPessoal from "@/assets/blog-marca-pessoal.jpg";
+import blogVelocidade from "@/assets/blog-velocidade.jpg";
 
 export interface BlogArticle {
   slug: string;
@@ -404,6 +410,124 @@ export const blogArticles: BlogArticle[] = [
       "Landing pages por empreendimento são essenciais para lançamentos. Páginas dedicadas com planta baixa, perspectivas, localização, tabela de preços e formulário de interesse geram leads ultra-qualificados para a equipe de vendas.",
       "CRM integrado ao site transforma o processo comercial. Quando um lead preenche um formulário ou clica em 'Tenho interesse', os dados entram automaticamente no CRM com informações do imóvel desejado, permitindo follow-up imediato e personalizado.",
       "SEO imobiliário é altamente lucrativo. Uma única venda de um apartamento pode gerar comissões de dezenas de milhares de reais. Ranquear para termos como 'apartamento à venda em [bairro]' ou 'casa para alugar em [cidade]' tem um ROI incomparável.",
+    ],
+  },
+  {
+    slug: "como-criar-loja-virtual-que-vende",
+    title: "Como criar uma loja virtual que realmente vende em 2026",
+    excerpt: "Descubra os elementos essenciais de um e-commerce de sucesso: da escolha da plataforma ao funil de vendas que converte visitantes em compradores.",
+    category: "E-commerce",
+    icon: ShoppingCart,
+    readTime: "9 min",
+    date: "12 Abr 2026",
+    image: blogEcommerce,
+    message: "Olá, quero criar uma loja virtual profissional",
+    content: [
+      "O e-commerce brasileiro faturou mais de R$ 200 bilhões em 2025 e a projeção para 2026 é de crescimento de 15%. Criar uma loja virtual deixou de ser opcional — é uma necessidade estratégica para qualquer negócio que venda produtos ou serviços.",
+      "A escolha da plataforma é o primeiro passo crítico. Soluções como WooCommerce, Shopify e lojas customizadas têm vantagens e desvantagens. O mais importante é escolher uma plataforma que permita escalar sem limitações técnicas, com boa velocidade de carregamento e integração com meios de pagamento brasileiros.",
+      "A experiência de compra define o sucesso da sua loja. Fotos profissionais dos produtos, descrições detalhadas, avaliações de clientes reais e um checkout simplificado são elementos obrigatórios. Cada clique desnecessário no processo de compra reduz sua conversão em até 10%.",
+      "O carrinho abandonado é o maior desafio do e-commerce — em média, 70% dos carrinhos são abandonados. Estratégias de recuperação como e-mails automatizados, retargeting e ofertas de frete grátis podem recuperar até 30% dessas vendas perdidas.",
+      "SEO para e-commerce é diferente de SEO para sites institucionais. Cada produto deve ter uma página otimizada com título único, descrição original, imagens com alt text, dados estruturados (Schema Product) e URLs amigáveis. Evite copiar descrições do fabricante — conteúdo duplicado prejudica o ranqueamento.",
+      "Integração com marketplaces como Mercado Livre, Amazon e Shopee amplifica sua visibilidade. Use sua loja própria como hub central e distribua para múltiplos canais. Isso diversifica receita e reduz dependência de um único canal de vendas.",
+      "Logística é tão importante quanto marketing. Ofereça múltiplas opções de frete, calcule prazos em tempo real, tenha política de troca clara e invista em embalagens que surpreendam. A experiência pós-compra determina se o cliente volta ou nunca mais compra.",
+    ],
+  },
+  {
+    slug: "automacao-com-ia-para-empresas",
+    title: "Automação com IA: como empresas estão economizando 40% do tempo operacional",
+    excerpt: "Entenda como a inteligência artificial está revolucionando processos empresariais e como implementar automações que realmente funcionam.",
+    category: "Inteligência Artificial",
+    icon: Bot,
+    readTime: "8 min",
+    date: "13 Abr 2026",
+    image: blogAutomacaoIA,
+    message: "Olá, quero automatizar processos da minha empresa com IA",
+    content: [
+      "A automação com inteligência artificial não é mais ficção científica — é realidade operacional. Empresas que implementam IA em seus processos reportam economia média de 40% no tempo gasto em tarefas repetitivas, liberando equipes para atividades estratégicas e criativas.",
+      "Atendimento ao cliente é a área com maior impacto imediato. Chatbots inteligentes com IA podem resolver até 80% das dúvidas frequentes 24 horas por dia, qualificar leads automaticamente e encaminhar apenas os casos complexos para atendentes humanos. O resultado: resposta instantânea e equipe focada no que importa.",
+      "Automação de marketing com IA vai além de e-mails agendados. Sistemas inteligentes analisam comportamento do visitante em tempo real, personalizam conteúdo dinamicamente, segmentam audiências automaticamente e otimizam horários de envio baseados em padrões individuais de cada lead.",
+      "Geração de conteúdo com IA acelera a produção sem perder qualidade. Textos para redes sociais, descrições de produtos, e-mails de follow-up e até artigos de blog podem ser gerados como rascunhos pela IA e refinados por humanos em uma fração do tempo.",
+      "Análise de dados com IA identifica padrões invisíveis ao olho humano. Previsão de vendas, identificação de clientes com risco de churn, otimização de preços e análise de sentimento em avaliações são apenas algumas aplicações que transformam dados brutos em decisões estratégicas.",
+      "A implementação correta é gradual. Comece automatizando uma tarefa específica e de alto volume, meça os resultados, ajuste e expanda. Tentar automatizar tudo de uma vez é receita para fracasso. O segredo é escolher processos com alto volume e baixa complexidade como ponto de partida.",
+      "O investimento em automação com IA se paga rapidamente. Considere o custo-hora da sua equipe multiplicado pelas horas economizadas por mês. Na maioria dos casos, o ROI positivo acontece já nos primeiros 60 dias de implementação.",
+    ],
+  },
+  {
+    slug: "estrategias-de-conversao-para-sites",
+    title: "7 estratégias de conversão que transformam visitantes em clientes",
+    excerpt: "Técnicas comprovadas de CRO (Conversion Rate Optimization) que podem dobrar suas vendas sem aumentar o tráfego do seu site.",
+    category: "Conversão",
+    icon: Target,
+    readTime: "7 min",
+    date: "14 Abr 2026",
+    image: blogConversao,
+    message: "Olá, quero aumentar a taxa de conversão do meu site",
+    content: [
+      "A maioria das empresas foca exclusivamente em atrair mais tráfego, ignorando uma verdade fundamental: dobrar sua taxa de conversão tem o mesmo efeito que dobrar seu tráfego — mas custa muito menos. CRO (Conversion Rate Optimization) é a ciência de transformar mais visitantes em clientes.",
+      "Proposta de valor clara nos primeiros 3 segundos. Quando alguém chega ao seu site, precisa entender imediatamente: o que você oferece, para quem e qual o benefício principal. Se o visitante precisa pensar para entender, você já o perdeu. Use headlines diretas e específicas, não genéricas.",
+      "Prova social é o gatilho mais poderoso da internet. Depoimentos com foto e nome real, logos de clientes, números de resultados (ex: '+500 projetos entregues') e avaliações verificáveis transformam desconfiança em confiança. Posicione provas sociais próximas aos CTAs para máximo impacto.",
+      "Reduza fricção no processo de conversão. Cada campo desnecessário em um formulário reduz a conversão em 10-15%. Peça apenas o essencial (nome e telefone/e-mail), remova distrações visuais e garanta que o CTA seja visível sem rolagem em qualquer dispositivo.",
+      "Urgência e escassez funcionam quando são reais. Contadores regressivos para ofertas limitadas, vagas restantes e preços promocionais com prazo criam senso de urgência que acelera a tomada de decisão. Mas cuidado: urgência falsa destrói credibilidade rapidamente.",
+      "Testes A/B são obrigatórios, não opcionais. Teste variações de headlines, cores de botões, posicionamento de formulários e textos de CTA. Pequenas mudanças podem gerar grandes resultados — uma simples alteração no texto do botão pode aumentar conversões em 30%.",
+      "Velocidade de carregamento impacta diretamente a conversão. Cada segundo adicional de carregamento reduz conversões em 7%. Otimize imagens, minimize código, use CDN e priorize o carregamento do conteúdo acima da dobra. Um site rápido não é luxo — é requisito.",
+    ],
+  },
+  {
+    slug: "chatbot-com-ia-para-atendimento",
+    title: "Chatbot com IA: como automatizar o atendimento e vender mais",
+    excerpt: "Saiba como implementar um chatbot inteligente que atende, qualifica leads e aumenta vendas enquanto você dorme.",
+    category: "Inteligência Artificial",
+    icon: MessageCircle,
+    readTime: "6 min",
+    date: "11 Abr 2026",
+    image: blogChatbot,
+    message: "Olá, quero um chatbot com IA para meu site",
+    content: [
+      "Chatbots com inteligência artificial evoluíram drasticamente nos últimos anos. O que antes eram menus rígidos com respostas pré-definidas agora são assistentes conversacionais capazes de entender contexto, interpretar intenções e oferecer respostas personalizadas em linguagem natural.",
+      "O impacto nos negócios é mensurável: empresas com chatbot inteligente reportam aumento de 35% na geração de leads, redução de 60% no tempo de resposta e disponibilidade 24/7 — sem precisar contratar equipe de plantão para horários fora do expediente.",
+      "A qualificação automática de leads é uma das funcionalidades mais valiosas. O chatbot coleta nome, contato, interesse e nível de urgência de forma natural, em uma conversa amigável. Quando o lead chega para a equipe comercial, já vem com todas as informações necessárias para um atendimento assertivo.",
+      "Personalização é o diferencial de chatbots modernos. Ao analisar o comportamento de navegação do visitante (quais páginas visitou, quanto tempo ficou, de onde veio), o chatbot adapta sua abordagem. Um visitante que leu sobre preços recebe uma oferta; um que leu sobre funcionalidades recebe mais detalhes técnicos.",
+      "A integração com WhatsApp Business é essencial no mercado brasileiro. O chatbot pode transferir automaticamente a conversa para o WhatsApp da empresa, enviando todas as informações coletadas para que o atendente humano continue exatamente de onde o bot parou.",
+      "A implementação começa simples e evolui. Na primeira fase, o chatbot responde dúvidas frequentes (FAQ) e coleta dados de contato. Na segunda, qualifica leads com perguntas estratégicas. Na terceira, integra com CRM e sistemas de automação para follow-up inteligente.",
+    ],
+  },
+  {
+    slug: "marca-pessoal-digital-como-se-posicionar",
+    title: "Marca pessoal digital: como se posicionar como autoridade online",
+    excerpt: "Estratégias práticas para construir uma marca pessoal forte na internet e atrair clientes pela sua reputação e expertise.",
+    category: "Marketing Digital",
+    icon: User,
+    readTime: "7 min",
+    date: "09 Abr 2026",
+    image: blogMarcaPessoal,
+    message: "Olá, quero construir minha marca pessoal na internet",
+    content: [
+      "Em 2026, sua marca pessoal é seu ativo mais valioso. Profissionais que se posicionam como autoridades em suas áreas atraem oportunidades naturalmente — clientes procuram por eles, não o contrário. E tudo começa com uma presença digital estratégica.",
+      "Seu site pessoal é a base da sua marca. Diferente das redes sociais (onde você é inquilino), seu site é seu território. Ele deve comunicar claramente: quem você é, o que faz, para quem faz e quais resultados entrega. Um bom portfólio com cases reais vale mais que mil posts genéricos.",
+      "Conteúdo de autoridade é o combustível da marca pessoal. Artigos de blog, vídeos educativos, podcasts e posts aprofundados sobre sua área de expertise constroem percepção de conhecimento ao longo do tempo. A regra é simples: ensine generosamente o que você sabe.",
+      "LinkedIn é a plataforma mais subestimada para marca pessoal profissional. Posts regulares com insights da sua área, comentários estratégicos em publicações de outros profissionais e artigos long-form geram visibilidade orgânica impressionante — e leads B2B altamente qualificados.",
+      "Consistência visual importa mais do que perfeição. Uma foto profissional atualizada, uma paleta de cores coerente, um tom de voz definido e uma bio unificada em todas as plataformas criam reconhecimento instantâneo. As pessoas confiam em marcas consistentes.",
+      "Networking digital amplifica resultados. Participe de comunidades, colabore com outros profissionais, participe de podcasts como convidado e organize lives colaborativas. Cada aparição em um novo canal expande seu alcance para audiências que ainda não te conhecem.",
+      "Resultados documentados são a prova definitiva de competência. Compartilhe cases com números reais, depoimentos de clientes satisfeitos e antes/depois de projetos. Nada vende mais do que evidência concreta de resultados entregues.",
+    ],
+  },
+  {
+    slug: "velocidade-do-site-impacto-nas-vendas",
+    title: "Velocidade do site: por que cada segundo custa vendas e como otimizar",
+    excerpt: "Entenda como a velocidade de carregamento impacta diretamente suas vendas e aprenda técnicas para ter um site ultra-rápido.",
+    category: "Desenvolvimento Web",
+    icon: Zap,
+    readTime: "6 min",
+    date: "07 Abr 2026",
+    image: blogVelocidade,
+    message: "Olá, meu site está lento e quero otimizar a velocidade",
+    content: [
+      "A velocidade do site é um fator de ranqueamento oficial do Google e impacta diretamente suas vendas. Dados mostram que 53% dos visitantes mobile abandonam um site que demora mais de 3 segundos para carregar. Cada segundo de atraso reduz conversões em 7% e satisfação do cliente em 16%.",
+      "Core Web Vitals são as métricas que o Google usa para avaliar a experiência do usuário: LCP (Largest Contentful Paint — tempo até o maior elemento carregar), FID (First Input Delay — tempo até o site responder ao primeiro clique) e CLS (Cumulative Layout Shift — estabilidade visual). Otimize essas três métricas e seu SEO agradece.",
+      "Imagens são a principal causa de sites lentos. Comprima todas as imagens sem perda visível de qualidade, use formatos modernos como WebP ou AVIF, implemente lazy loading (carregamento sob demanda) e sirva imagens com dimensões corretas para cada dispositivo.",
+      "CDN (Content Delivery Network) distribui seu site em servidores ao redor do mundo. Quando um visitante de São Paulo acessa seu site, ele recebe os arquivos de um servidor próximo, não de um datacenter distante. Isso reduz o tempo de carregamento em até 50% para visitantes geograficamente distantes.",
+      "Minimize e comprima código CSS, JavaScript e HTML. Remova código não utilizado, combine arquivos quando possível e ative compressão Gzip ou Brotli no servidor. Cada kilobyte eliminado é milissegundo ganho — e em mobile com conexão 4G, isso faz diferença enorme.",
+      "Cache do navegador é gratuito e poderoso. Configure headers de cache para que recursos estáticos (imagens, CSS, JS) sejam armazenados no navegador do visitante. Na segunda visita, o site carrega instantaneamente porque os arquivos já estão no dispositivo do usuário.",
     ],
   },
 ];

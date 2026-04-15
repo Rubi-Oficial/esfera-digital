@@ -36,6 +36,14 @@ const Footer = () => {
           <p className="text-xs text-muted-foreground/60">
             © {new Date().getFullYear()} Esfera Soluções Digitais. Todos os direitos reservados.
           </p>
+          <a
+            href="https://wa.me/5548991061707"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground/60 hover:text-primary transition-colors"
+          >
+            📱 (48) 99106-1707
+          </a>
           <p className="text-xs text-muted-foreground/40">
             Feito com estratégia, design e I.A.
           </p>

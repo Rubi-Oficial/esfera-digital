@@ -14,7 +14,98 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      lead_events: {
+        Row: {
+          created_at: string
+          details: Json | null
+          event_type: string
+          from_stage: Database["public"]["Enums"]["pipeline_stage"] | null
+          id: string
+          lead_id: string
+          to_stage: Database["public"]["Enums"]["pipeline_stage"] | null
+        }
+        Insert: {
+          created_at?: string
+          details?: Json | null
+          event_type: string
+          from_stage?: Database["public"]["Enums"]["pipeline_stage"] | null
+          id?: string
+          lead_id: string
+          to_stage?: Database["public"]["Enums"]["pipeline_stage"] | null
+        }
+        Update: {
+          created_at?: string
+          details?: Json | null
+          event_type?: string
+          from_stage?: Database["public"]["Enums"]["pipeline_stage"] | null
+          id?: string
+          lead_id?: string
+          to_stage?: Database["public"]["Enums"]["pipeline_stage"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_events_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          created_at: string
+          dor_principal: string | null
+          id: string
+          interesse: string | null
+          nome: string
+          objetivo: string | null
+          origem: string | null
+          score: number
+          stage: Database["public"]["Enums"]["pipeline_stage"]
+          telefone: string
+          temperatura: Database["public"]["Enums"]["lead_temperature"]
+          tipo_negocio: string | null
+          ultima_interacao: string | null
+          updated_at: string
+          urgencia: string | null
+        }
+        Insert: {
+          created_at?: string
+          dor_principal?: string | null
+          id?: string
+          interesse?: string | null
+          nome: string
+          objetivo?: string | null
+          origem?: string | null
+          score?: number
+          stage?: Database["public"]["Enums"]["pipeline_stage"]
+          telefone: string
+          temperatura?: Database["public"]["Enums"]["lead_temperature"]
+          tipo_negocio?: string | null
+          ultima_interacao?: string | null
+          updated_at?: string
+          urgencia?: string | null
+        }
+        Update: {
+          created_at?: string
+          dor_principal?: string | null
+          id?: string
+          interesse?: string | null
+          nome?: string
+          objetivo?: string | null
+          origem?: string | null
+          score?: number
+          stage?: Database["public"]["Enums"]["pipeline_stage"]
+          telefone?: string
+          temperatura?: Database["public"]["Enums"]["lead_temperature"]
+          tipo_negocio?: string | null
+          ultima_interacao?: string | null
+          updated_at?: string
+          urgencia?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +114,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      lead_temperature: "frio" | "morno" | "quente"
+      pipeline_stage:
+        | "novo_lead"
+        | "engajado"
+        | "qualificado"
+        | "proposta_apresentada"
+        | "checkout_iniciado"
+        | "convertido"
+        | "perdido"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +249,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      lead_temperature: ["frio", "morno", "quente"],
+      pipeline_stage: [
+        "novo_lead",
+        "engajado",
+        "qualificado",
+        "proposta_apresentada",
+        "checkout_iniciado",
+        "convertido",
+        "perdido",
+      ],
+    },
   },
 } as const

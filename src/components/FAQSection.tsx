@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeader from "./ui/SectionHeader";
-import { staggerContainer, fadeInLeft } from "@/lib/animations";
+import { staggerContainer, blurFadeIn } from "@/lib/animations";
 import {
   Accordion,
   AccordionContent,
@@ -69,7 +69,7 @@ const FAQSection = () => {
         >
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, i) => (
-              <motion.div key={i} variants={fadeInLeft}>
+              <motion.div key={i} variants={blurFadeIn}>
                 <AccordionItem
                   value={`item-${i}`}
                   className="glass-hover rounded-2xl border-none px-6 data-[state=open]:glow-box"

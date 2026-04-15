@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { X, Search, AlertTriangle } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
-import { staggerContainer, fadeInUp } from "@/lib/animations";
+import { staggerContainer, slideUp } from "@/lib/animations";
 import problemImg from "@/assets/problem-visual.jpg";
 
 const problems = [
@@ -87,7 +87,7 @@ const ProblemSection = () => {
               {problems.map((p, i) => (
                 <motion.div
                   key={i}
-                  variants={fadeInUp}
+                  variants={slideUp}
                   className="glass-hover rounded-xl p-4 flex items-start gap-4 group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0 group-hover:bg-destructive/15 transition-colors duration-300">

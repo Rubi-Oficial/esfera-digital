@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeader from "./ui/SectionHeader";
-import { staggerContainer, fadeInUp } from "@/lib/animations";
+import { staggerContainer, slideUp } from "@/lib/animations";
 
 const steps = [
   { num: "1️⃣", title: "Envie informações do seu negócio", desc: "Preencha um breve formulário com os dados essenciais da sua empresa." },
@@ -39,7 +39,7 @@ const MethodologySection = () => {
             {steps.map((step, i) => (
               <motion.div
                 key={i}
-                variants={fadeInUp}
+                variants={slideUp}
                 className="glass-hover rounded-xl p-5 md:p-6 flex items-start gap-5 group relative overflow-hidden"
               >
                 <div className="relative z-10 flex items-start gap-5 w-full">

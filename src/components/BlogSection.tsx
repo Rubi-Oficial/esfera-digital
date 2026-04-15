@@ -4,7 +4,7 @@ import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
 import WhatsAppLink from "./ui/WhatsAppLink";
-import { staggerContainer, fadeInUp } from "@/lib/animations";
+import { staggerContainer, blurFadeIn } from "@/lib/animations";
 import { WHATSAPP_MESSAGES } from "@/lib/constants";
 import { blogArticles } from "@/lib/blog-data";
 
@@ -34,7 +34,7 @@ const BlogSection = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
         >
           {blogArticles.map((article) => (
-            <motion.div key={article.slug} variants={fadeInUp} whileHover={{ y: -6, transition: { duration: 0.25 } }}>
+            <motion.div key={article.slug} variants={blurFadeIn} whileHover={{ y: -6, transition: { duration: 0.25 } }}>
               <Link
                 to={`/blog/${article.slug}`}
                 className="group relative rounded-2xl border border-border/60 bg-card overflow-hidden hover:border-primary/30 transition-colors duration-300 flex flex-col h-full block"

@@ -9,7 +9,7 @@ export const WHATSAPP_MESSAGES = {
   specialist: "Olá, gostaria de falar com um especialista",
   presenca: "Olá, quero um site com IA para o meu negócio!",
   vaga: "Olá, quero garantir minha vaga",
-  planStart: "Olá, quero meu site profissional por R$ 1.290!",
+  planStart: "Olá, quero meu site profissional por R$ 997!",
   planPremium: "Olá, quero o Plano Premium",
   planScale: "Olá, quero o Plano Scale",
   info: "Olá, acessei o site da Esfera Digital e gostaria de mais informações sobre websites que aparecem nas pesquisas do google...",
@@ -29,7 +29,7 @@ export const FOOTER_LINKS = [
   { label: "O Problema", href: "#solucoes", title: "Por que você precisa de um site profissional" },
   { label: "Como Funciona", href: "#metodologia", title: "Nosso processo simples em 4 passos" },
   { label: "Portfólio", href: "#portfolio", title: "Projetos reais que geraram resultados" },
-  { label: "Oferta Especial", href: "#planos", title: "Site profissional completo por R$ 1.290" },
+  { label: "Oferta Especial", href: "#planos", title: "Site profissional completo a partir de R$ 997" },
   { label: "Blog", href: "#blog", title: "Artigos sobre marketing digital e criação de sites" },
   { label: "Depoimentos", href: "#depoimentos", title: "O que nossos clientes dizem sobre nosso trabalho" },
 ] as const;

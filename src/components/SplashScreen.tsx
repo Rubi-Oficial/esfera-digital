@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import logoIcon from "@/assets/logo-icon.png";
+import logoSphere from "@/assets/logo-sphere.png";
 
 const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [show, setShow] = useState(true);
@@ -22,7 +22,6 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Ambient glow */}
           <motion.div
             className="absolute w-[400px] h-[400px] rounded-full bg-primary/15 blur-[120px]"
             animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
@@ -30,19 +29,17 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
           />
 
           <div className="relative flex flex-col items-center gap-6">
-            {/* Logo sphere */}
             <motion.img
-              src={logoIcon}
+              src={logoSphere}
               alt="Esfera Digital"
-              className="w-20 h-20 object-contain drop-shadow-[0_0_20px_hsl(var(--primary)/0.6)]"
+              className="w-24 h-24 object-contain drop-shadow-[0_0_25px_hsl(var(--primary)/0.7)]"
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              width={80}
-              height={80}
+              width={96}
+              height={96}
             />
 
-            {/* Brand text */}
             <motion.div
               className="flex flex-col items-center gap-1"
               initial={{ opacity: 0, y: 20 }}
@@ -63,7 +60,6 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
               </motion.p>
             </motion.div>
 
-            {/* Loading bar */}
             <motion.div
               className="w-32 h-0.5 bg-muted rounded-full overflow-hidden mt-2"
               initial={{ opacity: 0 }}

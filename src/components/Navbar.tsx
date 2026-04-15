@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Rocket } from "lucide-react";
+import { Link } from "react-router-dom";
 import AnimatedLogo from "./AnimatedLogo";
 import WhatsAppLink from "./ui/WhatsAppLink";
 import { NAV_LINKS, WHATSAPP_MESSAGES } from "@/lib/constants";
@@ -22,7 +23,6 @@ const Navbar = () => {
     setLastY(y);
   });
 
-  // Close mobile menu on escape
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && open) setOpen(false);
@@ -31,7 +31,6 @@ const Navbar = () => {
     return () => document.removeEventListener("keydown", handleKey);
   }, [open]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -47,7 +46,6 @@ const Navbar = () => {
         if (el) {
           e.preventDefault();
           setOpen(false);
-          // Delay scroll to allow menu close and body overflow restore
           setTimeout(() => {
             el.scrollIntoView({ behavior: "smooth" });
           }, 350);
@@ -57,6 +55,9 @@ const Navbar = () => {
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
   }, []);
+
+  const regularLinks = NAV_LINKS.filter(l => !('isSpecial' in l && l.isSpecial));
+  const specialLink = NAV_LINKS.find(l => 'isSpecial' in l && l.isSpecial);
 
   return (
     <motion.nav
@@ -77,7 +78,7 @@ const Navbar = () => {
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
+          {regularLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -86,6 +87,15 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
+          {specialLink && (
+            <Link
+              to={specialLink.href}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_15px_hsl(var(--primary)/0.3)]"
+            >
+              <Rocket size={16} />
+              {specialLink.label}
+            </Link>
+          )}
           <WhatsAppLink
             message={WHATSAPP_MESSAGES.specialist}
             size="sm"
@@ -110,7 +120,6 @@ const Navbar = () => {
       <AnimatePresence>
         {open && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -127,7 +136,7 @@ const Navbar = () => {
               className="md:hidden overflow-hidden bg-background/98 backdrop-blur-2xl border-t border-border/30 relative z-50"
             >
               <div className="flex flex-col gap-1 p-6">
-                {NAV_LINKS.map((link, i) => (
+                {regularLinks.map((link, i) => (
                   <motion.a
                     key={link.href}
                     href={link.href}
@@ -140,6 +149,22 @@ const Navbar = () => {
                     {link.label}
                   </motion.a>
                 ))}
+                {specialLink && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: regularLinks.length * 0.06 }}
+                  >
+                    <Link
+                      to={specialLink.href}
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-2 text-primary hover:bg-primary/10 transition-all px-4 py-3 rounded-xl text-base font-semibold"
+                    >
+                      <Rocket size={18} />
+                      {specialLink.label}
+                    </Link>
+                  </motion.div>
+                )}
                 <div className="pt-4 mt-2 border-t border-border/20">
                   <WhatsAppLink
                     message={WHATSAPP_MESSAGES.specialist}

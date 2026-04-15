@@ -62,6 +62,7 @@ const CRM = () => {
       <SEOHead
         title="CRM Esfera Growth | Gestão de Leads"
         description="CRM inteligente para gestão de leads e pipeline de vendas"
+        path="/crm"
       />
       <div className="min-h-screen bg-background text-foreground">
         {/* Header */}

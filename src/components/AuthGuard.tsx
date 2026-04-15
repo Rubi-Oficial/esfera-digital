@@ -6,9 +6,10 @@ import { toast } from "sonner";
 
 interface AuthGuardProps {
   children: React.ReactNode;
+  requireAdmin?: boolean;
 }
 
-const AuthGuard = ({ children }: AuthGuardProps) => {
+const AuthGuard = ({ children, requireAdmin = true }: AuthGuardProps) => {
   const [session, setSession] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -87,7 +88,7 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
     );
   }
 
-  if (!session || !isAdmin) {
+  if (!session || (requireAdmin && !isAdmin)) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <motion.div

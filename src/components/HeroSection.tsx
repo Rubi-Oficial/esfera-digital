@@ -6,10 +6,10 @@ import { WHATSAPP_MESSAGES } from "@/lib/constants";
 import heroImg from "@/assets/hero-workspace.jpg";
 
 const benefits = [
-  "Sites institucionais sob medida para sua marca",
-  "Sistemas de I.A. que automatizam e vendem",
-  "Integração com WhatsApp, CRM e automações",
-  "SEO estratégico para dominar o Google",
+  "Sites institucionais sob medida",
+  "I.A. que automatiza e vende",
+  "WhatsApp, CRM e automações",
+  "SEO para dominar o Google",
 ];
 
 const TYPEWRITER_TEXT = "Websites + I.A.";
@@ -27,7 +27,6 @@ const useTypewriter = (text: string, speed: number, startDelay: number) => {
         setDisplayed(text.slice(0, i));
         if (i >= text.length) {
           clearInterval(interval);
-          // Keep cursor blinking for a bit then hide
           setTimeout(() => setShowCursor(false), 2000);
         }
       }, speed);
@@ -46,100 +45,85 @@ const HeroSection = () => {
     offset: ["start start", "end start"],
   });
 
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const orbY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const dot1Y = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const dot2Y = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const dot3Y = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
 
   const { displayed, showCursor } = useTypewriter(TYPEWRITER_TEXT, TYPEWRITER_SPEED, 1000);
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
-      {/* Hero background image with parallax */}
+      {/* Background image with strong overlay for readability */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/80 to-background z-10" />
         <motion.img
           src={heroImg}
           alt=""
           aria-hidden="true"
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-30"
           style={{ scale: imgScale }}
           width={1920}
           height={1080}
         />
       </motion.div>
 
-      <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px]" style={{ y: orbY }} aria-hidden="true" />
-      <motion.div className="absolute top-20 right-20 w-2 h-2 rounded-full bg-primary animate-pulse-glow" style={{ y: dot1Y }} aria-hidden="true" />
-      <motion.div className="absolute bottom-40 left-20 w-3 h-3 rounded-full bg-primary/60 animate-float" style={{ y: dot2Y }} aria-hidden="true" />
-      <motion.div className="absolute top-1/3 right-1/4 w-1 h-1 rounded-full bg-primary/40 animate-pulse-glow" style={{ y: dot3Y }} aria-hidden="true" />
+      {/* Single subtle glow — no floating dots */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" aria-hidden="true" />
 
       <motion.div className="container relative z-10 px-4 md:px-8 py-20" style={{ y: contentY, opacity: contentOpacity }}>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center"
+          transition={{ duration: 0.7 }}
+          className="max-w-3xl mx-auto text-center"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-8 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-medium mb-8 tracking-widest uppercase"
           >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" aria-hidden="true" />
-            ESFERA DIGITAL — Websites com Inteligência Artificial
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
+            Esfera Digital
           </motion.div>
 
-          <div className="relative mb-6">
-            {/* Glow behind title */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-              <div className="w-[80%] h-[80%] rounded-full bg-primary/15 blur-[80px] animate-pulse" />
-            </div>
-            <h1 className="relative text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight drop-shadow-[0_0_40px_hsl(43_70%_55%/0.3)]">
-              <span className="text-gradient inline-block min-h-[1.2em]">
-                {displayed}
-                {showCursor && (
-                  <span className="inline-block w-[3px] h-[0.8em] bg-primary ml-1 align-middle animate-blink" aria-hidden="true" />
-                )}
-              </span>
-              <br />
-              <span className="text-foreground drop-shadow-[0_0_20px_hsl(43_70%_55%/0.1)]">que vendem por você.</span>
-            </h1>
-          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6">
+            <span className="text-gradient inline-block min-h-[1.2em]">
+              {displayed}
+              {showCursor && (
+                <span className="inline-block w-[3px] h-[0.8em] bg-primary ml-1 align-middle animate-blink" aria-hidden="true" />
+              )}
+            </span>
+            <br />
+            <span className="text-foreground">que vendem por você.</span>
+          </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground/90 max-w-2xl mx-auto mb-10 leading-relaxed tracking-wide">
-            Criamos websites institucionais de alto impacto com inteligência artificial integrada — seu negócio funcionando, vendendo e atendendo{" "}
-            <strong className="text-foreground font-semibold">24 horas por dia</strong>.
+          <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed">
+            Websites de alto impacto com inteligência artificial integrada — seu negócio vendendo e atendendo{" "}
+            <strong className="text-foreground font-semibold">24h por dia</strong>.
           </p>
 
           <motion.ul
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-12"
+            className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto mb-12"
             aria-label="Benefícios"
             initial="hidden"
             animate="visible"
             variants={{
               hidden: {},
-              visible: { transition: { staggerChildren: 0.15, delayChildren: 1.2 } },
+              visible: { transition: { staggerChildren: 0.1, delayChildren: 1.2 } },
             }}
           >
             {benefits.map((b, i) => (
               <motion.li
                 key={i}
                 variants={{
-                  hidden: { opacity: 0, y: 20, scale: 0.95 },
-                  visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 12 } },
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 },
                 }}
-                whileHover={{ scale: 1.03, boxShadow: "0 0 20px hsl(43 70% 55% / 0.15)" }}
-                className="flex items-center gap-3 text-sm text-muted-foreground/80 tracking-wide glass-hover rounded-lg px-4 py-3 cursor-default"
+                className="flex items-center gap-2 text-xs text-muted-foreground tracking-wide bg-card/40 backdrop-blur-sm border border-border/30 rounded-full px-4 py-2"
               >
-                <div className="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
-                  <Check size={13} className="text-primary" aria-hidden="true" />
-                </div>
+                <Check size={12} className="text-primary shrink-0" aria-hidden="true" />
                 {b}
               </motion.li>
             ))}

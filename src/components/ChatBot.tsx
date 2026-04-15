@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, ArrowRight } from "lucide-react";
 import { WHATSAPP_PHONE } from "@/lib/constants";
+import { createLead, updateLeadStage } from "@/lib/crm";
 
 type Message = {
   id: string;
@@ -80,6 +81,7 @@ const ChatBot = () => {
   });
   const [showPulse, setShowPulse] = useState(true);
   const [hasGreeted, setHasGreeted] = useState(false);
+  const [crmLeadId, setCrmLeadId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 

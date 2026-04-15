@@ -14,12 +14,14 @@ const transformations = [
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [140, -140]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.8, 1, 0.8, 0.2]);
+  const orbScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.15, 0.8]);
 
   return (
     <section ref={sectionRef} className="section-padding relative overflow-hidden" aria-labelledby="about-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" aria-hidden="true" />
-      <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/5 blur-[140px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-[600px] h-[600px] rounded-full bg-primary/6 blur-[140px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
 
       <div className="container relative z-10 px-4 md:px-8">
         <motion.div

@@ -11,13 +11,15 @@ import { blogArticles } from "@/lib/blog-data";
 const BlogSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbY = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const dotY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [120, -120]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.8, 1, 0.8, 0.2]);
+  const orbScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.15, 0.85]);
+  const dotY = useTransform(scrollYProgress, [0, 1], [0, -160]);
 
   return (
     <section ref={sectionRef} id="blog" className="section-padding section-divider relative overflow-hidden" aria-labelledby="blog-heading">
-      <motion.div className="absolute w-[450px] h-[450px] rounded-full bg-primary/5 blur-[130px] -right-20 top-1/3 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
-      <motion.div className="absolute w-1.5 h-1.5 rounded-full bg-primary/50 animate-float left-12 top-20 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
+      <motion.div className="absolute w-[550px] h-[550px] rounded-full bg-primary/6 blur-[130px] -right-20 top-1/3 pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
+      <motion.div className="absolute w-2 h-2 rounded-full bg-primary/50 animate-float left-12 top-20 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
           label="Conteúdo"

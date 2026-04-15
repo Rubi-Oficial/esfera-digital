@@ -35,7 +35,9 @@ const benefits = [
 const AIServicesSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [120, -120]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.7, 1, 0.7, 0.2]);
+  const orbScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.2, 0.85]);
 
   return (
     <section
@@ -44,7 +46,7 @@ const AIServicesSection = () => {
       className="section-padding section-divider relative overflow-hidden"
       aria-label="O que o site faz por você"
     >
-      <motion.div className="absolute w-[400px] h-[400px] rounded-full bg-primary/3 blur-[130px] -right-20 top-1/4 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/5 blur-[130px] -right-20 top-1/4 pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
 
       <div className="container relative z-10 px-4 md:px-8">
         <SectionHeader

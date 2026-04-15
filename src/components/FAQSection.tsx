@@ -47,11 +47,13 @@ const faqs = [
 const FAQSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.7, 1, 0.7, 0.2]);
+  const orbScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.2, 0.85]);
 
   return (
     <section ref={sectionRef} className="section-padding section-divider relative overflow-hidden" aria-labelledby="faq-heading">
-      <motion.div className="absolute w-[400px] h-[400px] rounded-full bg-primary/5 blur-[130px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/6 blur-[130px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
           label="💬 Objeções"

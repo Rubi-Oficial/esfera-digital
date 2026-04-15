@@ -63,8 +63,10 @@ const slideVariants = {
 const TestimonialsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const orbY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const dotY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.8, 1, 0.8, 0.2]);
+  const orbScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.15, 0.8]);
+  const dotY = useTransform(scrollYProgress, [0, 1], [0, -140]);
 
   const [[activeIndex, direction], setActiveIndex] = useState([0, 0]);
   const [isPaused, setIsPaused] = useState(false);
@@ -93,8 +95,8 @@ const TestimonialsSection = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[150px] pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
-      <motion.div className="absolute w-2 h-2 rounded-full bg-primary/40 animate-pulse-glow left-16 top-16 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
+      <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-primary/6 blur-[150px] pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
+      <motion.div className="absolute w-3 h-3 rounded-full bg-primary/40 animate-pulse-glow left-16 top-16 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <SectionHeader

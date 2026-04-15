@@ -102,8 +102,12 @@ const AuthGuard = ({ children, requireAdmin = true }: AuthGuardProps) => {
                 <Lock size={28} className="text-primary" />
               </div>
             </div>
-            <h1 className="text-xl font-bold font-sora text-center mb-1">Esfera Growth CRM</h1>
-            <p className="text-sm text-muted-foreground text-center mb-6">Acesso restrito a administradores</p>
+            <h1 className="text-xl font-bold font-sora text-center mb-1">
+              {requireAdmin ? "Esfera Growth CRM" : "Esfera Growth"}
+            </h1>
+            <p className="text-sm text-muted-foreground text-center mb-6">
+              {requireAdmin ? "Acesso restrito a administradores" : "Faça login para continuar"}
+            </p>
 
             {session && !isAdmin ? (
               <div className="text-center space-y-4">

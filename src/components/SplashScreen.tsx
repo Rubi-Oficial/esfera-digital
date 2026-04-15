@@ -23,7 +23,7 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
         >
           {/* Ambient glow */}
           <motion.div
-            className="absolute w-[400px] h-[400px] rounded-full bg-primary/20 blur-[120px]"
+            className="absolute w-[400px] h-[400px] rounded-full bg-primary/15 blur-[120px]"
             animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />

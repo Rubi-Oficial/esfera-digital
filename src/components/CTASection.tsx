@@ -36,14 +36,14 @@ const CTASection = () => {
             style={{ y: innerY }}
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(0,0,0,0.1),transparent_50%)]" aria-hidden="true" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(0,0,0,0.15),transparent_50%)]" aria-hidden="true" />
           <div className="relative z-10">
             <motion.div
               initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
-              className="w-16 h-16 rounded-2xl bg-primary-foreground/10 flex items-center justify-center mx-auto mb-8"
+              className="w-16 h-16 rounded-2xl bg-primary-foreground/20 flex items-center justify-center mx-auto mb-8"
             >
               <Rocket size={28} className="text-primary-foreground" aria-hidden="true" />
             </motion.div>
@@ -53,7 +53,7 @@ const CTASection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.35 }}
-              className="text-primary-foreground/70 text-base mb-4"
+              className="text-primary-foreground/80 text-base mb-4"
             >
               Enquanto você pensa… outras empresas estão sendo encontradas no Google
               e fechando clientes que poderiam ser seus.
@@ -100,7 +100,7 @@ const CTASection = () => {
                 message={WHATSAPP_MESSAGES.planStart}
                 size="lg"
                 ariaLabel="Quero meu site agora"
-                className="bg-primary-foreground text-primary hover:brightness-95 shadow-xl font-bold"
+                className="bg-primary-foreground text-primary hover:brightness-95 shadow-xl font-bold rounded-xl"
               >
                 Quero meu site por R$ 1.290
               </WhatsAppLink>

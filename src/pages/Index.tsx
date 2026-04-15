@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SplashScreen from "@/components/SplashScreen";
 import ChatBot from "@/components/ChatBot";
+import ScrollToTop from "@/components/ScrollToTop";
 
 // Lazy load below-the-fold sections
 const ProblemSection = lazy(() => import("@/components/ProblemSection"));
@@ -50,6 +51,7 @@ const Index = () => {
         <Suspense fallback={null}>
           <Footer />
         </Suspense>
+        <ScrollToTop />
         <ChatBot />
       </div>
     </>

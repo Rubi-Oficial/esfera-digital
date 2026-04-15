@@ -52,7 +52,7 @@ const HeroSection = () => {
   const { displayed, showCursor } = useTypewriter(TYPEWRITER_TEXT, TYPEWRITER_SPEED, 1000);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
+    <section ref={sectionRef} className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
       {/* Network particles background */}
       <NetworkBackground />
 
@@ -78,7 +78,7 @@ const HeroSection = () => {
               Seu negócio está perdendo clientes
             </motion.div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6">
               <span className="text-gradient inline-block min-h-[1.2em] drop-shadow-[0_0_30px_hsl(152_100%_50%/0.3)]">
                 {displayed}
                 {showCursor && (

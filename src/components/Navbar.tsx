@@ -71,7 +71,7 @@ const Navbar = () => {
       role="navigation"
       aria-label="Navegação principal"
     >
-      <div className="container flex items-center justify-between h-16 px-4 md:px-8">
+      <div className="container flex items-center justify-between h-16 md:h-18 px-4 md:px-8">
         <a href="#" aria-label="Esfera Soluções Digitais - Página inicial" className="flex items-center">
           <AnimatedLogo size="sm" />
         </a>

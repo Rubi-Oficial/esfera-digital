@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, ArrowRight } from "lucide-react";
 import { WHATSAPP_PHONE } from "@/lib/constants";
+import { createLead, updateLeadStage } from "@/lib/crm";
 
 type Message = {
   id: string;
@@ -80,6 +81,7 @@ const ChatBot = () => {
   });
   const [showPulse, setShowPulse] = useState(true);
   const [hasGreeted, setHasGreeted] = useState(false);
+  const [crmLeadId, setCrmLeadId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -167,6 +169,12 @@ const ChatBot = () => {
 
         case "telefone":
           setLead((prev) => ({ ...prev, telefone: userInput }));
+          // Create lead in CRM
+          createLead({ nome: lead.nome || "Lead", telefone: userInput, origem: "chatbot" })
+            .then((newLead) => {
+              setCrmLeadId(newLead.id);
+            })
+            .catch(console.error);
           setTimeout(() => {
             addBotMessage(
               `Perfeito! 📱\n\nQual é o seu principal **interesse**?`,
@@ -178,6 +186,9 @@ const ChatBot = () => {
 
         case "interesse":
           setLead((prev) => ({ ...prev, interesse: userInput }));
+          if (crmLeadId) {
+            updateLeadStage(crmLeadId, "novo_lead", "engajado").catch(console.error);
+          }
           setTimeout(() => {
             addBotMessage(
               `Ótima escolha! 🎯\n\nPara te atender melhor, qual é o **tipo do seu negócio**? (ex: clínica, restaurante, loja, consultoria, etc.)`
@@ -188,6 +199,9 @@ const ChatBot = () => {
 
         case "tipoNegocio":
           setLead((prev) => ({ ...prev, tipoNegocio: userInput }));
+          if (crmLeadId) {
+            updateLeadStage(crmLeadId, "engajado", "qualificado").catch(console.error);
+          }
           setTimeout(() => {
             addBotMessage(
               `Entendi! 📋\n\nQual a sua **urgência** para o projeto?`,
@@ -234,11 +248,13 @@ const ChatBot = () => {
             // "Não tenho dúvidas" or free text
             setTimeout(() => {
               const finalLead = { ...lead, objetivo: lead.objetivo || userInput };
+              if (crmLeadId) {
+                updateLeadStage(crmLeadId, "qualificado", "proposta_apresentada").catch(console.error);
+              }
               addBotMessage(
                 `Maravilha, **${lead.nome}**! 🎉\n\nResumo das suas informações:\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n⏰ **Urgência:** ${lead.urgencia}\n🎯 **Objetivo:** ${lead.objetivo}\n\nVou te encaminhar para o nosso WhatsApp para darmos continuidade ao seu atendimento. Clique no botão abaixo! 👇`
               );
               setStep("finalizar");
-              // Auto-send to WhatsApp after a short delay
               setTimeout(() => sendToWhatsApp(finalLead), 2000);
             }, 600);
           }
@@ -249,7 +265,7 @@ const ChatBot = () => {
           break;
       }
     },
-    [addBotMessage, addUserMessage, lead]
+    [addBotMessage, addUserMessage, lead, crmLeadId]
   );
 
   const handleSend = () => {

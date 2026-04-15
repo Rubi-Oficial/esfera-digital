@@ -4,6 +4,7 @@ import { MessageCircle, X, Send, ArrowRight } from "lucide-react";
 import { WHATSAPP_PHONE } from "@/lib/constants";
 import { createLead, updateLeadStage } from "@/lib/crm";
 import { lookupRefCode, recordRefClick, createReferral, type ReferralCode } from "@/lib/referral";
+import { onChatbotOpen } from "@/lib/chatbot-events";
 
 type Message = {
   id: string;
@@ -58,7 +59,7 @@ const DUVIDAS_OPTIONS = [
 
 const FAQ: Record<string, string> = {
   "Quanto custa?":
-    "Nossos planos começam a partir de **R$ 1.290** para um site profissional completo com IA integrada, SEO otimizado e design personalizado. O investimento varia conforme as funcionalidades que você precisa. Quer que eu te mostre os detalhes? 😊",
+    "Nossos planos começam a partir de **R$ 997** para um site profissional completo com IA integrada, SEO otimizado e design personalizado. O investimento varia conforme as funcionalidades que você precisa. Quer que eu te mostre os detalhes? 😊",
   "Qual o prazo de entrega?":
     "Trabalhamos com prazos de **7 a 15 dias úteis** para entregas, dependendo da complexidade do projeto. Sites mais simples podem ficar prontos em até 5 dias! ⚡",
   "Quais funcionalidades incluem?":
@@ -86,6 +87,13 @@ const ChatBot = () => {
   const [refCodeData, setRefCodeData] = useState<ReferralCode | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Listen for global chatbot open events
+  useEffect(() => {
+    return onChatbotOpen(() => {
+      setIsOpen(true);
+    });
+  }, []);
 
   // Track referral code from URL
   useEffect(() => {
@@ -139,7 +147,7 @@ const ChatBot = () => {
       setShowPulse(false);
       setTimeout(() => {
         addBotMessage(
-          `Olá! 👋 Eu sou a **${BOT_NAME}**, assistente digital da Esfera Digital.\n\nEstou aqui para te ajudar a encontrar a melhor solução web para o seu negócio!\n\nPara começar, qual é o seu **nome**?`
+          `Olá! 👋 Eu sou a **${BOT_NAME}**, assistente digital da Esfera Digital.\n\nEm 30 segundos eu entendo seu caso e te conecto com a melhor solução.\n\nPara começar, qual é o seu **nome**?`
         );
         setStep("nome");
       }, 500);
@@ -168,6 +176,12 @@ const ChatBot = () => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  const isHighIntent = (data: LeadData): boolean => {
+    const urgenciaQuente = data.urgencia?.includes("ontem") || data.urgencia?.includes("🔥");
+    const interesseForte = data.interesse?.includes("Site com IA") || data.interesse?.includes("Loja Virtual");
+    return urgenciaQuente || interesseForte;
+  };
+
   const processStep = useCallback(
     (userInput: string, currentStep: Step) => {
       addUserMessage(userInput);
@@ -185,7 +199,6 @@ const ChatBot = () => {
 
         case "telefone":
           setLead((prev) => ({ ...prev, telefone: userInput }));
-          // Create lead in CRM
           createLead({
             nome: lead.nome || "Lead",
             telefone: userInput,
@@ -193,7 +206,6 @@ const ChatBot = () => {
           })
             .then((newLead) => {
               setCrmLeadId(newLead.id);
-              // If referred, create referral entry
               if (refCodeData) {
                 createReferral(
                   refCodeData.id,
@@ -275,17 +287,32 @@ const ChatBot = () => {
               }, 800);
             }, 600);
           } else {
-            // "Não tenho dúvidas" or free text
+            // "Não tenho dúvidas" or free text → smart routing
             setTimeout(() => {
               const finalLead = { ...lead, objetivo: lead.objetivo || userInput };
               if (crmLeadId) {
                 updateLeadStage(crmLeadId, "qualificado", "proposta_apresentada").catch(console.error);
               }
-              addBotMessage(
-                `Maravilha, **${lead.nome}**! 🎉\n\nResumo das suas informações:\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n⏰ **Urgência:** ${lead.urgencia}\n🎯 **Objetivo:** ${lead.objetivo}\n\nVou te encaminhar para o nosso WhatsApp para darmos continuidade ao seu atendimento. Clique no botão abaixo! 👇`
-              );
+
+              const highIntent = isHighIntent(finalLead);
+
+              if (highIntent) {
+                // High intent → connect to human specialist
+                addBotMessage(
+                  `Já entendi seu cenário, **${lead.nome}**! 👍\n\nVocê tem um caso com bastante potencial. Vou te direcionar da forma mais rápida para um especialista que pode te ajudar agora.\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n⏰ **Urgência:** ${lead.urgencia}\n🎯 **Objetivo:** ${lead.objetivo}\n\nPosso te conectar com um especialista agora 👇`
+                );
+              } else {
+                // Normal lead → show proposal then offer WhatsApp
+                addBotMessage(
+                  `Maravilha, **${lead.nome}**! 🎉\n\nJá entendi seu cenário. Com base no que você me disse, temos a solução ideal para o seu negócio!\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n⏰ **Urgência:** ${lead.urgencia}\n🎯 **Objetivo:** ${lead.objetivo}\n\nNosso time vai preparar uma proposta personalizada. Clique abaixo para falar com nosso especialista e receber os detalhes! 👇`
+                );
+              }
+
               setStep("finalizar");
-              setTimeout(() => sendToWhatsApp(finalLead), 2000);
+              // Auto-open WhatsApp after delay only for high-intent
+              if (highIntent) {
+                setTimeout(() => sendToWhatsApp(finalLead), 3000);
+              }
             }, 600);
           }
           break;
@@ -295,7 +322,7 @@ const ChatBot = () => {
           break;
       }
     },
-    [addBotMessage, addUserMessage, lead, crmLeadId]
+    [addBotMessage, addUserMessage, lead, crmLeadId, refCodeData]
   );
 
   const handleSend = () => {
@@ -334,8 +361,8 @@ const ChatBot = () => {
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: "spring", stiffness: 200, delay: 3 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-24 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-[0_4px_20px_hsl(var(--primary)/0.4)] hover:shadow-[0_4px_30px_hsl(var(--primary)/0.6)] transition-all duration-300 hover:scale-105"
-            aria-label="Abrir chatbot"
+            className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-[0_4px_20px_hsl(var(--primary)/0.4)] hover:shadow-[0_4px_30px_hsl(var(--primary)/0.6)] transition-all duration-300 hover:scale-105"
+            aria-label="Falar com especialista"
           >
             <MessageCircle size={26} />
             {showPulse && (
@@ -431,7 +458,7 @@ const ChatBot = () => {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                     </svg>
-                    Continuar no WhatsApp
+                    Falar com especialista agora
                     <ArrowRight size={16} />
                   </button>
                 </motion.div>

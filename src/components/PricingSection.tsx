@@ -100,7 +100,33 @@ const PricingSection = () => {
               </div>
             </div>
 
-            {/* What's included */}
+            {/* Countdown Timer */}
+            {!expired && (
+              <div className="mb-8">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Clock size={14} className="text-destructive animate-pulse" />
+                  <p className="text-xs font-semibold uppercase tracking-wider text-destructive">
+                    Oferta expira em
+                  </p>
+                </div>
+                <div className="flex justify-center gap-3">
+                  {[
+                    { value: hours, label: "Horas" },
+                    { value: minutes, label: "Min" },
+                    { value: seconds, label: "Seg" },
+                  ].map((unit, i) => (
+                    <div key={i} className="flex flex-col items-center">
+                      <span className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-2xl font-bold text-primary tabular-nums">
+                        {String(unit.value).padStart(2, "0")}
+                      </span>
+                      <span className="text-[10px] text-muted-foreground mt-1 uppercase tracking-wider">
+                        {unit.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="mb-8">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4 flex items-center gap-2">
                 <Gift size={16} /> O que está incluso

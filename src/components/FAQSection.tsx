@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeader from "./ui/SectionHeader";
 import WhatsAppLink from "./ui/WhatsAppLink";
 import { staggerContainer, fadeInLeft } from "@/lib/animations";
@@ -45,9 +46,16 @@ const faqs = [
 ];
 
 const FAQSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const orbY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const dotY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+
   return (
-    <section className="section-padding section-divider" aria-labelledby="faq-heading">
-      <div className="container px-4 md:px-8">
+    <section ref={sectionRef} className="section-padding section-divider relative overflow-hidden" aria-labelledby="faq-heading">
+      <motion.div className="absolute w-[400px] h-[400px] rounded-full bg-primary/5 blur-[130px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-2 h-2 rounded-full bg-primary/40 animate-pulse-glow right-20 bottom-32 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
+      <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
           label="Dúvidas"
           titleId="faq-heading"

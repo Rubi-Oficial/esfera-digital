@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Bot, Zap, MessageSquare, Brain, BarChart3, Shield } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import WhatsAppLink from "./ui/WhatsAppLink";
@@ -51,14 +52,22 @@ const services = [
 ];
 
 const AIServicesSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const dot1Y = useTransform(scrollYProgress, [0, 1], [0, -70]);
+  const dot2Y = useTransform(scrollYProgress, [0, 1], [0, -40]);
+
   return (
     <section
+      ref={sectionRef}
       id="ia-services"
       className="py-24 md:py-32 relative overflow-hidden"
       aria-label="Serviços de Inteligência Artificial"
     >
-      {/* Background image */}
-      <div className="absolute inset-0" aria-hidden="true">
+      {/* Background image with parallax */}
+      <motion.div className="absolute inset-0" style={{ y: bgY }} aria-hidden="true">
         <img
           src={aiBg}
           alt=""
@@ -68,7 +77,11 @@ const AIServicesSection = () => {
           height={1080}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
-      </div>
+      </motion.div>
+
+      <motion.div className="absolute w-[400px] h-[400px] rounded-full bg-primary/5 blur-[130px] -right-20 top-1/4 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-2 h-2 rounded-full bg-primary animate-pulse-glow left-16 top-32 pointer-events-none" style={{ y: dot1Y }} aria-hidden="true" />
+      <motion.div className="absolute w-1.5 h-1.5 rounded-full bg-primary/60 animate-float right-24 bottom-40 pointer-events-none" style={{ y: dot2Y }} aria-hidden="true" />
 
       <div className="container relative z-10 px-4 md:px-8">
         <SectionHeader

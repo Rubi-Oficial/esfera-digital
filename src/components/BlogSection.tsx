@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
@@ -8,9 +9,16 @@ import { WHATSAPP_MESSAGES } from "@/lib/constants";
 import { blogArticles } from "@/lib/blog-data";
 
 const BlogSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const orbY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const dotY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+
   return (
-    <section id="blog" className="section-padding section-divider" aria-labelledby="blog-heading">
-      <div className="container px-4 md:px-8">
+    <section ref={sectionRef} id="blog" className="section-padding section-divider relative overflow-hidden" aria-labelledby="blog-heading">
+      <motion.div className="absolute w-[450px] h-[450px] rounded-full bg-primary/5 blur-[130px] -right-20 top-1/3 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-1.5 h-1.5 rounded-full bg-primary/50 animate-float left-12 top-20 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
+      <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
           label="Conteúdo"
           titleId="blog-heading"

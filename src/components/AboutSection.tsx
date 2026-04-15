@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Target, Award, Sparkles, TrendingUp } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, fadeInUpRotate } from "@/lib/animations";
@@ -12,10 +13,17 @@ const focuses = [
 ];
 
 const AboutSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const orbY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const dotY = useTransform(scrollYProgress, [0, 1], [0, -90]);
+
   return (
-    <section className="section-padding relative" aria-labelledby="about-heading">
+    <section ref={sectionRef} className="section-padding relative overflow-hidden" aria-labelledby="about-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" aria-hidden="true" />
-      <div className="container relative px-4 md:px-8">
+      <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/5 blur-[140px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY }} aria-hidden="true" />
+      <motion.div className="absolute w-2.5 h-2.5 rounded-full bg-primary/50 animate-float left-10 bottom-20 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
+      <div className="container relative z-10 px-4 md:px-8">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}

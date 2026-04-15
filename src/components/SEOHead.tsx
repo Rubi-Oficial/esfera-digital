@@ -114,11 +114,35 @@ const SEOHead = ({
       scriptEl.remove();
     }
 
+    // Breadcrumbs JSON-LD
+    let breadcrumbEl = document.getElementById("seo-jsonld-breadcrumb") as HTMLScriptElement | null;
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      const breadcrumbJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbs.map((item, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": item.name,
+          "item": item.url,
+        })),
+      };
+      if (!breadcrumbEl) {
+        breadcrumbEl = document.createElement("script");
+        breadcrumbEl.id = "seo-jsonld-breadcrumb";
+        breadcrumbEl.type = "application/ld+json";
+        document.head.appendChild(breadcrumbEl);
+      }
+      breadcrumbEl.textContent = JSON.stringify(breadcrumbJsonLd);
+    } else if (breadcrumbEl) {
+      breadcrumbEl.remove();
+    }
+
     return () => {
-      // Cleanup article schema on unmount
       document.getElementById("seo-jsonld-article")?.remove();
+      document.getElementById("seo-jsonld-breadcrumb")?.remove();
     };
-  }, [fullTitle, description, fullUrl, ogImage, type, articleSchema]);
+  }, [fullTitle, description, fullUrl, ogImage, type, articleSchema, breadcrumbs]);
 
   return null;
 };

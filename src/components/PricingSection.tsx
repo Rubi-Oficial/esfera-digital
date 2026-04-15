@@ -1,9 +1,39 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, Zap, Users, Briefcase, MapPin, Gift } from "lucide-react";
+import { Check, Zap, Users, Briefcase, MapPin, Gift, Clock } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import WhatsAppLink from "./ui/WhatsAppLink";
 import { WHATSAPP_MESSAGES } from "@/lib/constants";
+
+const useCountdown = () => {
+  const getTarget = () => {
+    const stored = localStorage.getItem("promo_end");
+    if (stored) return new Date(stored).getTime();
+    const end = new Date();
+    end.setHours(end.getHours() + 48);
+    localStorage.setItem("promo_end", end.toISOString());
+    return end.getTime();
+  };
+
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const diff = getTarget() - Date.now();
+    return diff > 0 ? diff : 0;
+  });
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      const diff = getTarget() - Date.now();
+      setTimeLeft(diff > 0 ? diff : 0);
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const hours = Math.floor(timeLeft / 3600000);
+  const minutes = Math.floor((timeLeft % 3600000) / 60000);
+  const seconds = Math.floor((timeLeft % 60000) / 1000);
+
+  return { hours, minutes, seconds, expired: timeLeft <= 0 };
+};
 
 const included = [
   "Site profissional (One Page estratégico)",
@@ -30,6 +60,7 @@ const idealFor = [
 
 const PricingSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const { hours, minutes, seconds, expired } = useCountdown();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const orbY1 = useTransform(scrollYProgress, [0, 1], [50, -50]);
   const orbY2 = useTransform(scrollYProgress, [0, 1], [-30, 60]);
@@ -69,7 +100,33 @@ const PricingSection = () => {
               </div>
             </div>
 
-            {/* What's included */}
+            {/* Countdown Timer */}
+            {!expired && (
+              <div className="mb-8">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Clock size={14} className="text-destructive animate-pulse" />
+                  <p className="text-xs font-semibold uppercase tracking-wider text-destructive">
+                    Oferta expira em
+                  </p>
+                </div>
+                <div className="flex justify-center gap-3">
+                  {[
+                    { value: hours, label: "Horas" },
+                    { value: minutes, label: "Min" },
+                    { value: seconds, label: "Seg" },
+                  ].map((unit, i) => (
+                    <div key={i} className="flex flex-col items-center">
+                      <span className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-2xl font-bold text-primary tabular-nums">
+                        {String(unit.value).padStart(2, "0")}
+                      </span>
+                      <span className="text-[10px] text-muted-foreground mt-1 uppercase tracking-wider">
+                        {unit.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="mb-8">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4 flex items-center gap-2">
                 <Gift size={16} /> O que está incluso

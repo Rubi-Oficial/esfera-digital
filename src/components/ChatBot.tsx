@@ -203,7 +203,7 @@ const ChatBot = () => {
         case "telefone":
           setLead((prev) => ({ ...prev, telefone: userInput }));
           createLead({
-            nome: lead.nome || "Lead",
+            nome: leadRef.current.nome || "Lead",
             telefone: userInput,
             origem: refCodeData ? "indicacao" : "chatbot",
           })
@@ -213,7 +213,7 @@ const ChatBot = () => {
                 createReferral(
                   refCodeData.id,
                   newLead.id,
-                  lead.nome || "Lead",
+                  leadRef.current.nome || "Lead",
                   userInput,
                   Number(refCodeData.comissao_por_venda)
                 ).catch(console.error);
@@ -231,8 +231,11 @@ const ChatBot = () => {
 
         case "interesse":
           setLead((prev) => ({ ...prev, interesse: userInput }));
-          if (crmLeadId) {
-            updateLeadStage(crmLeadId, "novo_lead", "engajado").catch(console.error);
+          {
+            const lid = crmLeadIdRef.current;
+            if (lid) {
+              updateLeadStage(lid, "novo_lead", "engajado").catch(console.error);
+            }
           }
           setTimeout(() => {
             addBotMessage(
@@ -244,8 +247,11 @@ const ChatBot = () => {
 
         case "tipoNegocio":
           setLead((prev) => ({ ...prev, tipoNegocio: userInput }));
-          if (crmLeadId) {
-            updateLeadStage(crmLeadId, "engajado", "qualificado").catch(console.error);
+          {
+            const lid = crmLeadIdRef.current;
+            if (lid) {
+              updateLeadStage(lid, "engajado", "qualificado").catch(console.error);
+            }
           }
           setTimeout(() => {
             addBotMessage(
@@ -268,21 +274,18 @@ const ChatBot = () => {
 
         case "objetivo":
           setLead((prev) => ({ ...prev, objetivo: userInput }));
-          if (crmLeadId) {
-            updateLeadStage(crmLeadId, "engajado", "qualificado").catch(console.error);
-          }
           setTimeout(() => {
-            const finalLead = { ...lead, objetivo: userInput };
-            const highIntent = isHighIntent(finalLead);
+            const currentLead = { ...leadRef.current, objetivo: userInput };
+            const highIntent = isHighIntent(currentLead);
 
             if (highIntent) {
               addBotMessage(
-                `Já entendi seu cenário, **${lead.nome}**! 👍\n\nCom base no que você me disse, seu perfil é de alguém que precisa de **resultados rápidos**.\n\nTemos 2 opções para você:\n\n🚀 **Esfera Growth** — R$ 1.997 ⭐ *Recomendado pra você*\nSite + ecossistema de crescimento + consultoria + programa de indicações\n\n⚡ **Site Profissional** — R$ 997\nSite completo com IA, SEO e design personalizado\n\nQual faz mais sentido pro seu negócio?`,
+                `Já entendi seu cenário, **${currentLead.nome}**! 👍\n\nCom base no que você me disse, seu perfil é de alguém que precisa de **resultados rápidos**.\n\nTemos 2 opções para você:\n\n🚀 **Esfera Growth** — R$ 1.997 ⭐ *Recomendado pra você*\nSite + ecossistema de crescimento + consultoria + programa de indicações\n\n⚡ **Site Profissional** — R$ 997\nSite completo com IA, SEO e design personalizado\n\nQual faz mais sentido pro seu negócio?`,
                 PLANO_OPTIONS
               );
             } else {
               addBotMessage(
-                `Maravilha, **${lead.nome}**! 🎉\n\nCom base no que você me contou, preparei as melhores opções:\n\n🚀 **Esfera Growth** — R$ 1.997 ⭐ *Mais vendido*\nSite + ecossistema de crescimento + consultoria individual + programa de indicações\n\n⚡ **Site Profissional** — R$ 997\nSite completo com IA, SEO, design personalizado e entrega em 7 dias\n\nQual opção combina mais com o momento do seu negócio?`,
+                `Maravilha, **${currentLead.nome}**! 🎉\n\nCom base no que você me contou, preparei as melhores opções:\n\n🚀 **Esfera Growth** — R$ 1.997 ⭐ *Mais vendido*\nSite + ecossistema de crescimento + consultoria individual + programa de indicações\n\n⚡ **Site Profissional** — R$ 997\nSite completo com IA, SEO, design personalizado e entrega em 7 dias\n\nQual opção combina mais com o momento do seu negócio?`,
                 PLANO_OPTIONS
               );
             }
@@ -291,15 +294,17 @@ const ChatBot = () => {
           break;
 
         case "planos": {
-          if (crmLeadId) {
-            updateLeadStage(crmLeadId, "qualificado", "proposta_apresentada").catch(console.error);
+          const lid = crmLeadIdRef.current;
+          if (lid) {
+            updateLeadStage(lid, "qualificado", "proposta_apresentada").catch(console.error);
           }
 
+          const currentLead = leadRef.current;
           let planoMsg = "";
           if (userInput.includes("1.997") || userInput.includes("Growth")) {
-            planoMsg = `Ótima decisão, **${lead.nome}**! 🚀\n\nO **Esfera Growth** é o nosso carro-chefe — site profissional + ecossistema completo de crescimento com consultoria, programa de indicações e dashboard exclusivo.\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n💰 **Plano:** Esfera Growth — R$ 1.997`;
+            planoMsg = `Ótima decisão, **${currentLead.nome}**! 🚀\n\nO **Esfera Growth** é o nosso carro-chefe — site profissional + ecossistema completo de crescimento com consultoria, programa de indicações e dashboard exclusivo.\n\n📱 **Contato:** ${currentLead.telefone}\n💼 **Interesse:** ${currentLead.interesse}\n🏢 **Negócio:** ${currentLead.tipoNegocio}\n💰 **Plano:** Esfera Growth — R$ 1.997`;
           } else {
-            planoMsg = `Perfeito, **${lead.nome}**! ⚡\n\nO **Site Profissional** é ideal pra começar com o pé direito — site completo com IA, SEO otimizado, design personalizado e entrega em até 7 dias!\n\n📱 **Contato:** ${lead.telefone}\n💼 **Interesse:** ${lead.interesse}\n🏢 **Negócio:** ${lead.tipoNegocio}\n💰 **Plano:** Site Profissional — R$ 997`;
+            planoMsg = `Perfeito, **${currentLead.nome}**! ⚡\n\nO **Site Profissional** é ideal pra começar com o pé direito — site completo com IA, SEO otimizado, design personalizado e entrega em até 7 dias!\n\n📱 **Contato:** ${currentLead.telefone}\n💼 **Interesse:** ${currentLead.interesse}\n🏢 **Negócio:** ${currentLead.tipoNegocio}\n💰 **Plano:** Site Profissional — R$ 997`;
           }
 
           setTimeout(() => {
@@ -307,8 +312,8 @@ const ChatBot = () => {
             setStep("finalizar");
 
             // Auto-open WhatsApp for high intent
-            if (isHighIntent(lead)) {
-              setTimeout(() => sendToWhatsApp(lead), 3000);
+            if (isHighIntent(leadRef.current)) {
+              setTimeout(() => sendToWhatsApp(leadRef.current), 3000);
             }
           }, 600);
           break;
@@ -318,7 +323,7 @@ const ChatBot = () => {
           break;
       }
     },
-    [addBotMessage, addUserMessage, lead, crmLeadId, refCodeData]
+    [addBotMessage, addUserMessage, refCodeData]
   );
 
   const handleSend = () => {

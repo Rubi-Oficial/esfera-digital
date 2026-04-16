@@ -13,7 +13,7 @@ import StepsBlock from "@/components/growth-os/StepsBlock";
 import DashboardBlock from "@/components/growth-os/DashboardBlock";
 import FeaturesBlock from "@/components/growth-os/FeaturesBlock";
 import PlansBlock from "@/components/growth-os/PlansBlock";
-import AuthorityBlock from "@/components/growth-os/AuthorityBlock";
+// AuthorityBlock removido — duplicava StatsSection (3 stats) e o disclaimer de depoimentos foi suprido pela TestimonialsSection
 import CTAFinalBlock from "@/components/growth-os/CTAFinalBlock";
 import GrowthFooter from "@/components/growth-os/GrowthFooter";
 import WhatsAppFAB from "@/components/growth-os/WhatsAppFAB";
@@ -67,7 +67,6 @@ const GrowthOS = () => {
           </Suspense>
 
           <PlansBlock onSelectPlan={handleSelectPlan} />
-          <AuthorityBlock />
           <CTAFinalBlock />
         </main>
 

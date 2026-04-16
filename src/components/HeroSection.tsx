@@ -59,6 +59,10 @@ const HeroSection = () => {
         src={logoSphere}
         alt=""
         aria-hidden="true"
+        width={520}
+        height={520}
+        loading="eager"
+        decoding="async"
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[420px] lg:w-[520px] object-contain opacity-[0.12] pointer-events-none drop-shadow-[0_0_80px_hsl(var(--primary)/0.4)]"
         animate={{ rotate: 360 }}
         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}

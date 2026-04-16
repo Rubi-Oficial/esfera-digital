@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Users, TrendingUp, DollarSign, Flame } from "lucide-react";
-import { fetchLeads, fetchLeadsByStage, updateLeadStage, fetchSubscriptionsForUsers, STAGE_CONFIG, PIPELINE_ORDER, type PipelineStage, type LeadTemperature } from "@/lib/crm";
+import { fetchLeads, fetchLeadsByStage, updateLeadStage, fetchSubscriptionsForUsers, STAGE_CONFIG, PIPELINE_ORDER, type PipelineStage, type LeadTemperature, type Lead } from "@/lib/crm";
 import { fetchAllReferralCodes, fetchAllReferrals } from "@/lib/referral";
 import SEOHead from "@/components/SEOHead";
 import AuthGuard from "@/components/AuthGuard";
@@ -81,7 +81,7 @@ const CRMContent = () => {
   });
 
   const linkedUserIds = useMemo(
-    () => Array.from(new Set(leads.map((l: any) => l.user_id).filter(Boolean))) as string[],
+    () => Array.from(new Set(leads.map((l: Lead) => l.user_id).filter(Boolean))) as string[],
     [leads]
   );
 

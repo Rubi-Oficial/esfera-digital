@@ -75,6 +75,12 @@ const ChatBot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Refs to avoid stale closures in processStep
+  const leadRef = useRef(lead);
+  leadRef.current = lead;
+  const crmLeadIdRef = useRef(crmLeadId);
+  crmLeadIdRef.current = crmLeadId;
+
   // Listen for global chatbot open events
   useEffect(() => {
     return onChatbotOpen(() => {

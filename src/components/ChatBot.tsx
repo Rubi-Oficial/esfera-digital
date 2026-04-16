@@ -50,7 +50,6 @@ const URGENCIA_OPTIONS = [
 ];
 
 const PLANO_OPTIONS = [
-  "💎 Premium — R$ 5.000",
   "🚀 Esfera Growth — R$ 1.997",
   "⚡ Site Profissional — R$ 997",
 ];

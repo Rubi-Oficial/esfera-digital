@@ -21,6 +21,7 @@ const PortfolioImage = ({ src, alt }: PortfolioImageProps) => {
       src={src}
       alt={`Site ${alt} - projeto desenvolvido pela Esfera Soluções Digitais`}
       loading="lazy"
+      decoding="async"
       width="600"
       height="400"
       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

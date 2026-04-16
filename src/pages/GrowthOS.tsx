@@ -11,6 +11,7 @@ import NetworkBackground from "@/components/NetworkBackground";
 import AnimatedLogo from "@/components/AnimatedLogo";
 import SEOHead from "@/components/SEOHead";
 import ScrollToTop from "@/components/ScrollToTop";
+import LeadCaptureCheckout from "@/components/LeadCaptureCheckout";
 import dashboardImg from "@/assets/growth-os-dashboard.jpg";
 
 const WA_GROWTH = "Olá! Quero ativar meu Esfera Growth!";
@@ -356,13 +357,17 @@ const GrowthOS = () => {
                       </li>
                     ))}
                   </ul>
-                  <a href={plan.checkoutLink}
+                  <button
+                    onClick={() => {
+                      setSelectedPlan({ name: plan.name, priceIds: plan.checkoutLink.split("prices=")[1]?.split("&")[0] || "" });
+                      setCaptureOpen(true);
+                    }}
                     className={`w-full py-3.5 rounded-xl text-center font-semibold text-sm inline-flex items-center justify-center gap-2 transition-all ${
                       plan.popular ? "btn-premium" : "border border-primary/40 text-primary hover:bg-primary/10"
                     }`}
                   >
                     {plan.popular ? "Quero o Esfera Growth 🚀" : "Quero meu site"} <ArrowRight size={14} />
-                  </a>
+                  </button>
                 </motion.div>
               ))}
             </div>

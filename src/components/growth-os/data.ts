@@ -10,22 +10,22 @@ export const WA_STARTER = "Olá! Tenho interesse no plano Site Profissional.";
 export const WA_GROWTH_PLAN = "Olá! Tenho interesse no plano Esfera Growth.";
 export const WA_GENERIC = "Olá! Quero um site profissional que venda por mim.";
 
-// 🟥 Problemas (espelha "A maioria dos pequenos negócios cometem o mesmo erro")
+// 🟥 Problemas (espelha "A maioria dos negócios comete o mesmo erro")
 export const problems = [
   {
     icon: Share2,
-    text: "Acredita que Instagram é suficiente",
-    detail: "Algoritmos mudam, alcance cai — você não controla essas plataformas.",
+    text: "Depende exclusivamente do Instagram",
+    detail: "Algoritmos mudam constantemente — você não controla o alcance dessas plataformas.",
   },
   {
     icon: Globe,
-    text: "Não tem um site profissional",
-    detail: "87% dos consumidores pesquisam online antes de comprar.",
+    text: "Não possui um site profissional",
+    detail: "87% dos consumidores pesquisam online antes de tomar uma decisão de compra.",
   },
   {
     icon: Search,
-    text: "Não aparece no Google",
-    detail: "Quem aparece primeiro leva 75% dos cliques.",
+    text: "Não aparece nos resultados do Google",
+    detail: "O primeiro resultado orgânico recebe 75% de todos os cliques.",
   },
 ];
 

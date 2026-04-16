@@ -7,8 +7,8 @@ const ProblemBlock = () => (
   <Section id="problema" className="section-divider">
     <SectionTitle
       label="O Problema"
-      title={<>A maioria dos pequenos negócios cometem o <span className="text-destructive">mesmo erro</span></>}
-      subtitle="Resultado? Perde clientes todos os dias, parece amador e depende do algoritmo. E o pior: nem percebe quanto dinheiro está deixando na mesa."
+      title={<>A maioria dos negócios comete o <span className="text-destructive">mesmo erro</span></>}
+      subtitle="O resultado disso? Perda diária de oportunidades, imagem amadora frente à concorrência e dependência total de algoritmos. E muitas vezes, sem perceber o quanto de receita está sendo perdida."
     />
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
       {problems.map((p, i) => (

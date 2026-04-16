@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Users, TrendingUp, DollarSign, BarChart3, ArrowRight,
   Phone, Building2, Target, Clock, ChevronDown, ChevronUp,
   Flame, Snowflake, Thermometer, Brain, MessageCircle, Zap,
-  AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2
+  AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2,
+  Filter, Download, Search, X
 } from "lucide-react";
-import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type Lead } from "@/lib/crm";
+import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type LeadTemperature, type Lead } from "@/lib/crm";
 import { fetchAllReferralCodes, fetchAllReferrals, type ReferralCode, type Referral } from "@/lib/referral";
 import SEOHead from "@/components/SEOHead";
 import AuthGuard from "@/components/AuthGuard";

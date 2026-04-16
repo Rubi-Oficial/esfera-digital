@@ -312,6 +312,21 @@ export type Database = {
         }
         Returns: string
       }
+      get_my_referrals: {
+        Args: { _code_id: string }
+        Returns: {
+          comissao: number
+          created_at: string
+          data_conversao: string
+          data_pagamento: string
+          expires_at: string
+          id: string
+          lead_id: string
+          lead_nome: string
+          referral_code_id: string
+          status: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

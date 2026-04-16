@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Rocket, CheckCircle2, Clock, Users, DollarSign,
-  ArrowRight, Gift, TrendingUp, BarChart3, Link2
+  ArrowRight, Gift, TrendingUp, BarChart3, Link2, Bell, PartyPopper
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import SEOHead from "@/components/SEOHead";
@@ -12,6 +12,7 @@ import AnimatedLogo from "@/components/AnimatedLogo";
 import { getMyReferralCode, getMyReferrals, type ReferralCode, type Referral } from "@/lib/referral";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const PROJECT_STAGES = [
   { key: "briefing", label: "Briefing & Planejamento", icon: BarChart3 },
@@ -24,6 +25,8 @@ const PROJECT_STAGES = [
 const MeuProjetoContent = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
+  const [stageNotification, setStageNotification] = useState<{ from: string; to: string } | null>(null);
+  const hasShownToast = useRef(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -48,7 +51,26 @@ const MeuProjetoContent = () => {
         .maybeSingle();
       return data;
     },
+    refetchInterval: 30000,
   });
+
+  // Detect stage changes and show notification
+  useEffect(() => {
+    if (!myProject) return;
+    const storageKey = `project_stage_${myProject.id}`;
+    const lastSeen = localStorage.getItem(storageKey);
+    if (lastSeen && lastSeen !== myProject.current_stage && !hasShownToast.current) {
+      const fromLabel = PROJECT_STAGES.find(s => s.key === lastSeen)?.label || lastSeen;
+      const toLabel = PROJECT_STAGES.find(s => s.key === myProject.current_stage)?.label || myProject.current_stage;
+      setStageNotification({ from: fromLabel, to: toLabel });
+      hasShownToast.current = true;
+      toast.success("Seu projeto avançou! 🎉", {
+        description: `De "${fromLabel}" para "${toLabel}"`,
+        duration: 8000,
+      });
+    }
+    localStorage.setItem(storageKey, myProject.current_stage);
+  }, [myProject?.current_stage, myProject?.id]);
 
   const currentStageIndex = myProject
     ? PROJECT_STAGES.findIndex(s => s.key === myProject.current_stage)
@@ -107,6 +129,33 @@ const MeuProjetoContent = () => {
               Acompanhe o andamento do seu projeto e suas indicações.
             </p>
           </motion.div>
+
+          {/* Stage change notification banner */}
+          <AnimatePresence>
+            {stageNotification && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: "auto" }}
+                exit={{ opacity: 0, y: -10, height: 0 }}
+                className="bg-primary/10 border border-primary/30 rounded-xl p-4 flex items-start gap-3"
+              >
+                <PartyPopper size={20} className="text-primary shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-primary">Seu projeto avançou! 🎉</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    De <span className="font-medium text-foreground">{stageNotification.from}</span> para{" "}
+                    <span className="font-medium text-primary">{stageNotification.to}</span>
+                  </p>
+                </div>
+                <button
+                  onClick={() => setStageNotification(null)}
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  ✕
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {!myProject ? (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}

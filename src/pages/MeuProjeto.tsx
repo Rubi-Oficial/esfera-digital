@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Rocket, CheckCircle2, Clock, Users, DollarSign,
-  ArrowRight, Gift, TrendingUp, BarChart3, Link2
+  ArrowRight, Gift, TrendingUp, BarChart3, Link2, Bell, PartyPopper
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import SEOHead from "@/components/SEOHead";
@@ -12,6 +12,7 @@ import AnimatedLogo from "@/components/AnimatedLogo";
 import { getMyReferralCode, getMyReferrals, type ReferralCode, type Referral } from "@/lib/referral";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const PROJECT_STAGES = [
   { key: "briefing", label: "Briefing & Planejamento", icon: BarChart3 },

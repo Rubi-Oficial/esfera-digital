@@ -6,11 +6,11 @@ import { solution } from "./data";
 const SolutionBlock = () => (
   <Section id="solucao">
     <SectionTitle
-      label="A Solução"
-      title={<><span className="text-gradient">Esfera Growth</span> — Vendas estruturadas</>}
-      subtitle="Um ecossistema completo que organiza e automatiza seu processo comercial."
+      label="🤖 A Solução"
+      title={<>Site completo + <span className="text-gradient">I.A. integrada</span></>}
+      subtitle="Um verdadeiro vendedor digital que trabalha por você 24 horas por dia."
     />
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
       {solution.map((s, i) => (
         <motion.div
           key={i}

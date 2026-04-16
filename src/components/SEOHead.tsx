@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 const SITE_URL = "https://criarmeusiteagora.esferamarketing.com";
 const DEFAULT_OG_IMAGE = "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/9024b597-7d30-49e7-82f7-108a75811533";
+const SITE_NAME = "Esfera Digital";
 
 interface BreadcrumbItem {
   name: string;

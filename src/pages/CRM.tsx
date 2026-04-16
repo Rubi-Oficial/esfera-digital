@@ -732,6 +732,74 @@ const CRMContent = () => {
                       </ResponsiveContainer>
                     </div>
                   </motion.div>
+
+                  {/* Cumulative Growth Chart */}
+                  {cumulativeData.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.0 }}
+                      className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
+                    >
+                      <div className="flex items-center gap-2 mb-4">
+                        <Activity size={18} className="text-emerald-400" />
+                        <h2 className="text-lg font-semibold font-sora">Crescimento Acumulado</h2>
+                      </div>
+                      <div className="h-[280px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <AreaChart data={cumulativeData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                            <defs>
+                              <linearGradient id="gradCumTotal" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                              </linearGradient>
+                              <linearGradient id="gradCumConv" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#34d399" stopOpacity={0.3} />
+                                <stop offset="95%" stopColor="#34d399" stopOpacity={0} />
+                              </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+                            <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
+                            <Tooltip contentStyle={chartTooltipStyle} />
+                            <Legend />
+                            <Area type="monotone" dataKey="total" name="Total Acumulado" stroke="hsl(var(--primary))" fill="url(#gradCumTotal)" strokeWidth={2} />
+                            <Area type="monotone" dataKey="convertidos" name="Convertidos" stroke="#34d399" fill="url(#gradCumConv)" strokeWidth={2} />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Weekly Conversion Rate */}
+                  {weeklyConversionData.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.1 }}
+                      className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
+                    >
+                      <div className="flex items-center gap-2 mb-4">
+                        <Percent size={18} className="text-violet-400" />
+                        <h2 className="text-lg font-semibold font-sora">Taxa de Conversão Semanal</h2>
+                      </div>
+                      <div className="h-[280px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={weeklyConversionData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                            <XAxis dataKey="label" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+                            <YAxis yAxisId="left" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
+                            <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} unit="%" />
+                            <Tooltip contentStyle={chartTooltipStyle} />
+                            <Legend />
+                            <Bar yAxisId="left" dataKey="total" name="Leads" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} opacity={0.6} />
+                            <Bar yAxisId="left" dataKey="convertidos" name="Convertidos" fill="#34d399" radius={[4, 4, 0, 0]} />
+                            <Bar yAxisId="right" dataKey="taxa" name="Taxa %" fill="#a78bfa" radius={[4, 4, 0, 0]} opacity={0.7} />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
               )}
 

@@ -1,9 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, Zap, Users, Briefcase, MapPin, Clock, Rocket, BookOpen, UserCheck, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
 import { useCountdown } from "@/hooks/useCountdown";
+import LeadCaptureCheckout from "./LeadCaptureCheckout";
 
 const plans = [
   {
@@ -82,6 +83,8 @@ const idealFor = [
 const PricingSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { hours, minutes, seconds, expired } = useCountdown();
+  const [captureOpen, setCaptureOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<{ name: string; priceIds: string } | null>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const orbY1 = useTransform(scrollYProgress, [0, 1], [120, -120]);
   const orbY2 = useTransform(scrollYProgress, [0, 1], [-60, 120]);
@@ -210,12 +213,15 @@ const PricingSection = () => {
                   </ul>
                 </div>
 
-                <Link
-                  to={`/checkout?prices=${plan.priceIds}&plan=${encodeURIComponent(plan.name)}`}
+                <button
+                  onClick={() => {
+                    setSelectedPlan({ name: plan.name, priceIds: plan.priceIds });
+                    setCaptureOpen(true);
+                  }}
                   className="w-full py-3 text-sm inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
                 >
                   {plan.cta}
-                </Link>
+                </button>
 
                 {plan.growthLink && (
                   <Link
@@ -268,6 +274,15 @@ const PricingSection = () => {
           </div>
         </motion.div>
       </div>
+
+      {selectedPlan && (
+        <LeadCaptureCheckout
+          open={captureOpen}
+          onClose={() => setCaptureOpen(false)}
+          planName={selectedPlan.name}
+          priceIds={selectedPlan.priceIds}
+        />
+      )}
     </section>
   );
 };

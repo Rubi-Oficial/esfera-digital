@@ -261,6 +261,7 @@ const MeuProjetoContent = () => {
               </div>
             </motion.div>
           )}
+        </main>
       </div>
     </>
   );

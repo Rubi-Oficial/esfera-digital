@@ -4,14 +4,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
+import GrowthOS from "./pages/GrowthOS.tsx";
 
 // Lazy-loaded routes (code-split per route)
 const Blog = lazy(() => import("./pages/Blog.tsx"));
 const BlogArticle = lazy(() => import("./pages/BlogArticle.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 const Indicacao = lazy(() => import("./pages/Indicacao.tsx"));
-const GrowthOS = lazy(() => import("./pages/GrowthOS.tsx"));
 const CRM = lazy(() => import("./pages/CRM.tsx"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword.tsx"));
 const MeuProjeto = lazy(() => import("./pages/MeuProjeto.tsx"));
@@ -34,8 +33,7 @@ const App = () => (
       <BrowserRouter>
         <Suspense fallback={<RouteFallback />}>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/growth-os" element={<GrowthOS />} />
+            <Route path="/" element={<GrowthOS />} />
             <Route path="/crm" element={<CRM />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/meu-projeto" element={<MeuProjeto />} />

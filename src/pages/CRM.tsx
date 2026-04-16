@@ -6,17 +6,18 @@ import {
   Phone, Building2, Target, Clock, ChevronDown, ChevronUp,
   Flame, Snowflake, Thermometer, Brain, MessageCircle, Zap,
   AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2,
-  Filter, Download, Search, X
+  Filter, Download, Search, X, CalendarDays
 } from "lucide-react";
 import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type LeadTemperature, type Lead } from "@/lib/crm";
 import { fetchAllReferralCodes, fetchAllReferrals, type ReferralCode, type Referral } from "@/lib/referral";
 import SEOHead from "@/components/SEOHead";
 import AuthGuard from "@/components/AuthGuard";
-import { format } from "date-fns";
+import { format, subDays, startOfDay, eachDayOfInterval, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { WHATSAPP_PHONE } from "@/lib/constants";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 // Follow-up messages by stage
 const FOLLOWUP_MESSAGES: Record<string, { label: string; message: string }> = {

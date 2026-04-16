@@ -6,7 +6,7 @@ import {
   Phone, Building2, Target, Clock, ChevronDown, ChevronUp,
   Flame, Snowflake, Thermometer, Brain, MessageCircle, Zap,
   AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2,
-  Filter, Download, Search, X, CalendarDays
+  Filter, Download, Search, X, CalendarDays, Activity, Percent
 } from "lucide-react";
 import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type LeadTemperature, type Lead } from "@/lib/crm";
 import { fetchAllReferralCodes, fetchAllReferrals, type ReferralCode, type Referral } from "@/lib/referral";

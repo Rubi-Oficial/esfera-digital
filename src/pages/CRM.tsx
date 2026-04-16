@@ -62,6 +62,10 @@ const CRMContent = () => {
   const [projectForm, setProjectForm] = useState({ client_name: "", user_id: "", current_stage: "briefing", notes: "" });
   const [editingProject, setEditingProject] = useState<string | null>(null);
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
+  const [tempFilter, setTempFilter] = useState<LeadTemperature | "all">("all");
+  const [stageFilter, setStageFilter] = useState<PipelineStage | "all">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: leads = [], isLoading } = useQuery({

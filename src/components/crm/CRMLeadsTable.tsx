@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Phone, Building2, Target, Clock, ChevronDown, ChevronUp, Send } from "lucide-react";
-import { STAGE_CONFIG, type Lead } from "@/lib/crm";
+import { Users, Phone, Building2, Target, Clock, ChevronDown, ChevronUp, Send, CreditCard, UserCheck } from "lucide-react";
+import { STAGE_CONFIG, SUBSCRIPTION_STATUS_CONFIG, type Lead, type SubscriptionInfo } from "@/lib/crm";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import TempIcon from "./TempIcon";
 import { FOLLOWUP_MESSAGES, sendFollowUpWhatsApp } from "./types";
 
+type LeadWithUser = Lead & { user_id?: string | null };
+
 interface CRMLeadsTableProps {
-  leads: Lead[];
+  leads: LeadWithUser[];
   activeFilters: number;
   totalCount: number;
   onClearFilters: () => void;
+  subscriptions?: Record<string, SubscriptionInfo>;
 }
 
 const CRMLeadsTable = ({ leads, activeFilters, totalCount, onClearFilters }: CRMLeadsTableProps) => {

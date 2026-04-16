@@ -12,6 +12,8 @@ import GrowthOS from "./pages/GrowthOS.tsx";
 import CRM from "./pages/CRM.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import MeuProjeto from "./pages/MeuProjeto.tsx";
+import Checkout from "./pages/Checkout.tsx";
+import CheckoutReturn from "./pages/CheckoutReturn.tsx";
 
 const queryClient = new QueryClient();
 

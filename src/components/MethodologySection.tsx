@@ -4,10 +4,10 @@ import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, slideUp } from "@/lib/animations";
 
 const steps = [
-  { num: "1️⃣", title: "Envie informações do seu negócio", desc: "Preencha um breve formulário com os dados essenciais da sua empresa." },
-  { num: "2️⃣", title: "Criamos site + design + estrutura de vendas", desc: "Nossa equipe desenvolve tudo: copy persuasiva, design moderno e otimização." },
-  { num: "3️⃣", title: "Integramos IA e WhatsApp", desc: "Conectamos chatbot inteligente, formulários e botão de WhatsApp." },
-  { num: "4️⃣", title: "Publicamos tudo pronto pra você", desc: "Seu site vai ao ar 100% funcional — pronto para gerar clientes." },
+  { num: "01", title: "Envie as informações do seu negócio", desc: "Preencha um breve formulário com os dados essenciais da sua empresa." },
+  { num: "02", title: "Criamos site, design e estrutura de vendas", desc: "Nossa equipe desenvolve tudo: copy estratégica, design moderno e otimização completa." },
+  { num: "03", title: "Integramos I.A. e WhatsApp", desc: "Conectamos chatbot inteligente, formulários de captação e botão de WhatsApp." },
+  { num: "04", title: "Publicamos tudo pronto para você", desc: "Seu site vai ao ar 100% funcional — otimizado para gerar clientes desde o primeiro dia." },
 ];
 
 const MethodologySection = () => {
@@ -22,10 +22,10 @@ const MethodologySection = () => {
 
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
-          label="⚙️ Como Funciona"
+          label="Como Funciona"
           titleId="methodology-heading"
-          title={<>Simples, rápido e <span className="text-gradient">sem dor de cabeça</span></>}
-          subtitle="Em 4 passos simples você tem um site profissional pronto para vender."
+          title={<>Processo simples, <span className="text-gradient">resultado rápido</span></>}
+          subtitle="Em 4 etapas, você tem um site profissional pronto para gerar resultados."
           className="mb-14"
         />
 
@@ -45,7 +45,7 @@ const MethodologySection = () => {
               >
                 <div className="relative z-10 flex items-start gap-5 w-full">
                   <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:border-primary/40 group-hover:bg-primary/15 transition-all duration-300">
-                    <span className="text-2xl">{step.num}</span>
+                    <span className="text-lg font-bold text-primary">{step.num}</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-base mb-1 text-foreground group-hover:text-primary transition-colors duration-300">{step.title}</h3>

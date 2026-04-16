@@ -10,7 +10,7 @@ const plans = [
   {
     id: "site_profissional",
     name: "Site Profissional",
-    subtitle: "Ideal para começar",
+    subtitle: "Ideal para começar sua presença digital",
     implantacao: 997,
     implantacaoOriginal: 1500,
     mensal: 97,
@@ -20,17 +20,17 @@ const plans = [
     included: [
       "Site profissional (One Page estratégico)",
       "Design moderno e personalizado",
-      "Copy pronta para vender",
+      "Copy estratégica para conversão",
       "Integração com WhatsApp",
-      "SEO básico (para aparecer no Google)",
-      "Certificado SSL grátis",
+      "SEO básico (apareça no Google)",
+      "Certificado SSL incluso",
       "1 ano de hospedagem incluso",
-      "Entrega rápida",
+      "Entrega em até 7 dias úteis",
     ],
     bonuses: [
-      "Entrega em até 7 dias",
-      "Setup prioritário",
-      "Suporte inicial incluso",
+      "Entrega prioritária",
+      "Setup completo incluso",
+      "Suporte pós-entrega",
     ],
     highlights: null,
     cta: "Quero meu site",
@@ -44,20 +44,20 @@ const plans = [
     implantacaoOriginal: 3000,
     mensal: 297,
     featured: true,
-    badge: "🚀 Mais vendido",
+    badge: "Mais vendido",
     icon: Rocket,
     included: [
       "Tudo do plano Site Profissional",
-      "Base de Conhecimento Interna exclusiva",
+      "Base de Conhecimento exclusiva",
       "Consultoria individual com especialista",
-      "Estratégia de captação de clientes",
+      "Estratégia personalizada de captação",
       "Programa de Parcerias (Indique e Ganhe)",
       "Dashboard de indicações e comissões",
       "Suporte prioritário por 3 meses",
       "Relatórios de performance mensais",
     ],
     bonuses: [
-      "1 sessão de consultoria grátis",
+      "1 sessão de consultoria inclusa",
       "Acesso vitalício à base de conhecimento",
       "Grupo exclusivo de membros Growth",
       "Acesso ao grupo VIP no Telegram",
@@ -67,7 +67,7 @@ const plans = [
       { icon: UserCheck, label: "Consultoria Individual" },
       { icon: BarChart3, label: "Dashboard Growth" },
     ],
-    cta: "Quero o Esfera Growth 🚀",
+    cta: "Quero o Esfera Growth",
     priceIds: "esfera_growth_implantacao,esfera_growth_mensal",
     growthLink: true,
   },
@@ -100,9 +100,9 @@ const PricingSection = () => {
       <div className="container px-4 sm:px-6 md:px-8 relative z-10">
         <SectionHeader
           titleId="pricing-heading"
-          label="💰 Oferta Especial"
+          label="Planos"
           title={<>Escolha o plano <span className="text-gradient">ideal para você</span></>}
-          subtitle="Do site profissional ao ecossistema completo de crescimento. Escolha o que faz mais sentido pro seu negócio."
+          subtitle="Do site profissional ao ecossistema completo de crescimento. Escolha o que faz mais sentido para o seu negócio."
           className="mb-8 md:mb-10"
         />
 
@@ -153,7 +153,7 @@ const PricingSection = () => {
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <Clock size={12} className="text-destructive animate-pulse" />
                       <p className="text-[10px] font-semibold uppercase tracking-wider text-destructive">
-                        Oferta expira em
+                        Oferta por tempo limitado
                       </p>
                     </div>
                     <div className="flex justify-center gap-2">
@@ -202,7 +202,7 @@ const PricingSection = () => {
 
                 {/* Bonuses */}
                 <div className={`glass rounded-xl p-3 mb-5 border ${plan.featured ? "border-primary/20" : "border-border/30"}`}>
-                  <h4 className={`text-xs font-bold uppercase tracking-wider mb-2 ${plan.featured ? "text-primary" : "text-muted-foreground"}`}>🎁 {plan.featured ? "Bônus exclusivos" : "Bônus"}</h4>
+                  <h4 className={`text-xs font-bold uppercase tracking-wider mb-2 ${plan.featured ? "text-primary" : "text-muted-foreground"}`}>Bônus {plan.featured ? "exclusivos" : "inclusos"}</h4>
                   <ul className="space-y-1.5">
                     {plan.bonuses.map((b, i) => (
                       <li key={i} className="flex items-center gap-2 text-xs text-secondary-foreground">
@@ -218,7 +218,7 @@ const PricingSection = () => {
                     setSelectedPlan({ name: plan.name, priceIds: plan.priceIds });
                     setCaptureOpen(true);
                   }}
-                  className="w-full py-3 text-sm inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+                  className={`w-full py-3 text-sm inline-flex items-center justify-center rounded-xl font-medium transition-all ${plan.featured ? "btn-premium" : "bg-primary text-primary-foreground hover:opacity-90"}`}
                 >
                   {plan.cta}
                 </button>
@@ -244,7 +244,7 @@ const PricingSection = () => {
           transition={{ delay: 0.3 }}
           className="max-w-2xl mx-auto mt-12 text-center"
         >
-          <h3 className="text-lg font-bold mb-6">🎯 Pra quem são esses planos?</h3>
+          <h3 className="text-lg font-bold mb-6">Para quem são esses planos?</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {idealFor.map((item, i) => (
               <div key={i} className="glass-hover rounded-xl p-4 text-center">
@@ -254,7 +254,7 @@ const PricingSection = () => {
             ))}
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            👉 Que querem mais clientes <strong className="text-foreground">sem depender de redes sociais</strong>
+            Profissionais e empresas que querem mais clientes <strong className="text-foreground">sem depender de redes sociais</strong>.
           </p>
         </motion.div>
 
@@ -266,10 +266,10 @@ const PricingSection = () => {
           transition={{ delay: 0.5 }}
           className="max-w-lg mx-auto mt-10"
         >
-          <div className="glass rounded-xl p-5 border border-destructive/20 text-center">
-            <p className="text-sm font-semibold text-destructive mb-1">⚠️ Vagas limitadas</p>
+          <div className="glass rounded-xl p-5 border border-primary/20 text-center">
+            <p className="text-sm font-semibold text-foreground mb-1">Vagas limitadas por mês</p>
             <p className="text-xs text-muted-foreground">
-              Trabalhamos com número limitado de projetos por mês. Quando fechar, só no próximo ciclo.
+              Trabalhamos com número limitado de projetos para garantir qualidade. Quando atingirmos o limite, as próximas vagas abrem no mês seguinte.
             </p>
           </div>
         </motion.div>

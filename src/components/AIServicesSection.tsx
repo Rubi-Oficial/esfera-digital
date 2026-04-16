@@ -1,33 +1,29 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { MessageSquare, Smartphone, CalendarDays, TrendingUp, Bot, Shield } from "lucide-react";
+import { MessageSquare, Smartphone, CalendarDays, TrendingUp } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import ChatbotTrigger from "./ui/ChatbotTrigger";
 
 const benefits = [
   {
     icon: MessageSquare,
-    title: "Responde clientes automaticamente",
-    description: "I.A. integrada que atende, qualifica e responde em tempo real — 24 horas por dia.",
-    emoji: "💬",
+    title: "Atendimento automatizado 24h",
+    description: "Inteligência artificial integrada que atende, qualifica e responde seus clientes em tempo real — a qualquer hora.",
   },
   {
     icon: Smartphone,
-    title: "Leva direto pro WhatsApp",
-    description: "Botões, formulários e chatbot que direcionam leads qualificados para seu WhatsApp.",
-    emoji: "📲",
+    title: "Direcionamento para WhatsApp",
+    description: "Botões estratégicos, formulários e chatbot que encaminham leads qualificados direto para o seu WhatsApp.",
   },
   {
     icon: CalendarDays,
-    title: "Gera contatos todos os dias",
-    description: "Estrutura de captação com formulários inteligentes e calls-to-action estratégicos.",
-    emoji: "📅",
+    title: "Captação contínua de leads",
+    description: "Estrutura de captação com formulários inteligentes e chamadas para ação posicionadas estrategicamente.",
   },
   {
     icon: TrendingUp,
-    title: "Aumenta sua credibilidade",
-    description: "Design profissional que transmite autoridade e confiança para seus clientes.",
-    emoji: "📈",
+    title: "Credibilidade profissional",
+    description: "Design de alto nível que transmite autoridade, confiança e diferencia sua marca da concorrência.",
   },
 ];
 
@@ -49,9 +45,9 @@ const AIServicesSection = () => {
 
       <div className="container relative z-10 px-4 md:px-8">
         <SectionHeader
-          label="🤖 Solução"
+          label="Solução"
           title={<>Site completo + <span className="text-gradient">I.A. integrada</span></>}
-          subtitle="Um verdadeiro vendedor digital que trabalha por você 24 horas por dia."
+          subtitle="Um sistema digital completo que trabalha por você 24 horas por dia."
         />
 
         <motion.div
@@ -62,7 +58,7 @@ const AIServicesSection = () => {
           className="text-center mb-12"
         >
           <p className="text-lg text-muted-foreground">
-            <strong className="text-foreground">Seu site vai:</strong>
+            <strong className="text-foreground">O que seu site vai fazer:</strong>
           </p>
         </motion.div>
 
@@ -83,7 +79,7 @@ const AIServicesSection = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold mb-1.5 text-foreground">
-                      {benefit.emoji} {benefit.title}
+                      {benefit.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed text-sm">
                       {benefit.description}

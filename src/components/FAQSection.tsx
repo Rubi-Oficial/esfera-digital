@@ -11,40 +11,40 @@ import {
 
 const faqs = [
   {
-    question: "\"Ah, mas eu não entendo de tecnologia…\"",
-    answer: "Não precisa! Fazemos tudo pra você — do design ao conteúdo, da programação à publicação. Você só precisa nos enviar as informações básicas do seu negócio.",
+    question: "Não entendo de tecnologia. Isso é um problema?",
+    answer: "De forma alguma. Cuidamos de absolutamente tudo — do design ao conteúdo, da programação à publicação. Você só precisa nos enviar as informações básicas do seu negócio.",
   },
   {
-    question: "\"E se eu não tiver conteúdo?\"",
-    answer: "Sem problemas. Criamos a copy e toda a estrutura completa do seu site. Textos persuasivos, chamadas para ação e conteúdo otimizado para Google.",
+    question: "E se eu não tiver conteúdo pronto?",
+    answer: "Não se preocupe. Criamos toda a estrutura de conteúdo do seu site: textos persuasivos, chamadas para ação e conteúdo otimizado para mecanismos de busca.",
   },
   {
-    question: "\"Vai funcionar para o meu negócio?\"",
-    answer: "Se seus clientes pesquisam no Google, sim! Nossos sites são ideais para pequenos empresários, autônomos, prestadores de serviço e negócios locais de qualquer segmento.",
+    question: "Funciona para o meu tipo de negócio?",
+    answer: "Se os seus clientes pesquisam no Google antes de comprar, sim. Nossos sites são ideais para empresários, autônomos, prestadores de serviço e negócios locais de qualquer segmento.",
   },
   {
-    question: "Quanto tempo leva para ficar pronto?",
-    answer: "Sites One Page são entregues em até 7 dias úteis. Tudo é feito de forma ágil para que você comece a gerar clientes o mais rápido possível.",
+    question: "Qual o prazo de entrega?",
+    answer: "Sites One Page são entregues em até 7 dias úteis. Todo o processo é conduzido de forma ágil para que você comece a gerar resultados o mais rápido possível.",
   },
   {
-    question: "O site funciona bem no celular?",
-    answer: "Sim! Todos os sites são desenvolvidos com design responsivo e mobile-first, garantindo experiência perfeita em smartphones, tablets e desktops.",
+    question: "O site é responsivo para celular?",
+    answer: "Sim. Todos os sites são desenvolvidos com design responsivo e mobile-first, garantindo experiência perfeita em smartphones, tablets e desktops.",
   },
   {
     question: "Como funciona o pagamento?",
-    answer: "O pagamento é feito online de forma segura. Você paga a implantação e uma mensalidade recorrente. Aceitamos cartão de crédito com parcelamento.",
+    answer: "O pagamento é feito online de forma segura. Você paga a implantação e uma mensalidade recorrente. Aceitamos cartão de crédito com opção de parcelamento.",
   },
   {
-    question: "Posso parcelar?",
-    answer: "Sim! O pagamento pode ser parcelado no cartão de crédito. Fale conosco para encontrar a melhor condição para o seu caso!",
+    question: "É possível parcelar?",
+    answer: "Sim. O pagamento pode ser parcelado no cartão de crédito. Entre em contato para encontrar a melhor condição para o seu caso.",
   },
   {
-    question: "Vocês oferecem suporte após a entrega?",
-    answer: "Sim! Todos os projetos incluem suporte técnico gratuito após a entrega, além de 1 ano de hospedagem incluso no pacote.",
+    question: "Há suporte após a entrega?",
+    answer: "Sim. Todos os projetos incluem suporte técnico após a entrega, além de 1 ano de hospedagem incluso no pacote.",
   },
   {
-    question: "Posso solicitar alterações?",
-    answer: "Claro! Nosso processo inclui rodadas de revisão. Você acompanha o progresso e pode solicitar ajustes antes da entrega final.",
+    question: "Posso solicitar alterações depois?",
+    answer: "Claro. Nosso processo inclui rodadas de revisão. Você acompanha o progresso e pode solicitar ajustes antes da entrega final.",
   },
 ];
 
@@ -60,10 +60,10 @@ const FAQSection = () => {
       <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/6 blur-[130px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
-          label="💬 Objeções"
+          label="Perguntas Frequentes"
           titleId="faq-heading"
-          title={<>Ainda tem <span className="text-gradient">dúvidas?</span></>}
-          subtitle="Respondemos as perguntas mais comuns sobre nosso serviço."
+          title={<>Dúvidas? <span className="text-gradient">Respondemos aqui.</span></>}
+          subtitle="As perguntas mais comuns sobre nosso serviço e processo."
         />
 
         <motion.div

@@ -5,10 +5,10 @@ import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, fadeInUpRotate, blurFadeIn } from "@/lib/animations";
 
 const transformations = [
-  { icon: Globe, label: "Aparece no Google", desc: "Seus clientes te encontram quando pesquisam" },
-  { icon: Sparkles, label: "Passa credibilidade", desc: "Design profissional que gera confiança" },
-  { icon: MessageSquare, label: "Responde automaticamente", desc: "I.A. atende seus clientes 24h" },
-  { icon: Zap, label: "Direciona pro WhatsApp", desc: "Leads qualificados direto no seu celular" },
+  { icon: Globe, label: "Visibilidade no Google", desc: "Seus clientes encontram você quando pesquisam pelo seu serviço." },
+  { icon: Sparkles, label: "Credibilidade imediata", desc: "Design profissional que gera confiança desde o primeiro acesso." },
+  { icon: MessageSquare, label: "Atendimento automático", desc: "I.A. integrada que responde e qualifica clientes 24 horas por dia." },
+  { icon: Zap, label: "Leads no WhatsApp", desc: "Contatos qualificados direcionados automaticamente para você." },
 ];
 
 const AboutSection = () => {
@@ -31,13 +31,13 @@ const AboutSection = () => {
           transition={{ duration: 0.7 }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">💡 A Virada</span>
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-4">A Transformação</span>
           <h2 id="about-heading" className="text-3xl md:text-5xl font-bold mb-6">
             Agora <span className="text-gradient">imagine isso:</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             Um site profissional trabalhando por você <strong className="text-foreground">24 horas por dia</strong>.
-            Isso não é futuro — isso já é possível hoje, com <strong className="text-foreground">inteligência artificial</strong>.
+            Isso já é realidade para centenas de empresas que usam <strong className="text-foreground">inteligência artificial</strong>.
           </p>
         </motion.div>
 
@@ -75,7 +75,7 @@ const AboutSection = () => {
           transition={{ delay: 0.5 }}
           className="text-center text-lg text-muted-foreground mt-10"
         >
-          👉 Como se você tivesse um <strong className="text-foreground">funcionário trabalhando 24h.</strong>
+          Como ter um <strong className="text-foreground">profissional dedicado trabalhando 24h</strong> pelo seu negócio.
         </motion.p>
       </div>
     </section>

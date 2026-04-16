@@ -25,7 +25,7 @@ const testimonials = [
     company: "Studio Pilates SC",
     role: "Proprietária",
     rating: 5,
-    text: "Investimento que se pagou em semanas. O número de agendamentos pelo site cresceu 400%. Recomendo de olhos fechados!",
+    text: "Investimento que se pagou em semanas. O número de agendamentos pelo site cresceu 400%. Recomendo sem hesitar.",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop&crop=face",
   },
   {
@@ -33,7 +33,7 @@ const testimonials = [
     company: "FN Engenharia",
     role: "Diretor",
     rating: 5,
-    text: "A equipe entendeu perfeitamente o que precisávamos. O site transmite a credibilidade que nossa empresa merece. Resultados impressionantes.",
+    text: "A equipe entendeu perfeitamente o que precisávamos. O site transmite a credibilidade que nossa empresa merece. Resultados acima do esperado.",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face",
   },
 ];
@@ -66,7 +66,6 @@ const TestimonialsSection = () => {
   const orbY = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const orbOpacity = useTransform(scrollYProgress, [0, 0.15, 0.5, 0.85, 1], [0.2, 0.8, 1, 0.8, 0.2]);
   const orbScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.15, 0.8]);
-  const dotY = useTransform(scrollYProgress, [0, 1], [0, -140]);
 
   const [[activeIndex, direction], setActiveIndex] = useState([0, 0]);
   const [isPaused, setIsPaused] = useState(false);
@@ -96,13 +95,12 @@ const TestimonialsSection = () => {
       onMouseLeave={() => setIsPaused(false)}
     >
       <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-primary/6 blur-[150px] pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
-      <motion.div className="absolute w-3 h-3 rounded-full bg-primary/40 animate-pulse-glow left-16 top-16 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <SectionHeader
           label="Depoimentos"
           titleId="testimonials-heading"
-          title={<>O que nossos <span className="text-primary">clientes dizem</span></>}
+          title={<>O que nossos <span className="text-gradient">clientes dizem</span></>}
           subtitle="Resultados reais de empresas que confiaram na Esfera Digital para transformar sua presença online."
         />
 
@@ -139,7 +137,6 @@ const TestimonialsSection = () => {
                 <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06),transparent_70%)] pointer-events-none" />
 
                 <div className="relative z-10">
-                  {/* Quote mark */}
                   <span className="absolute -top-2 -left-1 text-5xl text-primary/20 font-serif leading-none select-none" aria-hidden="true">"</span>
 
                   <div className="flex gap-1 mb-4">

@@ -69,11 +69,18 @@ export function useChatBot() {
       setHasGreeted(true);
       setShowPulse(false);
       setTimeout(() => {
-        addBotMessage(`Olá! 👋 Eu sou a **${BOT_NAME}**, assistente digital da Esfera Digital.\n\nEm 30 segundos eu entendo seu caso e te conecto com a melhor solução.\n\nPara começar, qual é o seu **nome**?`);
+        const intro = pendingInitialMessage
+          ? `Olá! 👋 Eu sou a **${BOT_NAME}**, assistente digital da Esfera Digital.\n\nVi que você tem interesse em: _"${pendingInitialMessage}"_\n\nPara que eu possa te ajudar com isso, qual é o seu **nome**?`
+          : `Olá! 👋 Eu sou a **${BOT_NAME}**, assistente digital da Esfera Digital.\n\nEm 30 segundos eu entendo seu caso e te conecto com a melhor solução.\n\nPara começar, qual é o seu **nome**?`;
+        addBotMessage(intro);
         setStep("nome");
+        if (pendingInitialMessage) {
+          setLead((prev) => ({ ...prev, interesse: pendingInitialMessage }));
+          setPendingInitialMessage(null);
+        }
       }, 500);
     }
-  }, [isOpen, hasGreeted, addBotMessage]);
+  }, [isOpen, hasGreeted, addBotMessage, pendingInitialMessage]);
 
   const buildWhatsAppMessage = (data: LeadData) => {
     return [

@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Users, TrendingUp, DollarSign, Flame } from "lucide-react";
-import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, type PipelineStage, type LeadTemperature } from "@/lib/crm";
+import { fetchLeads, fetchLeadsByStage, updateLeadStage, fetchSubscriptionsForUsers, STAGE_CONFIG, PIPELINE_ORDER, type PipelineStage, type LeadTemperature } from "@/lib/crm";
 import { fetchAllReferralCodes, fetchAllReferrals } from "@/lib/referral";
 import SEOHead from "@/components/SEOHead";
 import AuthGuard from "@/components/AuthGuard";
@@ -77,6 +77,18 @@ const CRMContent = () => {
       return data as { id: string; email: string; created_at: string }[];
     },
     staleTime: 30000,
+  });
+
+  const linkedUserIds = useMemo(
+    () => Array.from(new Set(leads.map((l: any) => l.user_id).filter(Boolean))) as string[],
+    [leads]
+  );
+
+  const { data: subscriptionsByUser = {} } = useQuery({
+    queryKey: ["crm-subscriptions", linkedUserIds],
+    queryFn: () => fetchSubscriptionsForUsers(linkedUserIds),
+    enabled: linkedUserIds.length > 0,
+    refetchInterval: 30000,
   });
 
   const moveLeadMutation = useMutation({
@@ -166,7 +178,7 @@ const CRMContent = () => {
               <CRMFollowUp leads={followUpLeads} />
               <CRMFunnel grouped={grouped} />
               <CRMCharts leads={leads} grouped={grouped} />
-              <CRMLeadsTable leads={filteredLeads} activeFilters={activeFilters} totalCount={leads.length} onClearFilters={clearFilters} />
+              <CRMLeadsTable leads={filteredLeads} activeFilters={activeFilters} totalCount={leads.length} onClearFilters={clearFilters} subscriptions={subscriptionsByUser} />
             </div>
           ) : view === "pipeline" ? (
             <CRMPipeline grouped={grouped} onMoveLead={(id, from, to) => moveLeadMutation.mutate({ leadId: id, from, to })} isMoving={moveLeadMutation.isPending} />

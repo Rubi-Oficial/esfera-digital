@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Phone, Building2, Target, Clock, ChevronDown, ChevronUp, Send } from "lucide-react";
-import { STAGE_CONFIG, type Lead } from "@/lib/crm";
+import { Users, Phone, Building2, Target, Clock, ChevronDown, ChevronUp, Send, CreditCard, UserCheck } from "lucide-react";
+import { STAGE_CONFIG, SUBSCRIPTION_STATUS_CONFIG, type Lead, type SubscriptionInfo } from "@/lib/crm";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import TempIcon from "./TempIcon";
 import { FOLLOWUP_MESSAGES, sendFollowUpWhatsApp } from "./types";
 
+type LeadWithUser = Lead & { user_id?: string | null };
+
 interface CRMLeadsTableProps {
-  leads: Lead[];
+  leads: LeadWithUser[];
   activeFilters: number;
   totalCount: number;
   onClearFilters: () => void;
+  subscriptions?: Record<string, SubscriptionInfo>;
 }
 
-const CRMLeadsTable = ({ leads, activeFilters, totalCount, onClearFilters }: CRMLeadsTableProps) => {
+const CRMLeadsTable = ({ leads, activeFilters, totalCount, onClearFilters, subscriptions = {} }: CRMLeadsTableProps) => {
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
 
   return (
@@ -37,12 +40,24 @@ const CRMLeadsTable = ({ leads, activeFilters, totalCount, onClearFilters }: CRM
               onClick={() => setExpandedLead(expandedLead === lead.id ? null : lead.id)}
               className="w-full px-6 py-3 flex items-center justify-between hover:bg-muted/10 transition-colors text-left"
             >
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-3 min-w-0 flex-wrap">
                 <TempIcon temp={lead.temperatura} />
                 <span className="font-medium truncate">{lead.nome}</span>
                 <span className={`text-xs px-2 py-0.5 rounded-full border ${STAGE_CONFIG[lead.stage].color}`}>
                   {STAGE_CONFIG[lead.stage].emoji} {STAGE_CONFIG[lead.stage].label}
                 </span>
+                {lead.user_id && subscriptions[lead.user_id] && SUBSCRIPTION_STATUS_CONFIG[subscriptions[lead.user_id].status] && (
+                  <span className={`text-xs px-2 py-0.5 rounded-full border flex items-center gap-1 ${SUBSCRIPTION_STATUS_CONFIG[subscriptions[lead.user_id].status].color}`}>
+                    <CreditCard size={10} />
+                    {SUBSCRIPTION_STATUS_CONFIG[subscriptions[lead.user_id].status].label}
+                  </span>
+                )}
+                {lead.user_id && !subscriptions[lead.user_id] && (
+                  <span className="text-xs px-2 py-0.5 rounded-full border border-border/40 text-muted-foreground flex items-center gap-1">
+                    <UserCheck size={10} />
+                    Cadastrado
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-muted-foreground hidden sm:inline">Score: {lead.score}</span>

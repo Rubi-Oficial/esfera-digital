@@ -545,7 +545,7 @@ const CRMContent = () => {
                 })}
               </div>
             </div>
-          ) : (
+          ) : view === "indicacoes" ? (
             /* Indicações View */
             <div className="space-y-6">
               {/* Referral metrics */}

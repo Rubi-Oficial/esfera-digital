@@ -53,7 +53,7 @@ export function useMyProject() {
       });
     }
     localStorage.setItem(storageKey, myProject.current_stage);
-  }, [myProject?.current_stage, myProject?.id]);
+  }, [myProject]);
 
   const currentStageIndex = myProject
     ? PROJECT_STAGES.findIndex(s => s.key === myProject.current_stage)

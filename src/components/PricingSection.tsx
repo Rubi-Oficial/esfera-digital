@@ -92,17 +92,17 @@ const PricingSection = () => {
       <motion.div className="absolute w-[600px] h-[600px] rounded-full bg-primary/6 blur-[140px] -right-40 top-20 pointer-events-none" style={{ y: orbY1, opacity: orbOpacity, scale: orbScale1 }} aria-hidden="true" />
       <motion.div className="absolute w-[400px] h-[400px] rounded-full bg-primary/4 blur-[100px] left-0 bottom-0 pointer-events-none" style={{ y: orbY2, opacity: orbOpacity, scale: orbScale2 }} aria-hidden="true" />
 
-      <div className="container px-4 md:px-8 relative z-10">
+      <div className="container px-4 sm:px-6 md:px-8 relative z-10">
         <SectionHeader
           titleId="pricing-heading"
           label="💰 Oferta Especial"
           title={<>Escolha o plano <span className="text-gradient">ideal para você</span></>}
           subtitle="Do site profissional ao ecossistema completo de crescimento. Escolha o que faz mais sentido pro seu negócio."
-          className="mb-10"
+          className="mb-8 md:mb-10"
         />
 
         {/* Plans grid */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
           {/* Plan 1 - Site Profissional */}
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.95 }}

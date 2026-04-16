@@ -8,7 +8,7 @@ export type AIAnalysis = {
   lead_quente_acao: string;
 };
 
-export type CRMView = "pipeline" | "dashboard" | "indicacoes" | "projetos";
+export type CRMView = "pipeline" | "dashboard" | "indicacoes" | "projetos" | "roles";
 
 export const FOLLOWUP_MESSAGES: Record<string, { label: string; message: string }> = {
   qualificado: {

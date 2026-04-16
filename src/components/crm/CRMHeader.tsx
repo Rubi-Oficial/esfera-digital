@@ -6,6 +6,7 @@ const TABS = [
   { key: "pipeline" as const, label: "Pipeline" },
   { key: "indicacoes" as const, label: "Indicações" },
   { key: "projetos" as const, label: "Projetos" },
+  { key: "roles" as const, label: "Roles" },
 ];
 
 interface CRMHeaderProps {

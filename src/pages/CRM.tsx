@@ -590,6 +590,105 @@ const CRMContent = () => {
                 </div>
               </motion.div>
 
+              {/* Charts Section */}
+              {leads.length > 0 && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Daily Leads Area Chart */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
+                  >
+                    <div className="flex items-center gap-2 mb-4">
+                      <CalendarDays size={18} className="text-primary" />
+                      <h2 className="text-lg font-semibold font-sora">Evolução de Leads (30 dias)</h2>
+                    </div>
+                    <div className="h-[280px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={dailyLeadsData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                          <defs>
+                            <linearGradient id="gradTotal" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                              <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                          <XAxis dataKey="date" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+                          <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
+                          <Tooltip contentStyle={chartTooltipStyle} />
+                          <Area type="monotone" dataKey="total" name="Total" stroke="hsl(var(--primary))" fill="url(#gradTotal)" strokeWidth={2} />
+                          <Area type="monotone" dataKey="quentes" name="Quentes" stroke="#f87171" fill="#f8717120" strokeWidth={1.5} />
+                          <Area type="monotone" dataKey="mornos" name="Mornos" stroke="#facc15" fill="#facc1520" strokeWidth={1.5} />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </motion.div>
+
+                  {/* Temperature Pie Chart */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    className="bg-card border border-border/30 rounded-xl p-6"
+                  >
+                    <div className="flex items-center gap-2 mb-4">
+                      <Thermometer size={18} className="text-yellow-400" />
+                      <h2 className="text-lg font-semibold font-sora">Distribuição por Temperatura</h2>
+                    </div>
+                    <div className="h-[250px]">
+                      {tempDistribution.length > 0 ? (
+                        <ResponsiveContainer width="100%" height="100%">
+                          <PieChart>
+                            <Pie
+                              data={tempDistribution}
+                              cx="50%"
+                              cy="50%"
+                              innerRadius={55}
+                              outerRadius={90}
+                              paddingAngle={4}
+                              dataKey="value"
+                              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            >
+                              {tempDistribution.map((entry, idx) => (
+                                <Cell key={idx} fill={entry.color} stroke="transparent" />
+                              ))}
+                            </Pie>
+                            <Tooltip contentStyle={chartTooltipStyle} />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      ) : (
+                        <div className="h-full flex items-center justify-center text-sm text-muted-foreground">Sem dados</div>
+                      )}
+                    </div>
+                  </motion.div>
+
+                  {/* Stage Bar Chart */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9 }}
+                    className="bg-card border border-border/30 rounded-xl p-6"
+                  >
+                    <div className="flex items-center gap-2 mb-4">
+                      <BarChart3 size={18} className="text-cyan-400" />
+                      <h2 className="text-lg font-semibold font-sora">Leads por Etapa</h2>
+                    </div>
+                    <div className="h-[250px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={stageBarData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                          <XAxis dataKey="name" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} angle={-30} textAnchor="end" height={60} />
+                          <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
+                          <Tooltip contentStyle={chartTooltipStyle} />
+                          <Bar dataKey="count" name="Leads" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+
               {/* Leads Table */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

@@ -72,14 +72,24 @@ const ChatBot = () => {
   const [hasGreeted, setHasGreeted] = useState(false);
   const [crmLeadId, setCrmLeadId] = useState<string | null>(null);
   const [refCodeData, setRefCodeData] = useState<ReferralCode | null>(null);
+  const [isBubbleVisible, setIsBubbleVisible] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Listen for global chatbot open events
   useEffect(() => {
     return onChatbotOpen(() => {
+      setIsBubbleVisible(true);
       setIsOpen(true);
     });
+  }, []);
+
+  // Show chat bubble after 7s delay so user can explore the page first
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsBubbleVisible(true);
+    }, 7000);
+    return () => clearTimeout(timer);
   }, []);
 
   // Track referral code from URL
@@ -117,13 +127,14 @@ const ChatBot = () => {
     setMessages((prev) => [...prev, { id, text, sender: "user" }]);
   }, []);
 
-  // Auto-open after 8s
+  // Auto-open chat after 15s total (7s bubble delay + 8s more)
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!isOpen && !hasGreeted) {
+        setIsBubbleVisible(true);
         setIsOpen(true);
       }
-    }, 8000);
+    }, 15000);
     return () => clearTimeout(timer);
   }, [isOpen, hasGreeted]);
 
@@ -338,12 +349,12 @@ const ChatBot = () => {
     <>
       {/* Chat Toggle Button */}
       <AnimatePresence>
-        {!isOpen && (
+        {!isOpen && isBubbleVisible && (
           <motion.button
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 200, delay: 3 }}
+            transition={{ type: "spring", stiffness: 200 }}
             onClick={() => setIsOpen(true)}
             className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-[0_4px_20px_hsl(var(--primary)/0.4)] hover:shadow-[0_4px_30px_hsl(var(--primary)/0.6)] transition-all duration-300 hover:scale-105"
             aria-label="Falar com especialista"

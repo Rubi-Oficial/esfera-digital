@@ -90,6 +90,40 @@ export async function fetchLeads() {
   return data;
 }
 
+export type SubscriptionInfo = {
+  user_id: string;
+  status: string;
+  product_id: string | null;
+  stripe_price_id: string | null;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean;
+};
+
+export const SUBSCRIPTION_STATUS_CONFIG: Record<string, { label: string; color: string }> = {
+  active: { label: "Ativa", color: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" },
+  trialing: { label: "Trial", color: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30" },
+  past_due: { label: "Atrasada", color: "bg-orange-500/20 text-orange-400 border-orange-500/30" },
+  canceled: { label: "Cancelada", color: "bg-red-500/20 text-red-400 border-red-500/30" },
+  unpaid: { label: "Não paga", color: "bg-red-500/20 text-red-400 border-red-500/30" },
+  incomplete: { label: "Incompleta", color: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" },
+  incomplete_expired: { label: "Expirada", color: "bg-muted text-muted-foreground border-border", },
+  paused: { label: "Pausada", color: "bg-muted text-muted-foreground border-border" },
+};
+
+export async function fetchSubscriptionsForUsers(userIds: string[]): Promise<Record<string, SubscriptionInfo>> {
+  if (userIds.length === 0) return {};
+  const { data, error } = await supabase.rpc("admin_get_subscriptions_for_users", { _user_ids: userIds });
+  if (error) { console.error("fetchSubscriptionsForUsers", error); return {}; }
+  const map: Record<string, SubscriptionInfo> = {};
+  (data || []).forEach((s: any) => { map[s.user_id] = s; });
+  return map;
+}
+
+export async function linkLeadToUser(leadId: string, userId: string) {
+  const { error } = await supabase.rpc("admin_link_lead_to_user", { _lead_id: leadId, _user_id: userId });
+  if (error) throw error;
+}
+
 export async function fetchLeadsByStage() {
   const leads = await fetchLeads();
   const grouped: Record<PipelineStage, Lead[]> = {

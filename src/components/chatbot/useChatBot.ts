@@ -19,6 +19,7 @@ export function useChatBot() {
   const [crmLeadId, setCrmLeadId] = useState<string | null>(null);
   const [refCodeData, setRefCodeData] = useState<ReferralCode | null>(null);
   const [isBubbleVisible, setIsBubbleVisible] = useState(false);
+  const [pendingInitialMessage, setPendingInitialMessage] = useState<string | null>(null);
 
   const leadRef = useRef(lead);
   leadRef.current = lead;
@@ -26,7 +27,11 @@ export function useChatBot() {
   crmLeadIdRef.current = crmLeadId;
 
   useEffect(() => {
-    return onChatbotOpen(() => { setIsBubbleVisible(true); setIsOpen(true); });
+    return onChatbotOpen((detail) => {
+      setIsBubbleVisible(true);
+      setIsOpen(true);
+      if (detail?.initialMessage) setPendingInitialMessage(detail.initialMessage);
+    });
   }, []);
 
   useEffect(() => {

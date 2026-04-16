@@ -56,7 +56,7 @@ const FAQSection = () => {
   const orbScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.2, 0.85]);
 
   return (
-    <section ref={sectionRef} className="section-padding section-divider relative overflow-hidden" aria-labelledby="faq-heading">
+    <section ref={sectionRef} id="faq" className="section-padding section-divider relative overflow-hidden" aria-labelledby="faq-heading">
       <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/6 blur-[130px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader

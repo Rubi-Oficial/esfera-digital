@@ -11,6 +11,7 @@ import Indicacao from "./pages/Indicacao.tsx";
 import GrowthOS from "./pages/GrowthOS.tsx";
 import CRM from "./pages/CRM.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
+import MeuProjeto from "./pages/MeuProjeto.tsx";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/growth-os" element={<GrowthOS />} />
           <Route path="/crm" element={<CRM />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/meu-projeto" element={<MeuProjeto />} />
           <Route path="/indicacao" element={<Indicacao />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />

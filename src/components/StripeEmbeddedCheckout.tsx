@@ -7,7 +7,6 @@ interface StripeEmbeddedCheckoutProps {
   priceIds?: string[];
   quantity?: number;
   customerEmail?: string;
-  userId?: string;
   returnUrl?: string;
 }
 

@@ -106,7 +106,6 @@ const CheckoutSection = ({ userId, customerEmail }: CheckoutSectionProps) => {
                 <StripeEmbeddedCheckout
                   priceId={priceId}
                   customerEmail={customerEmail}
-                  userId={userId}
                   returnUrl={`${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`}
                 />
               </div>

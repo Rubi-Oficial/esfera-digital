@@ -16,13 +16,12 @@ export function StripeEmbeddedCheckout({
   priceIds,
   quantity,
   customerEmail,
-  userId,
   returnUrl,
 }: StripeEmbeddedCheckoutProps) {
   const fetchClientSecret = async (): Promise<string> => {
     const ids = priceIds || (priceId ? [priceId] : []);
     const { data, error } = await supabase.functions.invoke("create-checkout", {
-      body: { priceIds: ids, quantity, customerEmail, userId, returnUrl, environment: getStripeEnvironment() },
+      body: { priceIds: ids, quantity, customerEmail, returnUrl, environment: getStripeEnvironment() },
     });
     if (error || !data?.clientSecret) {
       throw new Error(error?.message || "Failed to create checkout session");

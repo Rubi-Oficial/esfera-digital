@@ -25,6 +25,8 @@ const PROJECT_STAGES = [
 const MeuProjetoContent = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
+  const [stageNotification, setStageNotification] = useState<{ from: string; to: string } | null>(null);
+  const hasShownToast = useRef(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {

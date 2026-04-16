@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
-import { Menu, X, Rocket } from "lucide-react";
+import { Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
 import ChatbotTrigger from "./ui/ChatbotTrigger";
 import { NAV_LINKS } from "@/lib/constants";
@@ -65,17 +65,17 @@ const Navbar = () => {
       transition={{ duration: 0.35, ease: "easeInOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-2xl border-b border-border/30 shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
+          ? "bg-background/80 backdrop-blur-2xl border-b border-border/30 shadow-[0_4px_30px_rgba(0,0,0,0.25)]"
           : "bg-transparent backdrop-blur-none border-b border-transparent"
       }`}
       role="navigation"
       aria-label="Navegação principal"
     >
       <div className="container flex items-center justify-between h-16 md:h-18 px-4 md:px-8">
-        <a href="#" aria-label="Esfera Soluções Digitais - Página inicial" className="flex items-center">
+        <a href="#" aria-label="Esfera Soluções Digitais - Página inicial" className="flex items-center group">
           <span className="text-lg font-bold tracking-tight" style={{ letterSpacing: "-0.02em" }}>
-            <span className="text-foreground">ESFERA</span>
-            <span className="text-primary ml-1.5" style={{ letterSpacing: "0.15em" }}>DIGITAL</span>
+            <span className="text-foreground group-hover:text-foreground/90 transition-colors">ESFERA</span>
+            <span className="text-primary ml-1.5 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.4)] transition-all" style={{ letterSpacing: "0.15em" }}>DIGITAL</span>
           </span>
         </a>
 
@@ -109,7 +109,7 @@ const Navbar = () => {
           </ChatbotTrigger>
         </div>
 
-        {/* Mobile hamburger with animated icon */}
+        {/* Mobile hamburger */}
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden text-foreground p-2.5 -mr-2 rounded-xl hover:bg-card/50 active:bg-card/70 transition-colors"
@@ -144,8 +144,8 @@ const Navbar = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden fixed inset-0 top-16 bg-background/70 backdrop-blur-sm z-40"
+              transition={{ duration: 0.25 }}
+              className="md:hidden fixed inset-0 top-16 bg-background/60 backdrop-blur-md z-40"
               onClick={() => setOpen(false)}
               aria-hidden="true"
             />
@@ -153,8 +153,8 @@ const Navbar = () => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="md:hidden overflow-hidden bg-background/98 backdrop-blur-2xl border-t border-border/30 relative z-50"
+              transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+              className="md:hidden overflow-hidden bg-background/95 backdrop-blur-2xl border-t border-border/30 relative z-50 shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
             >
               <div className="flex flex-col gap-1 p-5 pb-6">
                 {regularLinks.map((link, i) => (
@@ -165,7 +165,7 @@ const Navbar = () => {
                     className="text-muted-foreground hover:text-foreground active:text-primary hover:bg-card/50 active:bg-card/70 transition-all px-4 py-3.5 rounded-xl text-base font-medium"
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05, ease: "easeOut" }}
+                    transition={{ delay: i * 0.04, ease: "easeOut" }}
                   >
                     {link.label}
                   </motion.a>
@@ -174,7 +174,7 @@ const Navbar = () => {
                   <motion.div
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: regularLinks.length * 0.05 }}
+                    transition={{ delay: regularLinks.length * 0.04 }}
                   >
                     <Link
                       to={specialLink.href}
@@ -190,7 +190,7 @@ const Navbar = () => {
                   className="pt-4 mt-2 border-t border-border/20"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: (regularLinks.length + 1) * 0.05 }}
+                  transition={{ delay: (regularLinks.length + 1) * 0.04 }}
                 >
                   <ChatbotTrigger
                     size="md"

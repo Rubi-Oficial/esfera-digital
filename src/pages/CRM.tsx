@@ -234,6 +234,52 @@ const CRMContent = () => {
     toast.success(`${filteredLeads.length} leads exportados!`);
   };
 
+  // Chart data: leads per day (last 30 days)
+  const dailyLeadsData = useMemo(() => {
+    const today = startOfDay(new Date());
+    const start = subDays(today, 29);
+    const days = eachDayOfInterval({ start, end: today });
+    return days.map(day => {
+      const dayStr = format(day, "yyyy-MM-dd");
+      const dayLeads = leads.filter(l => format(parseISO(l.created_at), "yyyy-MM-dd") === dayStr);
+      return {
+        date: format(day, "dd/MM", { locale: ptBR }),
+        total: dayLeads.length,
+        quentes: dayLeads.filter(l => l.temperatura === "quente").length,
+        mornos: dayLeads.filter(l => l.temperatura === "morno").length,
+        frios: dayLeads.filter(l => l.temperatura === "frio").length,
+      };
+    });
+  }, [leads]);
+
+  // Chart data: temperature distribution
+  const tempDistribution = useMemo(() => {
+    const frios = leads.filter(l => l.temperatura === "frio").length;
+    const mornos = leads.filter(l => l.temperatura === "morno").length;
+    const quentes = leads.filter(l => l.temperatura === "quente").length;
+    return [
+      { name: "Frio 🧊", value: frios, color: "#60a5fa" },
+      { name: "Morno 🌡️", value: mornos, color: "#facc15" },
+      { name: "Quente 🔥", value: quentes, color: "#f87171" },
+    ].filter(d => d.value > 0);
+  }, [leads]);
+
+  // Chart data: leads per stage bar chart
+  const stageBarData = useMemo(() => {
+    return PIPELINE_ORDER.map(stage => ({
+      name: STAGE_CONFIG[stage].label,
+      count: grouped?.[stage]?.length || 0,
+    }));
+  }, [grouped]);
+
+  const chartTooltipStyle = {
+    backgroundColor: "hsl(var(--card))",
+    border: "1px solid hsl(var(--border))",
+    borderRadius: "8px",
+    color: "hsl(var(--foreground))",
+    fontSize: "12px",
+  };
+
   return (
     <>
       <SEOHead

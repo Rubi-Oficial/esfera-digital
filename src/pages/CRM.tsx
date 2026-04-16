@@ -6,7 +6,7 @@ import {
   Phone, Building2, Target, Clock, ChevronDown, ChevronUp,
   Flame, Snowflake, Thermometer, Brain, MessageCircle, Zap,
   AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2,
-  Filter, Download, Search, X, CalendarDays
+  Filter, Download, Search, X, CalendarDays, Activity, Percent
 } from "lucide-react";
 import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type LeadTemperature, type Lead } from "@/lib/crm";
 import { fetchAllReferralCodes, fetchAllReferrals, type ReferralCode, type Referral } from "@/lib/referral";
@@ -271,6 +271,52 @@ const CRMContent = () => {
       count: grouped?.[stage]?.length || 0,
     }));
   }, [grouped]);
+
+  // Chart data: cumulative leads over time
+  const cumulativeData = useMemo(() => {
+    if (leads.length === 0) return [];
+    const sorted = [...leads].sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+    const today = startOfDay(new Date());
+    const earliest = startOfDay(new Date(sorted[0].created_at));
+    const start = subDays(today, Math.min(89, Math.floor((today.getTime() - earliest.getTime()) / 86400000)));
+    const days = eachDayOfInterval({ start, end: today });
+    let cumTotal = leads.filter(l => new Date(l.created_at) < start).length;
+    let cumConvertidos = leads.filter(l => l.stage === "convertido" && new Date(l.created_at) < start).length;
+    return days.map(day => {
+      const dayStr = format(day, "yyyy-MM-dd");
+      const dayLeads = leads.filter(l => format(parseISO(l.created_at), "yyyy-MM-dd") === dayStr);
+      cumTotal += dayLeads.length;
+      cumConvertidos += dayLeads.filter(l => l.stage === "convertido").length;
+      return {
+        date: format(day, "dd/MM", { locale: ptBR }),
+        total: cumTotal,
+        convertidos: cumConvertidos,
+      };
+    });
+  }, [leads]);
+
+  // Chart data: weekly conversion rate
+  const weeklyConversionData = useMemo(() => {
+    if (leads.length === 0) return [];
+    const today = startOfDay(new Date());
+    const weeks: { label: string; total: number; convertidos: number; taxa: number }[] = [];
+    for (let w = 7; w >= 0; w--) {
+      const weekEnd = subDays(today, w * 7);
+      const weekStart = subDays(weekEnd, 6);
+      const weekLeads = leads.filter(l => {
+        const d = new Date(l.created_at);
+        return d >= weekStart && d <= new Date(weekEnd.getTime() + 86400000 - 1);
+      });
+      const convertidos = weekLeads.filter(l => l.stage === "convertido").length;
+      weeks.push({
+        label: format(weekStart, "dd/MM", { locale: ptBR }),
+        total: weekLeads.length,
+        convertidos,
+        taxa: weekLeads.length > 0 ? Math.round((convertidos / weekLeads.length) * 100) : 0,
+      });
+    }
+    return weeks;
+  }, [leads]);
 
   const chartTooltipStyle = {
     backgroundColor: "hsl(var(--card))",
@@ -686,6 +732,74 @@ const CRMContent = () => {
                       </ResponsiveContainer>
                     </div>
                   </motion.div>
+
+                  {/* Cumulative Growth Chart */}
+                  {cumulativeData.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.0 }}
+                      className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
+                    >
+                      <div className="flex items-center gap-2 mb-4">
+                        <Activity size={18} className="text-emerald-400" />
+                        <h2 className="text-lg font-semibold font-sora">Crescimento Acumulado</h2>
+                      </div>
+                      <div className="h-[280px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <AreaChart data={cumulativeData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                            <defs>
+                              <linearGradient id="gradCumTotal" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                              </linearGradient>
+                              <linearGradient id="gradCumConv" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#34d399" stopOpacity={0.3} />
+                                <stop offset="95%" stopColor="#34d399" stopOpacity={0} />
+                              </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+                            <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
+                            <Tooltip contentStyle={chartTooltipStyle} />
+                            <Legend />
+                            <Area type="monotone" dataKey="total" name="Total Acumulado" stroke="hsl(var(--primary))" fill="url(#gradCumTotal)" strokeWidth={2} />
+                            <Area type="monotone" dataKey="convertidos" name="Convertidos" stroke="#34d399" fill="url(#gradCumConv)" strokeWidth={2} />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Weekly Conversion Rate */}
+                  {weeklyConversionData.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.1 }}
+                      className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
+                    >
+                      <div className="flex items-center gap-2 mb-4">
+                        <Percent size={18} className="text-violet-400" />
+                        <h2 className="text-lg font-semibold font-sora">Taxa de Conversão Semanal</h2>
+                      </div>
+                      <div className="h-[280px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={weeklyConversionData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                            <XAxis dataKey="label" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+                            <YAxis yAxisId="left" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
+                            <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} unit="%" />
+                            <Tooltip contentStyle={chartTooltipStyle} />
+                            <Legend />
+                            <Bar yAxisId="left" dataKey="total" name="Leads" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} opacity={0.6} />
+                            <Bar yAxisId="left" dataKey="convertidos" name="Convertidos" fill="#34d399" radius={[4, 4, 0, 0]} />
+                            <Bar yAxisId="right" dataKey="taxa" name="Taxa %" fill="#a78bfa" radius={[4, 4, 0, 0]} opacity={0.7} />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
               )}
 

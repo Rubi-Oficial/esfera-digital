@@ -1,68 +1,30 @@
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Users, TrendingUp, DollarSign, BarChart3, ArrowRight,
-  Phone, Building2, Target, Clock, ChevronDown, ChevronUp,
-  Flame, Snowflake, Thermometer, Brain, MessageCircle, Zap,
-  AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2,
-  Filter, Download, Search, X, CalendarDays, Activity, Percent
-} from "lucide-react";
-import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type LeadTemperature, type Lead } from "@/lib/crm";
-import { fetchAllReferralCodes, fetchAllReferrals, type ReferralCode, type Referral } from "@/lib/referral";
+import { Users, TrendingUp, DollarSign, Flame } from "lucide-react";
+import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, type PipelineStage, type LeadTemperature } from "@/lib/crm";
+import { fetchAllReferralCodes, fetchAllReferrals } from "@/lib/referral";
 import SEOHead from "@/components/SEOHead";
 import AuthGuard from "@/components/AuthGuard";
-import { format, subDays, startOfDay, eachDayOfInterval, parseISO } from "date-fns";
+import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { WHATSAPP_PHONE } from "@/lib/constants";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
-// Follow-up messages by stage
-const FOLLOWUP_MESSAGES: Record<string, { label: string; message: string }> = {
-  qualificado: {
-    label: "Follow-up: Qualificado",
-    message: "Olá! Vi que você demonstrou interesse no Esfera Growth. Posso te ajudar a entender como funciona no seu caso? 🚀",
-  },
-  proposta_apresentada: {
-    label: "Follow-up: Proposta",
-    message: "Olá! Quer que eu libere sua vaga agora? Temos condições especiais para quem começar esta semana! ⚡",
-  },
-  checkout_iniciado: {
-    label: "Follow-up: Checkout",
-    message: "Olá! Vi que você quase ativou o Esfera Growth… Posso te ajudar com alguma dúvida? 😊",
-  },
-};
-
-const sendFollowUpWhatsApp = (phone: string, stage: string) => {
-  const followUp = FOLLOWUP_MESSAGES[stage];
-  if (!followUp) return;
-  const cleanPhone = phone.replace(/\D/g, "");
-  const fullPhone = cleanPhone.startsWith("55") ? cleanPhone : `55${cleanPhone}`;
-  const url = `https://wa.me/${fullPhone}?text=${encodeURIComponent(followUp.message)}`;
-  window.open(url, "_blank", "noopener,noreferrer");
-};
-
-const TempIcon = ({ temp }: { temp: string }) => {
-  if (temp === "quente") return <Flame size={14} className="text-red-400" />;
-  if (temp === "morno") return <Thermometer size={14} className="text-yellow-400" />;
-  return <Snowflake size={14} className="text-blue-400" />;
-};
-
-type AIAnalysis = {
-  previsao_faturamento: string;
-  insights: string[];
-  acoes_sugeridas: string[];
-  gargalo_principal: string;
-  lead_quente_acao: string;
-};
+import CRMHeader from "@/components/crm/CRMHeader";
+import CRMMetrics from "@/components/crm/CRMMetrics";
+import CRMFilters from "@/components/crm/CRMFilters";
+import CRMAIInsights from "@/components/crm/CRMAIInsights";
+import CRMFollowUp from "@/components/crm/CRMFollowUp";
+import CRMFunnel from "@/components/crm/CRMFunnel";
+import CRMCharts from "@/components/crm/CRMCharts";
+import CRMLeadsTable from "@/components/crm/CRMLeadsTable";
+import CRMPipeline from "@/components/crm/CRMPipeline";
+import CRMIndicacoes from "@/components/crm/CRMIndicacoes";
+import CRMProjetos from "@/components/crm/CRMProjetos";
+import type { CRMView, AIAnalysis } from "@/components/crm/types";
 
 const CRMContent = () => {
-  const [view, setView] = useState<"pipeline" | "dashboard" | "indicacoes" | "projetos">("dashboard");
-  const [projectForm, setProjectForm] = useState({ client_name: "", user_id: "", current_stage: "briefing", notes: "" });
-  const [editingProject, setEditingProject] = useState<string | null>(null);
-  const [expandedLead, setExpandedLead] = useState<string | null>(null);
+  const [view, setView] = useState<CRMView>("dashboard");
   const [tempFilter, setTempFilter] = useState<LeadTemperature | "all">("all");
   const [stageFilter, setStageFilter] = useState<PipelineStage | "all">("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -85,14 +47,8 @@ const CRMContent = () => {
     queryKey: ["crm-ai", leads.length],
     queryFn: async (): Promise<AIAnalysis | null> => {
       if (leads.length === 0) return null;
-      const { data, error } = await supabase.functions.invoke("crm-ai", {
-        body: { leads },
-      });
-      if (error) {
-        console.error("AI analysis error:", error);
-        toast.error("Erro ao gerar análise IA");
-        return null;
-      }
+      const { data, error } = await supabase.functions.invoke("crm-ai", { body: { leads } });
+      if (error) { console.error("AI analysis error:", error); toast.error("Erro ao gerar análise IA"); return null; }
       return data;
     },
     enabled: leads.length > 0,
@@ -100,20 +56,9 @@ const CRMContent = () => {
     refetchOnWindowFocus: false,
   });
 
-  // Referral data
-  const { data: refCodes = [] } = useQuery({
-    queryKey: ["admin-referral-codes"],
-    queryFn: fetchAllReferralCodes,
-    refetchInterval: 15000,
-  });
+  const { data: refCodes = [] } = useQuery({ queryKey: ["admin-referral-codes"], queryFn: fetchAllReferralCodes, refetchInterval: 15000 });
+  const { data: allReferrals = [] } = useQuery({ queryKey: ["admin-referrals"], queryFn: fetchAllReferrals, refetchInterval: 15000 });
 
-  const { data: allReferrals = [] } = useQuery({
-    queryKey: ["admin-referrals"],
-    queryFn: fetchAllReferrals,
-    refetchInterval: 15000,
-  });
-
-  // Client projects
   const { data: clientProjects = [], refetch: refetchProjects } = useQuery({
     queryKey: ["client-projects"],
     queryFn: async () => {
@@ -124,7 +69,6 @@ const CRMContent = () => {
     refetchInterval: 15000,
   });
 
-  // Registered users for selector
   const { data: registeredUsers = [] } = useQuery({
     queryKey: ["registered-users"],
     queryFn: async () => {
@@ -134,42 +78,6 @@ const CRMContent = () => {
     },
     staleTime: 30000,
   });
-
-  const PROJECT_STAGES_OPTIONS = [
-    { value: "briefing", label: "Briefing & Planejamento" },
-    { value: "design", label: "Design & Protótipo" },
-    { value: "development", label: "Desenvolvimento" },
-    { value: "review", label: "Revisão & Ajustes" },
-    { value: "launch", label: "Lançamento" },
-  ];
-
-  const handleSaveProject = async () => {
-    if (!projectForm.client_name || !projectForm.user_id) {
-      toast.error("Preencha nome e ID do usuário");
-      return;
-    }
-    if (editingProject) {
-      const { error } = await supabase.from("client_projects").update({
-        client_name: projectForm.client_name,
-        current_stage: projectForm.current_stage,
-        notes: projectForm.notes || null,
-      }).eq("id", editingProject);
-      if (error) { toast.error("Erro ao atualizar"); return; }
-      toast.success("Projeto atualizado!");
-    } else {
-      const { error } = await supabase.from("client_projects").insert({
-        client_name: projectForm.client_name,
-        user_id: projectForm.user_id,
-        current_stage: projectForm.current_stage,
-        notes: projectForm.notes || null,
-      });
-      if (error) { toast.error("Erro ao criar projeto"); return; }
-      toast.success("Projeto criado!");
-    }
-    setProjectForm({ client_name: "", user_id: "", current_stage: "briefing", notes: "" });
-    setEditingProject(null);
-    refetchProjects();
-  };
 
   const moveLeadMutation = useMutation({
     mutationFn: ({ leadId, from, to }: { leadId: string; from: PipelineStage; to: PipelineStage }) =>
@@ -182,48 +90,39 @@ const CRMContent = () => {
 
   // Metrics
   const totalLeads = leads.length;
-  const convertidos = leads.filter(l => l.stage === "convertido").length;
+  const convertidos = leads.filter((l) => l.stage === "convertido").length;
   const taxaConversao = totalLeads > 0 ? ((convertidos / totalLeads) * 100).toFixed(1) : "0";
-  const quentes = leads.filter(l => l.temperatura === "quente").length;
-  const emAtendimento = leads.filter(l => !["convertido", "perdido", "novo_lead"].includes(l.stage)).length;
+  const quentes = leads.filter((l) => l.temperatura === "quente").length;
+  const emAtendimento = leads.filter((l) => !["convertido", "perdido", "novo_lead"].includes(l.stage)).length;
 
   // Filtered leads
   const filteredLeads = useMemo(() => {
     let result = leads;
-    if (tempFilter !== "all") result = result.filter(l => l.temperatura === tempFilter);
-    if (stageFilter !== "all") result = result.filter(l => l.stage === stageFilter);
+    if (tempFilter !== "all") result = result.filter((l) => l.temperatura === tempFilter);
+    if (stageFilter !== "all") result = result.filter((l) => l.stage === stageFilter);
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(l =>
-        l.nome.toLowerCase().includes(q) ||
-        l.telefone.includes(q) ||
-        (l.tipo_negocio && l.tipo_negocio.toLowerCase().includes(q))
+      result = result.filter((l) =>
+        l.nome.toLowerCase().includes(q) || l.telefone.includes(q) || (l.tipo_negocio && l.tipo_negocio.toLowerCase().includes(q))
       );
     }
     return result;
   }, [leads, tempFilter, stageFilter, searchQuery]);
 
   const activeFilters = (tempFilter !== "all" ? 1 : 0) + (stageFilter !== "all" ? 1 : 0) + (searchQuery.trim() ? 1 : 0);
+  const followUpLeads = filteredLeads.filter((l) => ["qualificado", "proposta_apresentada", "checkout_iniciado"].includes(l.stage));
+  const indicacaoLeads = leads.filter((l) => l.origem === "indicacao");
 
-  // Leads needing follow-up
-  const followUpLeads = filteredLeads.filter(l =>
-    ["qualificado", "proposta_apresentada", "checkout_iniciado"].includes(l.stage)
-  );
-
-  const funnelData = PIPELINE_ORDER.filter(s => s !== "perdido").map(stage => ({
-    stage,
-    count: grouped?.[stage]?.length || 0,
-    ...STAGE_CONFIG[stage],
-  }));
+  const clearFilters = () => { setTempFilter("all"); setStageFilter("all"); setSearchQuery(""); };
 
   const exportLeadsCSV = () => {
     const headers = ["Nome", "Telefone", "Temperatura", "Etapa", "Score", "Tipo Negócio", "Interesse", "Urgência", "Objetivo", "Dor Principal", "Origem", "Criado em"];
-    const rows = filteredLeads.map(l => [
+    const rows = filteredLeads.map((l) => [
       l.nome, l.telefone, l.temperatura, STAGE_CONFIG[l.stage].label, l.score,
       l.tipo_negocio || "", l.interesse || "", l.urgencia || "", l.objetivo || "",
-      l.dor_principal || "", l.origem || "", format(new Date(l.created_at), "dd/MM/yyyy HH:mm", { locale: ptBR })
+      l.dor_principal || "", l.origem || "", format(new Date(l.created_at), "dd/MM/yyyy HH:mm", { locale: ptBR }),
     ]);
-    const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const csv = [headers, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -234,134 +133,18 @@ const CRMContent = () => {
     toast.success(`${filteredLeads.length} leads exportados!`);
   };
 
-  // Chart data: leads per day (last 30 days)
-  const dailyLeadsData = useMemo(() => {
-    const today = startOfDay(new Date());
-    const start = subDays(today, 29);
-    const days = eachDayOfInterval({ start, end: today });
-    return days.map(day => {
-      const dayStr = format(day, "yyyy-MM-dd");
-      const dayLeads = leads.filter(l => format(parseISO(l.created_at), "yyyy-MM-dd") === dayStr);
-      return {
-        date: format(day, "dd/MM", { locale: ptBR }),
-        total: dayLeads.length,
-        quentes: dayLeads.filter(l => l.temperatura === "quente").length,
-        mornos: dayLeads.filter(l => l.temperatura === "morno").length,
-        frios: dayLeads.filter(l => l.temperatura === "frio").length,
-      };
-    });
-  }, [leads]);
-
-  // Chart data: temperature distribution
-  const tempDistribution = useMemo(() => {
-    const frios = leads.filter(l => l.temperatura === "frio").length;
-    const mornos = leads.filter(l => l.temperatura === "morno").length;
-    const quentes = leads.filter(l => l.temperatura === "quente").length;
-    return [
-      { name: "Frio 🧊", value: frios, color: "#60a5fa" },
-      { name: "Morno 🌡️", value: mornos, color: "#facc15" },
-      { name: "Quente 🔥", value: quentes, color: "#f87171" },
-    ].filter(d => d.value > 0);
-  }, [leads]);
-
-  // Chart data: leads per stage bar chart
-  const stageBarData = useMemo(() => {
-    return PIPELINE_ORDER.map(stage => ({
-      name: STAGE_CONFIG[stage].label,
-      count: grouped?.[stage]?.length || 0,
-    }));
-  }, [grouped]);
-
-  // Chart data: cumulative leads over time
-  const cumulativeData = useMemo(() => {
-    if (leads.length === 0) return [];
-    const sorted = [...leads].sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
-    const today = startOfDay(new Date());
-    const earliest = startOfDay(new Date(sorted[0].created_at));
-    const start = subDays(today, Math.min(89, Math.floor((today.getTime() - earliest.getTime()) / 86400000)));
-    const days = eachDayOfInterval({ start, end: today });
-    let cumTotal = leads.filter(l => new Date(l.created_at) < start).length;
-    let cumConvertidos = leads.filter(l => l.stage === "convertido" && new Date(l.created_at) < start).length;
-    return days.map(day => {
-      const dayStr = format(day, "yyyy-MM-dd");
-      const dayLeads = leads.filter(l => format(parseISO(l.created_at), "yyyy-MM-dd") === dayStr);
-      cumTotal += dayLeads.length;
-      cumConvertidos += dayLeads.filter(l => l.stage === "convertido").length;
-      return {
-        date: format(day, "dd/MM", { locale: ptBR }),
-        total: cumTotal,
-        convertidos: cumConvertidos,
-      };
-    });
-  }, [leads]);
-
-  // Chart data: weekly conversion rate
-  const weeklyConversionData = useMemo(() => {
-    if (leads.length === 0) return [];
-    const today = startOfDay(new Date());
-    const weeks: { label: string; total: number; convertidos: number; taxa: number }[] = [];
-    for (let w = 7; w >= 0; w--) {
-      const weekEnd = subDays(today, w * 7);
-      const weekStart = subDays(weekEnd, 6);
-      const weekLeads = leads.filter(l => {
-        const d = new Date(l.created_at);
-        return d >= weekStart && d <= new Date(weekEnd.getTime() + 86400000 - 1);
-      });
-      const convertidos = weekLeads.filter(l => l.stage === "convertido").length;
-      weeks.push({
-        label: format(weekStart, "dd/MM", { locale: ptBR }),
-        total: weekLeads.length,
-        convertidos,
-        taxa: weekLeads.length > 0 ? Math.round((convertidos / weekLeads.length) * 100) : 0,
-      });
-    }
-    return weeks;
-  }, [leads]);
-
-  const chartTooltipStyle = {
-    backgroundColor: "hsl(var(--card))",
-    border: "1px solid hsl(var(--border))",
-    borderRadius: "8px",
-    color: "hsl(var(--foreground))",
-    fontSize: "12px",
-  };
+  const dashboardMetrics = [
+    { label: "Total de Leads", value: totalLeads, icon: Users, color: "text-blue-400" },
+    { label: "Em Atendimento", value: emAtendimento, icon: TrendingUp, color: "text-cyan-400" },
+    { label: "Leads Quentes", value: quentes, icon: Flame, color: "text-red-400" },
+    { label: "Taxa Conversão", value: `${taxaConversao}%`, icon: DollarSign, color: "text-emerald-400" },
+  ];
 
   return (
     <>
-      <SEOHead
-        title="CRM Esfera Growth | Gestão de Leads"
-        description="CRM inteligente para gestão de leads e pipeline de vendas"
-        path="/crm"
-      />
+      <SEOHead title="CRM Esfera Growth | Gestão de Leads" description="CRM inteligente para gestão de leads e pipeline de vendas" path="/crm" />
       <div className="min-h-screen bg-background text-foreground">
-        <header className="sticky top-0 z-40 border-b border-border/30 bg-background/80 backdrop-blur-xl">
-          <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                <BarChart3 size={18} className="text-primary" />
-              </div>
-              <h1 className="text-lg font-bold font-sora">Esfera Growth CRM</h1>
-            </div>
-            <div className="flex gap-1 bg-muted/30 rounded-lg p-1">
-              {([
-                { key: "dashboard", label: "Dashboard" },
-                { key: "pipeline", label: "Pipeline" },
-                { key: "indicacoes", label: "Indicações" },
-                { key: "projetos", label: "Projetos" },
-              ] as const).map(v => (
-                <button
-                  key={v.key}
-                  onClick={() => setView(v.key)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                    view === v.key ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {v.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </header>
+        <CRMHeader view={view} onViewChange={setView} />
 
         <main className="container mx-auto px-4 py-6">
           {isLoading ? (
@@ -370,850 +153,27 @@ const CRMContent = () => {
             </div>
           ) : view === "dashboard" ? (
             <div className="space-y-6">
-              {/* Filter & Export Toolbar */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-card border border-border/30 rounded-xl p-4"
-              >
-                <div className="flex flex-wrap items-center gap-3">
-                  <div className="relative flex-1 min-w-[200px]">
-                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                    <input
-                      placeholder="Buscar por nome, telefone ou negócio..."
-                      value={searchQuery}
-                      onChange={e => setSearchQuery(e.target.value)}
-                      className="w-full bg-background border border-border/50 rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
-                    />
-                    {searchQuery && (
-                      <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                        <X size={14} />
-                      </button>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => setShowFilters(!showFilters)}
-                    className={`flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border transition-colors ${
-                      activeFilters > 0 ? "bg-primary/10 border-primary/30 text-primary" : "border-border/50 text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <Filter size={14} />
-                    Filtros
-                    {activeFilters > 0 && (
-                      <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">{activeFilters}</span>
-                    )}
-                  </button>
-                  <button
-                    onClick={exportLeadsCSV}
-                    disabled={filteredLeads.length === 0}
-                    className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors disabled:opacity-40"
-                  >
-                    <Download size={14} />
-                    Exportar CSV
-                  </button>
-                </div>
-
-                <AnimatePresence>
-                  {showFilters && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="flex flex-wrap gap-3 pt-4 border-t border-border/20 mt-4">
-                        <div className="space-y-1.5">
-                          <label className="text-xs text-muted-foreground font-medium">Temperatura</label>
-                          <div className="flex gap-1">
-                            {(["all", "frio", "morno", "quente"] as const).map(t => (
-                              <button
-                                key={t}
-                                onClick={() => setTempFilter(t)}
-                                className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
-                                  tempFilter === t ? "bg-primary/20 border-primary/40 text-primary" : "border-border/40 text-muted-foreground hover:text-foreground"
-                                }`}
-                              >
-                                {t === "all" ? "Todos" : `${TEMP_CONFIG[t].emoji} ${TEMP_CONFIG[t].label}`}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs text-muted-foreground font-medium">Etapa</label>
-                          <select
-                            value={stageFilter}
-                            onChange={e => setStageFilter(e.target.value as PipelineStage | "all")}
-                            className="bg-background border border-border/50 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
-                          >
-                            <option value="all">Todas as etapas</option>
-                            {PIPELINE_ORDER.map(s => (
-                              <option key={s} value={s}>{STAGE_CONFIG[s].emoji} {STAGE_CONFIG[s].label}</option>
-                            ))}
-                          </select>
-                        </div>
-                        {activeFilters > 0 && (
-                          <div className="flex items-end">
-                            <button
-                              onClick={() => { setTempFilter("all"); setStageFilter("all"); setSearchQuery(""); }}
-                              className="text-xs px-3 py-1.5 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
-                            >
-                              Limpar filtros
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {activeFilters > 0 && (
-                  <p className="text-xs text-muted-foreground mt-3">
-                    Mostrando {filteredLeads.length} de {leads.length} leads
-                  </p>
-                )}
-              </motion.div>
-
-              {/* Metrics */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { label: "Total de Leads", value: totalLeads, icon: Users, color: "text-blue-400" },
-                  { label: "Em Atendimento", value: emAtendimento, icon: TrendingUp, color: "text-cyan-400" },
-                  { label: "Leads Quentes", value: quentes, icon: Flame, color: "text-red-400" },
-                  { label: "Taxa Conversão", value: `${taxaConversao}%`, icon: DollarSign, color: "text-emerald-400" },
-                ].map((metric, i) => (
-                  <motion.div
-                    key={metric.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="bg-card border border-border/30 rounded-xl p-4"
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <metric.icon size={18} className={metric.color} />
-                      <span className="text-xs text-muted-foreground">{metric.label}</span>
-                    </div>
-                    <p className="text-2xl font-bold font-sora">{metric.value}</p>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* AI Insights */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="bg-card border border-primary/20 rounded-xl p-6"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <Brain size={20} className="text-primary" />
-                    <h2 className="text-lg font-semibold font-sora">Inteligência Artificial</h2>
-                  </div>
-                  <button
-                    onClick={() => refetchAI()}
-                    disabled={aiLoading}
-                    className="text-xs px-3 py-1.5 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors disabled:opacity-50"
-                  >
-                    {aiLoading ? "Analisando..." : "🔄 Atualizar"}
-                  </button>
-                </div>
-
-                {aiLoading ? (
-                  <div className="flex items-center gap-3 py-6">
-                    <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                    <span className="text-sm text-muted-foreground">IA analisando seus dados...</span>
-                  </div>
-                ) : aiAnalysis ? (
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-primary/5 border border-primary/10 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <DollarSign size={16} className="text-primary" />
-                        <span className="text-sm font-medium">Previsão de Faturamento</span>
-                      </div>
-                      <p className="text-xl font-bold text-primary">{aiAnalysis.previsao_faturamento}</p>
-                    </div>
-                    <div className="bg-red-500/5 border border-red-500/10 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <AlertTriangle size={16} className="text-red-400" />
-                        <span className="text-sm font-medium">Gargalo Principal</span>
-                      </div>
-                      <p className="text-sm">{aiAnalysis.gargalo_principal}</p>
-                    </div>
-                    <div className="md:col-span-2 bg-muted/10 border border-border/20 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Zap size={16} className="text-yellow-400" />
-                        <span className="text-sm font-medium">Ações Sugeridas pela IA</span>
-                      </div>
-                      <div className="space-y-2">
-                        {aiAnalysis.acoes_sugeridas.map((acao, i) => (
-                          <div key={i} className="flex items-start gap-2 text-sm">
-                            <CheckCircle2 size={14} className="text-primary mt-0.5 flex-shrink-0" />
-                            <span>{acao}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    {aiAnalysis.insights.length > 0 && (
-                      <div className="md:col-span-2 space-y-1.5">
-                        <span className="text-xs font-medium text-muted-foreground">💡 Insights</span>
-                        {aiAnalysis.insights.map((insight, i) => (
-                          <p key={i} className="text-xs text-muted-foreground">• {insight}</p>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <p className="text-sm text-muted-foreground py-4">Capture leads para ativar a análise IA.</p>
-                )}
-              </motion.div>
-
-              {/* Follow-up Alerts */}
-              {followUpLeads.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="bg-card border border-orange-500/20 rounded-xl p-6"
-                >
-                  <div className="flex items-center gap-2 mb-4">
-                    <MessageCircle size={20} className="text-orange-400" />
-                    <h2 className="text-lg font-semibold font-sora">Follow-up WhatsApp</h2>
-                    <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full">
-                      {followUpLeads.length} pendentes
-                    </span>
-                  </div>
-                  <div className="space-y-2">
-                    {followUpLeads.slice(0, 10).map(lead => (
-                      <div key={lead.id} className="flex items-center justify-between bg-muted/10 rounded-lg px-4 py-2.5">
-                        <div className="flex items-center gap-3 min-w-0">
-                          <TempIcon temp={lead.temperatura} />
-                          <span className="text-sm font-medium truncate">{lead.nome}</span>
-                          <span className={`text-xs px-2 py-0.5 rounded-full border ${STAGE_CONFIG[lead.stage].color}`}>
-                            {STAGE_CONFIG[lead.stage].label}
-                          </span>
-                        </div>
-                        <button
-                          onClick={() => sendFollowUpWhatsApp(lead.telefone, lead.stage)}
-                          className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-md bg-green-500/20 text-green-400 hover:bg-green-500/30 transition-colors flex-shrink-0"
-                        >
-                          <Send size={12} />
-                          Enviar
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Funnel */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="bg-card border border-border/30 rounded-xl p-6"
-              >
-                <h2 className="text-lg font-semibold font-sora mb-4">Funil de Vendas</h2>
-                <div className="space-y-2">
-                  {funnelData.map((item, i) => {
-                    const maxCount = Math.max(...funnelData.map(d => d.count), 1);
-                    const width = Math.max((item.count / maxCount) * 100, 8);
-                    return (
-                      <div key={item.stage} className="flex items-center gap-3">
-                        <span className="text-xs w-24 text-muted-foreground truncate">{item.emoji} {item.label}</span>
-                        <div className="flex-1 h-8 bg-muted/20 rounded-lg overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${width}%` }}
-                            transition={{ delay: 0.7 + i * 0.1, duration: 0.6 }}
-                            className={`h-full rounded-lg flex items-center px-3 ${item.color} border`}
-                          >
-                            <span className="text-xs font-medium">{item.count}</span>
-                          </motion.div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </motion.div>
-
-              {/* Charts Section */}
-              {leads.length > 0 && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Daily Leads Area Chart */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
-                  >
-                    <div className="flex items-center gap-2 mb-4">
-                      <CalendarDays size={18} className="text-primary" />
-                      <h2 className="text-lg font-semibold font-sora">Evolução de Leads (30 dias)</h2>
-                    </div>
-                    <div className="h-[280px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={dailyLeadsData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                          <defs>
-                            <linearGradient id="gradTotal" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                              <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
-                            </linearGradient>
-                          </defs>
-                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                          <XAxis dataKey="date" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
-                          <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
-                          <Tooltip contentStyle={chartTooltipStyle} />
-                          <Area type="monotone" dataKey="total" name="Total" stroke="hsl(var(--primary))" fill="url(#gradTotal)" strokeWidth={2} />
-                          <Area type="monotone" dataKey="quentes" name="Quentes" stroke="#f87171" fill="#f8717120" strokeWidth={1.5} />
-                          <Area type="monotone" dataKey="mornos" name="Mornos" stroke="#facc15" fill="#facc1520" strokeWidth={1.5} />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </motion.div>
-
-                  {/* Temperature Pie Chart */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                    className="bg-card border border-border/30 rounded-xl p-6"
-                  >
-                    <div className="flex items-center gap-2 mb-4">
-                      <Thermometer size={18} className="text-yellow-400" />
-                      <h2 className="text-lg font-semibold font-sora">Distribuição por Temperatura</h2>
-                    </div>
-                    <div className="h-[250px]">
-                      {tempDistribution.length > 0 ? (
-                        <ResponsiveContainer width="100%" height="100%">
-                          <PieChart>
-                            <Pie
-                              data={tempDistribution}
-                              cx="50%"
-                              cy="50%"
-                              innerRadius={55}
-                              outerRadius={90}
-                              paddingAngle={4}
-                              dataKey="value"
-                              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                            >
-                              {tempDistribution.map((entry, idx) => (
-                                <Cell key={idx} fill={entry.color} stroke="transparent" />
-                              ))}
-                            </Pie>
-                            <Tooltip contentStyle={chartTooltipStyle} />
-                          </PieChart>
-                        </ResponsiveContainer>
-                      ) : (
-                        <div className="h-full flex items-center justify-center text-sm text-muted-foreground">Sem dados</div>
-                      )}
-                    </div>
-                  </motion.div>
-
-                  {/* Stage Bar Chart */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.9 }}
-                    className="bg-card border border-border/30 rounded-xl p-6"
-                  >
-                    <div className="flex items-center gap-2 mb-4">
-                      <BarChart3 size={18} className="text-cyan-400" />
-                      <h2 className="text-lg font-semibold font-sora">Leads por Etapa</h2>
-                    </div>
-                    <div className="h-[250px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={stageBarData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                          <XAxis dataKey="name" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} angle={-30} textAnchor="end" height={60} />
-                          <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
-                          <Tooltip contentStyle={chartTooltipStyle} />
-                          <Bar dataKey="count" name="Leads" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </motion.div>
-
-                  {/* Cumulative Growth Chart */}
-                  {cumulativeData.length > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.0 }}
-                      className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
-                    >
-                      <div className="flex items-center gap-2 mb-4">
-                        <Activity size={18} className="text-emerald-400" />
-                        <h2 className="text-lg font-semibold font-sora">Crescimento Acumulado</h2>
-                      </div>
-                      <div className="h-[280px]">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <AreaChart data={cumulativeData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                            <defs>
-                              <linearGradient id="gradCumTotal" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
-                              </linearGradient>
-                              <linearGradient id="gradCumConv" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#34d399" stopOpacity={0.3} />
-                                <stop offset="95%" stopColor="#34d399" stopOpacity={0} />
-                              </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
-                            <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
-                            <Tooltip contentStyle={chartTooltipStyle} />
-                            <Legend />
-                            <Area type="monotone" dataKey="total" name="Total Acumulado" stroke="hsl(var(--primary))" fill="url(#gradCumTotal)" strokeWidth={2} />
-                            <Area type="monotone" dataKey="convertidos" name="Convertidos" stroke="#34d399" fill="url(#gradCumConv)" strokeWidth={2} />
-                          </AreaChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* Weekly Conversion Rate */}
-                  {weeklyConversionData.length > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.1 }}
-                      className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
-                    >
-                      <div className="flex items-center gap-2 mb-4">
-                        <Percent size={18} className="text-violet-400" />
-                        <h2 className="text-lg font-semibold font-sora">Taxa de Conversão Semanal</h2>
-                      </div>
-                      <div className="h-[280px]">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={weeklyConversionData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                            <XAxis dataKey="label" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
-                            <YAxis yAxisId="left" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
-                            <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} unit="%" />
-                            <Tooltip contentStyle={chartTooltipStyle} />
-                            <Legend />
-                            <Bar yAxisId="left" dataKey="total" name="Leads" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} opacity={0.6} />
-                            <Bar yAxisId="left" dataKey="convertidos" name="Convertidos" fill="#34d399" radius={[4, 4, 0, 0]} />
-                            <Bar yAxisId="right" dataKey="taxa" name="Taxa %" fill="#a78bfa" radius={[4, 4, 0, 0]} opacity={0.7} />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-              )}
-
-              {/* Leads Table */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="bg-card border border-border/30 rounded-xl overflow-hidden"
-              >
-                <div className="px-6 py-4 border-b border-border/30 flex items-center justify-between">
-                  <h2 className="text-lg font-semibold font-sora">
-                    Leads {activeFilters > 0 ? "Filtrados" : "Recentes"}
-                  </h2>
-                  <span className="text-xs text-muted-foreground">{filteredLeads.length} leads</span>
-                </div>
-                <div className="divide-y divide-border/20">
-                  {filteredLeads.slice(0, 50).map((lead) => (
-                    <div key={lead.id}>
-                      <button
-                        onClick={() => setExpandedLead(expandedLead === lead.id ? null : lead.id)}
-                        className="w-full px-6 py-3 flex items-center justify-between hover:bg-muted/10 transition-colors text-left"
-                      >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <TempIcon temp={lead.temperatura} />
-                          <span className="font-medium truncate">{lead.nome}</span>
-                          <span className={`text-xs px-2 py-0.5 rounded-full border ${STAGE_CONFIG[lead.stage].color}`}>
-                            {STAGE_CONFIG[lead.stage].emoji} {STAGE_CONFIG[lead.stage].label}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs text-muted-foreground hidden sm:inline">Score: {lead.score}</span>
-                          {expandedLead === lead.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                        </div>
-                      </button>
-                      <AnimatePresence>
-                        {expandedLead === lead.id && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden"
-                          >
-                            <div className="px-6 py-4 bg-muted/5 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                              <div className="flex items-center gap-2">
-                                <Phone size={14} className="text-muted-foreground" />
-                                <span>{lead.telefone}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Building2 size={14} className="text-muted-foreground" />
-                                <span>{lead.tipo_negocio || "—"}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Target size={14} className="text-muted-foreground" />
-                                <span>{lead.interesse || "—"}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Clock size={14} className="text-muted-foreground" />
-                                <span>{format(new Date(lead.created_at), "dd/MM HH:mm", { locale: ptBR })}</span>
-                              </div>
-                              {lead.objetivo && (
-                                <div className="col-span-2 md:col-span-4 text-muted-foreground">🎯 {lead.objetivo}</div>
-                              )}
-                              {FOLLOWUP_MESSAGES[lead.stage] && (
-                                <div className="col-span-2 md:col-span-4">
-                                  <button
-                                    onClick={() => sendFollowUpWhatsApp(lead.telefone, lead.stage)}
-                                    className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-md bg-green-500/20 text-green-400 hover:bg-green-500/30 transition-colors"
-                                  >
-                                    <Send size={12} />
-                                    {FOLLOWUP_MESSAGES[lead.stage].label}
-                                  </button>
-                                </div>
-                              )}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ))}
-                  {filteredLeads.length === 0 && (
-                    <div className="px-6 py-12 text-center text-muted-foreground">
-                      <Users size={40} className="mx-auto mb-3 opacity-40" />
-                      {activeFilters > 0 ? (
-                        <>
-                          <p>Nenhum lead encontrado com esses filtros.</p>
-                          <button onClick={() => { setTempFilter("all"); setStageFilter("all"); setSearchQuery(""); }} className="text-sm text-primary mt-2 hover:underline">
-                            Limpar filtros
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <p>Nenhum lead capturado ainda.</p>
-                          <p className="text-sm mt-1">Leads do chatbot aparecerão aqui automaticamente.</p>
-                        </>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </motion.div>
+              <CRMFilters
+                searchQuery={searchQuery} onSearchChange={setSearchQuery}
+                tempFilter={tempFilter} onTempFilterChange={setTempFilter}
+                stageFilter={stageFilter} onStageFilterChange={setStageFilter}
+                showFilters={showFilters} onToggleFilters={() => setShowFilters(!showFilters)}
+                activeFilters={activeFilters} filteredCount={filteredLeads.length} totalCount={leads.length}
+                onClearFilters={clearFilters} onExport={exportLeadsCSV}
+              />
+              <CRMMetrics metrics={dashboardMetrics} />
+              <CRMAIInsights aiAnalysis={aiAnalysis ?? null} aiLoading={aiLoading} onRefresh={() => refetchAI()} />
+              <CRMFollowUp leads={followUpLeads} />
+              <CRMFunnel grouped={grouped} />
+              <CRMCharts leads={leads} grouped={grouped} />
+              <CRMLeadsTable leads={filteredLeads} activeFilters={activeFilters} totalCount={leads.length} onClearFilters={clearFilters} />
             </div>
           ) : view === "pipeline" ? (
-            /* Pipeline View */
-            <div className="overflow-x-auto pb-4">
-              <div className="flex gap-4 min-w-max">
-                {PIPELINE_ORDER.map((stage) => {
-                  const config = STAGE_CONFIG[stage];
-                  const stageLeads: Lead[] = grouped?.[stage] || [];
-                  return (
-                    <div key={stage} className="w-72 flex-shrink-0">
-                      <div className={`rounded-t-xl px-4 py-3 border ${config.color} flex items-center justify-between`}>
-                        <span className="text-sm font-semibold">{config.emoji} {config.label}</span>
-                        <span className="text-xs font-mono">{stageLeads.length}</span>
-                      </div>
-                      <div className="bg-card/50 border border-t-0 border-border/20 rounded-b-xl p-2 space-y-2 min-h-[200px]">
-                        {stageLeads.map((lead) => {
-                          const stageIndex = PIPELINE_ORDER.indexOf(stage);
-                          const nextStage = stageIndex < PIPELINE_ORDER.length - 2 ? PIPELINE_ORDER[stageIndex + 1] : null;
-                          return (
-                            <motion.div
-                              key={lead.id}
-                              layout
-                              initial={{ opacity: 0, scale: 0.95 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              className="bg-background border border-border/30 rounded-lg p-3 space-y-2"
-                            >
-                              <div className="flex items-center justify-between">
-                                <span className="font-medium text-sm truncate">{lead.nome}</span>
-                                <TempIcon temp={lead.temperatura} />
-                              </div>
-                              <div className="text-xs text-muted-foreground space-y-0.5">
-                                <p>📱 {lead.telefone}</p>
-                                {lead.tipo_negocio && <p>🏢 {lead.tipo_negocio}</p>}
-                                <p>⭐ Score: {lead.score}</p>
-                              </div>
-                              {FOLLOWUP_MESSAGES[stage] && (
-                                <button
-                                  onClick={() => sendFollowUpWhatsApp(lead.telefone, stage)}
-                                  className="w-full text-xs px-2 py-1.5 rounded-md bg-green-500/10 text-green-400 hover:bg-green-500/20 transition-colors flex items-center justify-center gap-1"
-                                >
-                                  <Send size={10} /> Follow-up WhatsApp
-                                </button>
-                              )}
-                              {nextStage && stage !== "convertido" && (
-                                <button
-                                  onClick={() => moveLeadMutation.mutate({ leadId: lead.id, from: stage, to: nextStage })}
-                                  disabled={moveLeadMutation.isPending}
-                                  className="w-full text-xs px-2 py-1.5 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors flex items-center justify-center gap-1"
-                                >
-                                  Mover para {STAGE_CONFIG[nextStage].label}
-                                  <ArrowRight size={12} />
-                                </button>
-                              )}
-                              {stage !== "perdido" && stage !== "convertido" && (
-                                <button
-                                  onClick={() => moveLeadMutation.mutate({ leadId: lead.id, from: stage, to: "perdido" })}
-                                  disabled={moveLeadMutation.isPending}
-                                  className="w-full text-xs px-2 py-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
-                                >
-                                  Marcar como perdido
-                                </button>
-                              )}
-                            </motion.div>
-                          );
-                        })}
-                        {stageLeads.length === 0 && (
-                          <div className="py-8 text-center text-xs text-muted-foreground opacity-50">Nenhum lead</div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <CRMPipeline grouped={grouped} onMoveLead={(id, from, to) => moveLeadMutation.mutate({ leadId: id, from, to })} isMoving={moveLeadMutation.isPending} />
           ) : view === "indicacoes" ? (
-            /* Indicações View */
-            <div className="space-y-6">
-              {/* Referral metrics */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { label: "Parceiros", value: refCodes.length, icon: Users, color: "text-blue-400" },
-                  { label: "Total Indicações", value: allReferrals.length, icon: Gift, color: "text-cyan-400" },
-                  { label: "Vendas via Indicação", value: allReferrals.filter(r => r.status === "converted" || r.status === "paid").length, icon: TrendingUp, color: "text-green-400" },
-                  { label: "Comissões Pagas", value: `R$${refCodes.reduce((s, c) => s + Number(c.saldo_pago), 0).toFixed(0)}`, icon: DollarSign, color: "text-primary" },
-                ].map((metric, i) => (
-                  <motion.div
-                    key={metric.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="bg-card border border-border/30 rounded-xl p-4"
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <metric.icon size={18} className={metric.color} />
-                      <span className="text-xs text-muted-foreground">{metric.label}</span>
-                    </div>
-                    <p className="text-2xl font-bold font-sora">{metric.value}</p>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Top Referrers */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="bg-card border border-border/30 rounded-xl overflow-hidden"
-              >
-                <div className="px-6 py-4 border-b border-border/30 flex items-center gap-2">
-                  <Trophy size={18} className="text-yellow-400" />
-                  <h2 className="text-lg font-semibold font-sora">Ranking de Parceiros</h2>
-                </div>
-                <div className="divide-y divide-border/20">
-                  {refCodes.length === 0 ? (
-                    <div className="px-6 py-10 text-center text-muted-foreground">
-                      <Gift size={32} className="mx-auto mb-2 opacity-40" />
-                      <p className="text-sm">Nenhum parceiro cadastrado ainda.</p>
-                    </div>
-                  ) : (
-                    refCodes.map((rc, i) => (
-                      <div key={rc.id} className="px-6 py-3 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm font-bold text-muted-foreground w-6">{i + 1}.</span>
-                          <div>
-                            <p className="text-sm font-medium">{rc.nome}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {rc.total_clicks} cliques · {rc.total_leads} leads · {rc.total_vendas} vendas
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="text-right">
-                            <p className="text-sm font-semibold text-primary">R${Number(rc.saldo_disponivel).toFixed(0)}</p>
-                            <p className="text-xs text-muted-foreground">disponível</p>
-                          </div>
-                          <div className="flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-muted/20">
-                            <Link2 size={10} />
-                            <span>{rc.code}</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </motion.div>
-
-              {/* Recent referrals */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="bg-card border border-border/30 rounded-xl overflow-hidden"
-              >
-                <div className="px-6 py-4 border-b border-border/30">
-                  <h2 className="text-lg font-semibold font-sora">Indicações Recentes</h2>
-                </div>
-                <div className="divide-y divide-border/20">
-                  {allReferrals.length === 0 ? (
-                    <div className="px-6 py-10 text-center text-muted-foreground">
-                      <Users size={32} className="mx-auto mb-2 opacity-40" />
-                      <p className="text-sm">Nenhuma indicação recebida ainda.</p>
-                    </div>
-                  ) : (
-                    allReferrals.slice(0, 20).map((ref) => {
-                      const statusConfig: Record<string, { label: string; color: string }> = {
-                        pending: { label: "Pendente", color: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" },
-                        converted: { label: "Convertido", color: "bg-green-500/20 text-green-400 border-green-500/30" },
-                        paid: { label: "Pago", color: "bg-primary/20 text-primary border-primary/30" },
-                        expired: { label: "Expirado", color: "bg-red-500/20 text-red-400 border-red-500/30" },
-                      };
-                      const sc = statusConfig[ref.status] || statusConfig.pending;
-                      return (
-                        <div key={ref.id} className="px-6 py-3 flex items-center justify-between">
-                          <div>
-                            <p className="text-sm font-medium">{ref.lead_nome || "Lead"}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {new Date(ref.created_at).toLocaleDateString("pt-BR")}
-                              {ref.lead_telefone && ` · ${ref.lead_telefone}`}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <span className="text-sm font-semibold">R${Number(ref.comissao).toFixed(0)}</span>
-                            <span className={`text-xs px-2 py-0.5 rounded-full border ${sc.color}`}>{sc.label}</span>
-                          </div>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-              </motion.div>
-
-              {/* Leads via indicação */}
-              {(() => {
-                const indicacaoLeads = leads.filter(l => l.origem === "indicacao");
-                if (indicacaoLeads.length === 0) return null;
-                return (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                    className="bg-card border border-primary/20 rounded-xl p-5"
-                  >
-                    <div className="flex items-center gap-2 mb-3">
-                      <Gift size={18} className="text-primary" />
-                      <h2 className="text-sm font-semibold">Leads via Indicação no CRM</h2>
-                      <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full">{indicacaoLeads.length}</span>
-                    </div>
-                    <div className="space-y-2">
-                      {indicacaoLeads.slice(0, 10).map(lead => (
-                        <div key={lead.id} className="flex items-center justify-between bg-muted/10 rounded-lg px-4 py-2.5">
-                          <div className="flex items-center gap-3">
-                            <TempIcon temp={lead.temperatura} />
-                            <span className="text-sm font-medium">{lead.nome}</span>
-                            <span className={`text-xs px-2 py-0.5 rounded-full border ${STAGE_CONFIG[lead.stage].color}`}>
-                              {STAGE_CONFIG[lead.stage].label}
-                            </span>
-                          </div>
-                          <span className="text-xs text-muted-foreground">{lead.telefone}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                );
-              })()}
-            </div>
+            <CRMIndicacoes refCodes={refCodes} allReferrals={allReferrals} indicacaoLeads={indicacaoLeads} />
           ) : view === "projetos" ? (
-            <div className="space-y-6">
-              {/* Add/Edit Form */}
-              <div className="bg-card border border-border/30 rounded-xl p-5 space-y-4">
-                <h2 className="text-sm font-semibold">{editingProject ? "Editar Projeto" : "Novo Projeto"}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <input
-                    placeholder="Nome do cliente"
-                    value={projectForm.client_name}
-                    onChange={e => setProjectForm(p => ({ ...p, client_name: e.target.value }))}
-                    className="bg-background border border-border/50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
-                  />
-                  <select
-                    value={projectForm.user_id}
-                    onChange={e => setProjectForm(p => ({ ...p, user_id: e.target.value }))}
-                    disabled={!!editingProject}
-                    className="bg-background border border-border/50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 disabled:opacity-50"
-                  >
-                    <option value="">Selecione o cliente</option>
-                    {registeredUsers.map(u => (
-                      <option key={u.id} value={u.id}>{u.email}</option>
-                    ))}
-                  </select>
-                  <select
-                    value={projectForm.current_stage}
-                    onChange={e => setProjectForm(p => ({ ...p, current_stage: e.target.value }))}
-                    className="bg-background border border-border/50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
-                  >
-                    {PROJECT_STAGES_OPTIONS.map(s => (
-                      <option key={s.value} value={s.value}>{s.label}</option>
-                    ))}
-                  </select>
-                  <input
-                    placeholder="Notas (opcional)"
-                    value={projectForm.notes}
-                    onChange={e => setProjectForm(p => ({ ...p, notes: e.target.value }))}
-                    className="bg-background border border-border/50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleSaveProject}
-                    className="px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-                  >
-                    {editingProject ? "Salvar" : "Criar Projeto"}
-                  </button>
-                  {editingProject && (
-                    <button
-                      onClick={() => { setEditingProject(null); setProjectForm({ client_name: "", user_id: "", current_stage: "briefing", notes: "" }); }}
-                      className="px-5 py-2 rounded-lg bg-muted text-muted-foreground text-sm hover:text-foreground transition-colors"
-                    >
-                      Cancelar
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* Projects List */}
-              <div className="bg-card border border-border/30 rounded-xl overflow-hidden">
-                <div className="px-5 py-4 border-b border-border/30">
-                  <h2 className="text-sm font-semibold">Projetos ({clientProjects.length})</h2>
-                </div>
-                <div className="divide-y divide-border/20">
-                  {clientProjects.length === 0 ? (
-                    <div className="px-5 py-10 text-center text-muted-foreground text-sm">Nenhum projeto cadastrado.</div>
-                  ) : clientProjects.map(p => (
-                    <div key={p.id} className="px-5 py-4 flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium">{p.client_name}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {registeredUsers.find(u => u.id === p.user_id)?.email || p.user_id}
-                          {' · '}{PROJECT_STAGES_OPTIONS.find(s => s.value === p.current_stage)?.label || p.current_stage}
-                          {p.notes && ` · ${p.notes}`}
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => {
-                          setEditingProject(p.id);
-                          setProjectForm({ client_name: p.client_name, user_id: p.user_id, current_stage: p.current_stage, notes: p.notes || "" });
-                        }}
-                        className="text-xs px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
-                      >
-                        Editar
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <CRMProjetos clientProjects={clientProjects} registeredUsers={registeredUsers} onRefetch={() => refetchProjects()} />
           ) : null}
         </main>
       </div>

@@ -12,7 +12,7 @@ interface CheckoutSectionProps {
   customerEmail?: string;
 }
 
-const CheckoutSection = ({ userId, customerEmail }: CheckoutSectionProps) => {
+const CheckoutSection = ({ customerEmail }: CheckoutSectionProps) => {
   const [selectedPlan, setSelectedPlan] = useState<PlanOption | null>(null);
   const [mode, setMode] = useState<ChargeMode>("implantacao");
   const [checkoutOpen, setCheckoutOpen] = useState(false);

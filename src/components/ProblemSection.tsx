@@ -75,7 +75,7 @@ const ProblemSection = () => {
             <SectionHeader
               label="O Problema"
               titleId="problem-heading"
-              title={<>A maioria dos pequenos negócios comete <span className="text-gradient">o mesmo erro</span></>}
+              title={<>A maioria dos pequenos negócios cometem <span className="text-gradient">o mesmo erro</span></>}
               className="text-left mb-10"
             />
 

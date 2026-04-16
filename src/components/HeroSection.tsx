@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, ArrowDown } from "lucide-react";
 import ChatbotTrigger from "./ui/ChatbotTrigger";
 import NetworkBackground from "./NetworkBackground";
-import heroImg from "@/assets/hero-workspace.jpg";
+import heroImg from "@/assets/hero-workspace.webp";
 import logoSphere from "@/assets/logo-sphere.png";
 
 const benefits = [

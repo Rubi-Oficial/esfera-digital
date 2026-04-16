@@ -4,7 +4,7 @@ import { ArrowRight, MessageSquare, Zap } from "lucide-react";
 import NetworkBackground from "@/components/NetworkBackground";
 import { whatsappUrl } from "@/lib/constants";
 import { WA_GROWTH, WA_GENERIC } from "./data";
-import dashboardImg from "@/assets/growth-os-dashboard.jpg";
+import dashboardImg from "@/assets/growth-os-dashboard.webp";
 
 const GrowthHero = () => {
   const heroRef = useRef<HTMLElement>(null);

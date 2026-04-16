@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Section from "./Section";
 import SectionTitle from "./SectionTitle";
 import { dashboardMetrics } from "./data";
-import dashboardImg from "@/assets/growth-os-dashboard.jpg";
+import dashboardImg from "@/assets/growth-os-dashboard.webp";
 
 const DashboardBlock = () => (
   <Section id="dashboard">

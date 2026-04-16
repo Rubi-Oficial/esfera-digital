@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { X, Search, AlertTriangle } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, slideUp } from "@/lib/animations";
-import problemImg from "@/assets/problem-visual.jpg";
+import problemImg from "@/assets/problem-visual.webp";
 
 const problems = [
   { icon: X, text: "Depende exclusivamente do Instagram", detail: "Algoritmos mudam constantemente — você não controla o alcance dessas plataformas." },

@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      client_projects: {
+        Row: {
+          client_name: string
+          created_at: string
+          current_stage: string
+          id: string
+          notes: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          client_name: string
+          created_at?: string
+          current_stage?: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          client_name?: string
+          created_at?: string
+          current_stage?: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       lead_events: {
         Row: {
           created_at: string

@@ -35,9 +35,27 @@ const MeuProjetoContent = () => {
     });
   }, []);
 
-  // Current project stage (static for now — admin can update later)
-  const currentStageIndex = 1; // Design phase as example
-  const progressPercent = ((currentStageIndex + 1) / PROJECT_STAGES.length) * 100;
+  // Fetch client's project from DB
+  const { data: myProject } = useQuery({
+    queryKey: ["my-project"],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+      const { data } = await supabase
+        .from("client_projects")
+        .select("*")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      return data;
+    },
+  });
+
+  const currentStageIndex = myProject
+    ? PROJECT_STAGES.findIndex(s => s.key === myProject.current_stage)
+    : -1;
+  const progressPercent = currentStageIndex >= 0
+    ? ((currentStageIndex + 1) / PROJECT_STAGES.length) * 100
+    : 0;
 
   const { data: refCode } = useQuery({
     queryKey: ["my-referral-code"],
@@ -90,62 +108,76 @@ const MeuProjetoContent = () => {
             </p>
           </motion.div>
 
-          {/* Project Progress */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-card border border-border/30 rounded-xl p-5"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <Rocket size={18} className="text-primary" />
-              <h2 className="text-sm font-semibold">Progresso do Projeto</h2>
-              <span className="ml-auto text-xs text-muted-foreground">
-                {Math.round(progressPercent)}% concluído
-              </span>
-            </div>
+          {!myProject ? (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+              className="bg-card border border-border/30 rounded-xl p-8 text-center">
+              <Clock size={32} className="text-muted-foreground mx-auto mb-3 opacity-50" />
+              <h2 className="text-sm font-semibold mb-1">Projeto ainda não configurado</h2>
+              <p className="text-xs text-muted-foreground">Seu projeto será exibido aqui assim que o administrador configurar seu acesso.</p>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-card border border-border/30 rounded-xl p-5"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Rocket size={18} className="text-primary" />
+                <h2 className="text-sm font-semibold">Progresso do Projeto</h2>
+                <span className="ml-auto text-xs text-muted-foreground">
+                  {Math.round(progressPercent)}% concluído
+                </span>
+              </div>
 
-            <Progress value={progressPercent} className="h-2 mb-5" />
+              <Progress value={progressPercent} className="h-2 mb-5" />
 
-            <div className="space-y-2">
-              {PROJECT_STAGES.map((stage, i) => {
-                const isDone = i < currentStageIndex;
-                const isCurrent = i === currentStageIndex;
-                return (
-                  <div
-                    key={stage.key}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-colors ${
-                      isCurrent
-                        ? "bg-primary/10 border-primary/30"
-                        : isDone
-                        ? "bg-muted/10 border-border/20"
-                        : "bg-background border-border/10 opacity-50"
-                    }`}
-                  >
-                    {isDone ? (
-                      <CheckCircle2 size={18} className="text-primary shrink-0" />
-                    ) : isCurrent ? (
-                      <div className="w-[18px] h-[18px] rounded-full border-2 border-primary bg-primary/20 shrink-0 animate-pulse" />
-                    ) : (
-                      <div className="w-[18px] h-[18px] rounded-full border border-muted-foreground/30 shrink-0" />
-                    )}
-                    <stage.icon size={16} className={isCurrent ? "text-primary" : "text-muted-foreground"} />
-                    <span className={`text-sm ${isCurrent ? "text-foreground font-medium" : isDone ? "text-muted-foreground" : "text-muted-foreground/60"}`}>
-                      {stage.label}
-                    </span>
-                    {isCurrent && (
-                      <span className="ml-auto text-xs px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
-                        Em andamento
+              {myProject.notes && (
+                <p className="text-xs text-muted-foreground mb-4 bg-muted/20 rounded-lg px-3 py-2">
+                  📝 {myProject.notes}
+                </p>
+              )}
+
+              <div className="space-y-2">
+                {PROJECT_STAGES.map((stage, i) => {
+                  const isDone = i < currentStageIndex;
+                  const isCurrent = i === currentStageIndex;
+                  return (
+                    <div
+                      key={stage.key}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-colors ${
+                        isCurrent
+                          ? "bg-primary/10 border-primary/30"
+                          : isDone
+                          ? "bg-muted/10 border-border/20"
+                          : "bg-background border-border/10 opacity-50"
+                      }`}
+                    >
+                      {isDone ? (
+                        <CheckCircle2 size={18} className="text-primary shrink-0" />
+                      ) : isCurrent ? (
+                        <div className="w-[18px] h-[18px] rounded-full border-2 border-primary bg-primary/20 shrink-0 animate-pulse" />
+                      ) : (
+                        <div className="w-[18px] h-[18px] rounded-full border border-muted-foreground/30 shrink-0" />
+                      )}
+                      <stage.icon size={16} className={isCurrent ? "text-primary" : "text-muted-foreground"} />
+                      <span className={`text-sm ${isCurrent ? "text-foreground font-medium" : isDone ? "text-muted-foreground" : "text-muted-foreground/60"}`}>
+                        {stage.label}
                       </span>
-                    )}
-                    {isDone && (
-                      <span className="ml-auto text-xs text-primary">✓</span>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </motion.div>
+                      {isCurrent && (
+                        <span className="ml-auto text-xs px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
+                          Em andamento
+                        </span>
+                      )}
+                      {isDone && (
+                        <span className="ml-auto text-xs text-primary">✓</span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
 
           {/* Quick Stats */}
           <motion.div
@@ -155,10 +187,10 @@ const MeuProjetoContent = () => {
             className="grid grid-cols-2 md:grid-cols-3 gap-4"
           >
             {[
-              { label: "Etapa Atual", value: PROJECT_STAGES[currentStageIndex]?.label || "—", icon: Clock, color: "text-blue-400" },
+              { label: "Etapa Atual", value: myProject ? (PROJECT_STAGES[currentStageIndex]?.label || "—") : "—", icon: Clock, color: "text-blue-400" },
               { label: "Indicações", value: referrals.length, icon: Users, color: "text-cyan-400" },
               { label: "Comissão Acumulada", value: `R$${totalComissao.toFixed(0)}`, icon: DollarSign, color: "text-primary" },
-            ].map((metric, i) => (
+            ].map((metric) => (
               <div key={metric.label} className="bg-card border border-border/30 rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <metric.icon size={16} className={metric.color} />

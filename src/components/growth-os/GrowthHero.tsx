@@ -26,19 +26,17 @@ const GrowthHero = () => {
               transition={{ delay: 0.2 }}
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-medium mb-6 tracking-widest uppercase"
             >
-              <Zap size={12} className="animate-pulse" /> Seu negócio está perdendo clientes
+              <Zap size={12} className="animate-pulse" /> Site + CRM + IA em um só sistema
             </motion.div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5">
-              Websites + I.A.{" "}
-              <span className="text-gradient">que vendem por você.</span>
+              Sistema integrado de vendas que{" "}
+              <span className="text-gradient">trabalha por você 24h.</span>
             </h1>
 
-            <p className="text-base md:text-lg text-muted-foreground max-w-xl mb-6 leading-relaxed lg:mx-0 mx-auto">
-              Enquanto você depende do Instagram… <strong className="text-foreground font-semibold">seus concorrentes estão aparecendo no Google</strong> e fechando vendas.
-            </p>
-            <p className="text-sm md:text-base text-muted-foreground max-w-xl mb-8 leading-relaxed lg:mx-0 mx-auto">
-              Nós criamos seu site completo com inteligência artificial em poucos dias — <strong className="text-foreground font-semibold">pronto para atrair clientes e vender automaticamente</strong>.
+            <p className="text-base md:text-lg text-muted-foreground max-w-xl mb-8 leading-relaxed lg:mx-0 mx-auto">
+              Capte, organize e converta clientes de forma contínua com{" "}
+              <strong className="text-foreground font-semibold">automação inteligente via WhatsApp</strong>.
             </p>
 
             <motion.div

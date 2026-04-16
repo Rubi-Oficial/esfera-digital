@@ -99,6 +99,7 @@ export type Database = {
           ultima_interacao: string | null
           updated_at: string
           urgencia: string | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -116,6 +117,7 @@ export type Database = {
           ultima_interacao?: string | null
           updated_at?: string
           urgencia?: string | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -133,6 +135,7 @@ export type Database = {
           ultima_interacao?: string | null
           updated_at?: string
           urgencia?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -350,6 +353,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_get_subscriptions_for_users: {
+        Args: { _user_ids: string[] }
+        Returns: {
+          cancel_at_period_end: boolean
+          current_period_end: string
+          product_id: string
+          status: string
+          stripe_price_id: string
+          user_id: string
+        }[]
+      }
+      admin_link_lead_to_user: {
+        Args: { _lead_id: string; _user_id: string }
+        Returns: undefined
+      }
       create_chatbot_lead: {
         Args: {
           _dor_principal?: string
@@ -401,6 +419,7 @@ export type Database = {
           id: string
         }[]
       }
+      normalize_phone: { Args: { _phone: string }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"

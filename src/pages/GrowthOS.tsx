@@ -114,6 +114,8 @@ const GrowthOS = () => {
 
   const [formData, setFormData] = useState({ nome: "", telefone: "", empresa: "" });
   const [formSent, setFormSent] = useState(false);
+  const [captureOpen, setCaptureOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<{ name: string; priceIds: string } | null>(null);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();

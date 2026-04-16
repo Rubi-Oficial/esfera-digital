@@ -349,12 +349,12 @@ const ChatBot = () => {
     <>
       {/* Chat Toggle Button */}
       <AnimatePresence>
-        {!isOpen && (
+        {!isOpen && isBubbleVisible && (
           <motion.button
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 200, delay: 3 }}
+            transition={{ type: "spring", stiffness: 200 }}
             onClick={() => setIsOpen(true)}
             className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-[0_4px_20px_hsl(var(--primary)/0.4)] hover:shadow-[0_4px_30px_hsl(var(--primary)/0.6)] transition-all duration-300 hover:scale-105"
             aria-label="Falar com especialista"

@@ -81,7 +81,7 @@ export async function getMyReferrals(codeId: string): Promise<Referral[]> {
   const { data, error } = await supabase.rpc("get_my_referrals", { _code_id: codeId });
 
   if (error) throw error;
-  return (data || []).map((r: any) => ({ ...r, lead_telefone: null })) as Referral[];
+  return (data || []).map((r: Omit<Referral, "lead_telefone">) => ({ ...r, lead_telefone: null })) as Referral[];
 }
 
 // Look up a referral code by code string (for landing page) — uses secure RPC

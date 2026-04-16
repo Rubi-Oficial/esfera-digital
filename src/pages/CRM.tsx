@@ -186,8 +186,26 @@ const CRMContent = () => {
   const quentes = leads.filter(l => l.temperatura === "quente").length;
   const emAtendimento = leads.filter(l => !["convertido", "perdido", "novo_lead"].includes(l.stage)).length;
 
+  // Filtered leads
+  const filteredLeads = useMemo(() => {
+    let result = leads;
+    if (tempFilter !== "all") result = result.filter(l => l.temperatura === tempFilter);
+    if (stageFilter !== "all") result = result.filter(l => l.stage === stageFilter);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(l =>
+        l.nome.toLowerCase().includes(q) ||
+        l.telefone.includes(q) ||
+        (l.tipo_negocio && l.tipo_negocio.toLowerCase().includes(q))
+      );
+    }
+    return result;
+  }, [leads, tempFilter, stageFilter, searchQuery]);
+
+  const activeFilters = (tempFilter !== "all" ? 1 : 0) + (stageFilter !== "all" ? 1 : 0) + (searchQuery.trim() ? 1 : 0);
+
   // Leads needing follow-up
-  const followUpLeads = leads.filter(l =>
+  const followUpLeads = filteredLeads.filter(l =>
     ["qualificado", "proposta_apresentada", "checkout_iniciado"].includes(l.stage)
   );
 
@@ -196,6 +214,24 @@ const CRMContent = () => {
     count: grouped?.[stage]?.length || 0,
     ...STAGE_CONFIG[stage],
   }));
+
+  const exportLeadsCSV = () => {
+    const headers = ["Nome", "Telefone", "Temperatura", "Etapa", "Score", "Tipo Negócio", "Interesse", "Urgência", "Objetivo", "Dor Principal", "Origem", "Criado em"];
+    const rows = filteredLeads.map(l => [
+      l.nome, l.telefone, l.temperatura, STAGE_CONFIG[l.stage].label, l.score,
+      l.tipo_negocio || "", l.interesse || "", l.urgencia || "", l.objetivo || "",
+      l.dor_principal || "", l.origem || "", format(new Date(l.created_at), "dd/MM/yyyy HH:mm", { locale: ptBR })
+    ]);
+    const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `leads-esfera-${format(new Date(), "yyyy-MM-dd")}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success(`${filteredLeads.length} leads exportados!`);
+  };
 
   return (
     <>

@@ -30,6 +30,8 @@ const App = () => (
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/meu-projeto" element={<MeuProjeto />} />
           <Route path="/indicacao" element={<Indicacao />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/return" element={<CheckoutReturn />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -777,7 +777,8 @@ const CRMContent = () => {
                       <div>
                         <p className="text-sm font-medium">{p.client_name}</p>
                         <p className="text-xs text-muted-foreground">
-                          {PROJECT_STAGES_OPTIONS.find(s => s.value === p.current_stage)?.label || p.current_stage}
+                          {registeredUsers.find(u => u.id === p.user_id)?.email || p.user_id}
+                          {' · '}{PROJECT_STAGES_OPTIONS.find(s => s.value === p.current_stage)?.label || p.current_stage}
                           {p.notes && ` · ${p.notes}`}
                         </p>
                       </div>

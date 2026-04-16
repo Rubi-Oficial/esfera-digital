@@ -63,16 +63,19 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
   }
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
     letter-spacing: -0.02em;
     text-wrap: balance;
+    line-height: 1.1;
   }
 
   p {
@@ -90,6 +93,13 @@
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-primary;
     outline-style: solid;
+  }
+
+  /* Ensure all interactive elements have min 44px touch target on mobile */
+  @media (pointer: coarse) {
+    button, a, [role="button"], input, select, textarea {
+      min-height: 44px;
+    }
   }
 
   img {
@@ -140,9 +150,12 @@
     box-shadow: var(--glow-primary);
     transform: translateY(-4px);
   }
+  @media (prefers-reduced-motion: reduce) {
+    .glass-hover:hover { transform: none; }
+  }
 
   .section-padding {
-    @apply py-24 md:py-32;
+    @apply py-20 md:py-28 lg:py-32;
   }
 
   @keyframes blink {
@@ -174,11 +187,17 @@
     font-weight: 600;
     border-radius: 12px;
     box-shadow: 0 0 20px hsl(152 100% 50% / 0.3);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .btn-premium:hover {
     transform: scale(1.03);
     box-shadow: 0 0 30px hsl(152 100% 50% / 0.45);
+  }
+  .btn-premium:active {
+    transform: scale(0.98);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-premium:hover, .btn-premium:active { transform: none; }
   }
 
   /* Modern scrollbar */
@@ -194,5 +213,18 @@
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(152 100% 50% / 0.4);
+  }
+
+  /* Improved card interaction pattern */
+  .card-interactive {
+    @apply rounded-2xl border border-border/30 bg-card transition-all duration-300;
+  }
+  .card-interactive:hover {
+    border-color: hsl(152 100% 50% / 0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), var(--glow-primary);
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card-interactive:hover { transform: none; }
   }
 }

@@ -130,7 +130,32 @@ const MeuProjetoContent = () => {
             </p>
           </motion.div>
 
-          {!myProject ? (
+          {/* Stage change notification banner */}
+          <AnimatePresence>
+            {stageNotification && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: "auto" }}
+                exit={{ opacity: 0, y: -10, height: 0 }}
+                className="bg-primary/10 border border-primary/30 rounded-xl p-4 flex items-start gap-3"
+              >
+                <PartyPopper size={20} className="text-primary shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-primary">Seu projeto avançou! 🎉</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    De <span className="font-medium text-foreground">{stageNotification.from}</span> para{" "}
+                    <span className="font-medium text-primary">{stageNotification.to}</span>
+                  </p>
+                </div>
+                <button
+                  onClick={() => setStageNotification(null)}
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  ✕
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
               className="bg-card border border-border/30 rounded-xl p-8 text-center">
               <Clock size={32} className="text-muted-foreground mx-auto mb-3 opacity-50" />

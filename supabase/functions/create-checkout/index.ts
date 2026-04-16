@@ -1,6 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { type StripeEnv, createStripeClient } from "../_shared/stripe.ts";
+
+const supabase = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+);
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -8,7 +14,35 @@ serve(async (req) => {
   }
 
   try {
-    const { priceId, priceIds, quantity, customerEmail, userId, returnUrl, environment } = await req.json();
+    const { priceId, priceIds, quantity, customerEmail, returnUrl, environment } = await req.json();
+
+    const authHeader = req.headers.get("authorization") ?? req.headers.get("Authorization");
+    let verifiedUserId: string | undefined;
+
+    if (authHeader) {
+      const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+
+      if (!token || token === authHeader.trim()) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser(token);
+
+      if (authError || !user) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      verifiedUserId = user.id;
+    }
 
     const env = (environment || 'sandbox') as StripeEnv;
     const stripe = createStripeClient(env);
@@ -40,9 +74,9 @@ serve(async (req) => {
       ui_mode: "embedded",
       return_url: returnUrl || `${req.headers.get("origin")}/checkout/return?session_id={CHECKOUT_SESSION_ID}`,
       ...(customerEmail && { customer_email: customerEmail }),
-      ...(userId && {
-        metadata: { userId },
-        ...(hasRecurring && { subscription_data: { metadata: { userId } } }),
+      ...(verifiedUserId && {
+        metadata: { userId: verifiedUserId },
+        ...(hasRecurring && { subscription_data: { metadata: { userId: verifiedUserId } } }),
       }),
     });
 

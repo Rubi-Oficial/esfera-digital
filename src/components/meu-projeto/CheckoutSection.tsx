@@ -8,11 +8,10 @@ import ChargeModeToggle from "./ChargeModeToggle";
 import { CHARGE_LABELS, CHECKOUT_PLANS, type ChargeMode, type PlanOption } from "./checkout-plans";
 
 interface CheckoutSectionProps {
-  userId?: string;
   customerEmail?: string;
 }
 
-const CheckoutSection = ({ userId, customerEmail }: CheckoutSectionProps) => {
+const CheckoutSection = ({ customerEmail }: CheckoutSectionProps) => {
   const [selectedPlan, setSelectedPlan] = useState<PlanOption | null>(null);
   const [mode, setMode] = useState<ChargeMode>("implantacao");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -106,7 +105,6 @@ const CheckoutSection = ({ userId, customerEmail }: CheckoutSectionProps) => {
                 <StripeEmbeddedCheckout
                   priceId={priceId}
                   customerEmail={customerEmail}
-                  userId={userId}
                   returnUrl={`${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`}
                 />
               </div>

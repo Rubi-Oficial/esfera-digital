@@ -89,7 +89,7 @@ const MeuProjetoContent = () => {
           {hasActiveSubscription && subscription ? (
             <SubscriptionStatusCard subscription={subscription} />
           ) : (
-            <CheckoutSection userId={userId} customerEmail={userEmail} />
+            <CheckoutSection customerEmail={userEmail} />
           )}
 
           <ReferralCTA refCode={refCode} />

@@ -8,7 +8,6 @@ import ChargeModeToggle from "./ChargeModeToggle";
 import { CHARGE_LABELS, CHECKOUT_PLANS, type ChargeMode, type PlanOption } from "./checkout-plans";
 
 interface CheckoutSectionProps {
-  userId?: string;
   customerEmail?: string;
 }
 

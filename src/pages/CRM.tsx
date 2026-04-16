@@ -550,11 +550,14 @@ const CRMContent = () => {
                 transition={{ delay: 0.8 }}
                 className="bg-card border border-border/30 rounded-xl overflow-hidden"
               >
-                <div className="px-6 py-4 border-b border-border/30">
-                  <h2 className="text-lg font-semibold font-sora">Leads Recentes</h2>
+                <div className="px-6 py-4 border-b border-border/30 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold font-sora">
+                    Leads {activeFilters > 0 ? "Filtrados" : "Recentes"}
+                  </h2>
+                  <span className="text-xs text-muted-foreground">{filteredLeads.length} leads</span>
                 </div>
                 <div className="divide-y divide-border/20">
-                  {leads.slice(0, 20).map((lead) => (
+                  {filteredLeads.slice(0, 50).map((lead) => (
                     <div key={lead.id}>
                       <button
                         onClick={() => setExpandedLead(expandedLead === lead.id ? null : lead.id)}

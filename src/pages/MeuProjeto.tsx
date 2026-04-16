@@ -35,9 +35,27 @@ const MeuProjetoContent = () => {
     });
   }, []);
 
-  // Current project stage (static for now — admin can update later)
-  const currentStageIndex = 1; // Design phase as example
-  const progressPercent = ((currentStageIndex + 1) / PROJECT_STAGES.length) * 100;
+  // Fetch client's project from DB
+  const { data: myProject } = useQuery({
+    queryKey: ["my-project"],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+      const { data } = await supabase
+        .from("client_projects")
+        .select("*")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      return data;
+    },
+  });
+
+  const currentStageIndex = myProject
+    ? PROJECT_STAGES.findIndex(s => s.key === myProject.current_stage)
+    : -1;
+  const progressPercent = currentStageIndex >= 0
+    ? ((currentStageIndex + 1) / PROJECT_STAGES.length) * 100
+    : 0;
 
   const { data: refCode } = useQuery({
     queryKey: ["my-referral-code"],

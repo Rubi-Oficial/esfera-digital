@@ -35,8 +35,8 @@ const LeadCaptureCheckout = ({ open, onClose, planName, priceIds }: LeadCaptureC
 
     setLoading(true);
     try {
-      // Create lead in the CRM pipeline at checkout_iniciado stage
-      const { error } = await supabase.rpc("create_chatbot_lead", {
+      // Create lead in the CRM pipeline — RPC returns the lead id directly
+      const { data: leadId, error } = await supabase.rpc("create_chatbot_lead", {
         _nome: form.nome.trim(),
         _telefone: form.telefone.trim(),
         _origem: "checkout",
@@ -49,24 +49,15 @@ const LeadCaptureCheckout = ({ open, onClose, planName, priceIds }: LeadCaptureC
 
       if (error) throw error;
 
-      // Update the lead stage to checkout_iniciado
-      // We query for the lead we just created to update its stage
-      const { data: leads } = await supabase
-        .from("leads")
-        .select("id")
-        .eq("telefone", form.telefone.trim())
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-      if (leads && leads.length > 0) {
+      // Update stage using the returned lead ID (no race condition)
+      if (leadId) {
         await supabase
           .from("leads")
           .update({ stage: "checkout_iniciado" as any, ultima_interacao: new Date().toISOString() })
-          .eq("id", leads[0].id);
+          .eq("id", leadId);
 
-        // Log the stage change event
         await supabase.from("lead_events").insert({
-          lead_id: leads[0].id,
+          lead_id: leadId,
           event_type: "stage_change",
           from_stage: "novo_lead" as any,
           to_stage: "checkout_iniciado" as any,

@@ -4,6 +4,7 @@ import { Check, ArrowDown } from "lucide-react";
 import ChatbotTrigger from "./ui/ChatbotTrigger";
 import NetworkBackground from "./NetworkBackground";
 import heroImg from "@/assets/hero-workspace.jpg";
+import logoSphere from "@/assets/logo-sphere.png";
 
 const benefits = [
   "Sem complicação",
@@ -53,6 +54,16 @@ const HeroSection = () => {
   return (
     <section ref={sectionRef} className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-16" aria-label="Apresentação da Esfera">
       <NetworkBackground />
+      {/* Floating sphere background */}
+      <motion.img
+        src={logoSphere}
+        alt=""
+        aria-hidden="true"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[420px] lg:w-[520px] object-contain opacity-[0.12] pointer-events-none drop-shadow-[0_0_80px_hsl(var(--primary)/0.4)]"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        style={{ y: contentY }}
+      />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] rounded-full bg-primary/5 blur-[120px] md:blur-[150px]" aria-hidden="true" />
 
       <motion.div className="container relative z-10 px-4 sm:px-6 md:px-8 py-12 md:py-20" style={{ y: contentY, opacity: contentOpacity }}>

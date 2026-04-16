@@ -35,16 +35,18 @@ const InterCTA = ({
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
           <a
             href={primaryHref}
-            className="btn-premium px-6 py-3 text-sm font-bold inline-flex items-center gap-2 w-full sm:w-auto justify-center"
+            aria-label={primaryLabel}
+            className="btn-premium px-6 py-3 text-sm font-bold inline-flex items-center gap-2 w-full sm:w-auto justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            {primaryLabel} <ArrowRight size={14} />
+            {primaryLabel} <ArrowRight size={14} aria-hidden="true" />
           </a>
           <a
             href={secondaryHref}
             {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            className="border border-primary/40 text-primary hover:bg-primary/10 rounded-xl px-6 py-3 text-sm font-semibold inline-flex items-center gap-2 transition-all w-full sm:w-auto justify-center"
+            aria-label={secondaryLabel}
+            className="border border-primary/40 text-primary hover:bg-primary/10 rounded-xl px-6 py-3 text-sm font-semibold inline-flex items-center gap-2 transition-all w-full sm:w-auto justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <MessageSquare size={14} /> {secondaryLabel}
+            <MessageSquare size={14} aria-hidden="true" /> {secondaryLabel}
           </a>
         </div>
       </div>

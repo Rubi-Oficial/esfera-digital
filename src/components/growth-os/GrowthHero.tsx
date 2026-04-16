@@ -49,16 +49,42 @@ const GrowthHero = () => {
                 href={whatsappUrl(WA_GROWTH)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-premium px-7 py-4 text-base inline-flex items-center gap-2 font-bold w-full sm:w-auto justify-center"
+                aria-label="Fale conosco no WhatsApp e comece agora"
+                className="btn-premium px-7 py-4 text-base inline-flex items-center gap-2 font-bold w-full sm:w-auto justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                Comece agora <ArrowRight size={18} />
+                Comece agora <ArrowRight size={18} aria-hidden="true" />
               </a>
               <a
                 href="#planos-growth"
-                className="border border-primary/40 text-primary hover:bg-primary/10 rounded-xl px-7 py-4 text-base inline-flex items-center gap-2 font-semibold transition-all w-full sm:w-auto justify-center"
+                aria-label="Ver oferta especial e planos disponíveis"
+                className="border border-primary/40 text-primary hover:bg-primary/10 rounded-xl px-7 py-4 text-base inline-flex items-center gap-2 font-semibold transition-all w-full sm:w-auto justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                <MessageSquare size={18} /> Ver oferta especial
+                <MessageSquare size={18} aria-hidden="true" /> Ver oferta especial
               </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="mt-8 grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0"
+              role="list"
+              aria-label="Resultados em destaque"
+            >
+              {[
+                { value: "+87", label: "empresas" },
+                { value: "89%", label: "satisfação" },
+                { value: "3x", label: "mais leads" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  role="listitem"
+                  className="text-center lg:text-left border-l-2 border-primary/30 pl-3"
+                >
+                  <div className="text-xl md:text-2xl font-bold text-gradient leading-none">{stat.value}</div>
+                  <div className="text-[11px] uppercase tracking-wider text-muted-foreground mt-1">{stat.label}</div>
+                </div>
+              ))}
             </motion.div>
           </motion.div>
 

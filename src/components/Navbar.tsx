@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X, Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
-import AnimatedLogo from "./AnimatedLogo";
 import ChatbotTrigger from "./ui/ChatbotTrigger";
 import { NAV_LINKS } from "@/lib/constants";
 
@@ -74,7 +73,10 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between h-16 md:h-18 px-4 md:px-8">
         <a href="#" aria-label="Esfera Soluções Digitais - Página inicial" className="flex items-center">
-          <AnimatedLogo size="sm" />
+          <span className="text-lg font-bold tracking-tight" style={{ letterSpacing: "-0.02em" }}>
+            <span className="text-foreground">ESFERA</span>
+            <span className="text-primary ml-1.5" style={{ letterSpacing: "0.15em" }}>DIGITAL</span>
+          </span>
         </a>
 
         {/* Desktop nav */}

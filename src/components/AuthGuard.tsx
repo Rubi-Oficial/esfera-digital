@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { motion } from "framer-motion";
@@ -11,7 +12,7 @@ interface AuthGuardProps {
 }
 
 const AuthGuard = ({ children, requireAdmin = true }: AuthGuardProps) => {
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
@@ -23,37 +24,48 @@ const AuthGuard = ({ children, requireAdmin = true }: AuthGuardProps) => {
   const [googleLoading, setGoogleLoading] = useState(false);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session);
-      if (session?.user) {
-        const { data } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", session.user.id)
-          .eq("role", "admin")
-          .maybeSingle();
-        setIsAdmin(!!data);
+    let mounted = true;
+
+    // Helper: fetch admin role outside the auth callback to avoid Supabase deadlocks.
+    const checkAdmin = async (uid: string) => {
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", uid)
+        .eq("role", "admin")
+        .maybeSingle();
+      if (mounted) setIsAdmin(!!data);
+    };
+
+    // 1) Synchronous listener — only sets state, defers any supabase call.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      if (!mounted) return;
+      setSession(newSession);
+      if (newSession?.user) {
+        // Defer to avoid calling supabase APIs inside the callback (deadlock risk).
+        setTimeout(() => {
+          if (mounted) checkAdmin(newSession.user.id);
+        }, 0);
       } else {
         setIsAdmin(false);
       }
       setLoading(false);
     });
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSession(session);
-      if (session?.user) {
-        const { data } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", session.user.id)
-          .eq("role", "admin")
-          .maybeSingle();
-        setIsAdmin(!!data);
+    // 2) Initial session check.
+    supabase.auth.getSession().then(({ data: { session: initial } }) => {
+      if (!mounted) return;
+      setSession(initial);
+      if (initial?.user) {
+        checkAdmin(initial.user.id);
       }
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {

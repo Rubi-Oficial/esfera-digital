@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Indicacao from "./pages/Indicacao.tsx";
 import GrowthOS from "./pages/GrowthOS.tsx";
 import CRM from "./pages/CRM.tsx";
+import ResetPassword from "./pages/ResetPassword.tsx";
 
 const queryClient = new QueryClient();
 

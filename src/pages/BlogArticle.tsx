@@ -17,7 +17,7 @@ const RelatedCard = ({ article }: { article: BlogArticle }) => (
       <div className="relative aspect-[16/10] overflow-hidden">
         <img
           src={article.image}
-          alt={article.title}
+          alt={`Ilustração: ${article.title}`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
           width={400}

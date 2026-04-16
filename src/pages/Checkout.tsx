@@ -5,10 +5,13 @@ import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 
 export default function Checkout() {
   const [searchParams] = useSearchParams();
-  const priceId = searchParams.get("price") || "";
   const planName = searchParams.get("plan") || "Plano";
+  
+  // Support multiple price IDs (comma-separated)
+  const pricesParam = searchParams.get("prices") || searchParams.get("price") || "";
+  const priceIds = pricesParam.split(",").filter(Boolean);
 
-  if (!priceId) {
+  if (!priceIds.length) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="text-center space-y-4">
@@ -34,7 +37,7 @@ export default function Checkout() {
           </Link>
         </div>
         <StripeEmbeddedCheckout
-          priceId={priceId}
+          priceIds={priceIds}
           returnUrl={`${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`}
         />
       </div>

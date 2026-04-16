@@ -3,7 +3,8 @@ import { getStripe, getStripeEnvironment } from "@/lib/stripe";
 import { supabase } from "@/integrations/supabase/client";
 
 interface StripeEmbeddedCheckoutProps {
-  priceId: string;
+  priceId?: string;
+  priceIds?: string[];
   quantity?: number;
   customerEmail?: string;
   userId?: string;
@@ -12,14 +13,16 @@ interface StripeEmbeddedCheckoutProps {
 
 export function StripeEmbeddedCheckout({
   priceId,
+  priceIds,
   quantity,
   customerEmail,
   userId,
   returnUrl,
 }: StripeEmbeddedCheckoutProps) {
   const fetchClientSecret = async (): Promise<string> => {
+    const ids = priceIds || (priceId ? [priceId] : []);
     const { data, error } = await supabase.functions.invoke("create-checkout", {
-      body: { priceId, quantity, customerEmail, userId, returnUrl, environment: getStripeEnvironment() },
+      body: { priceIds: ids, quantity, customerEmail, userId, returnUrl, environment: getStripeEnvironment() },
     });
     if (error || !data?.clientSecret) {
       throw new Error(error?.message || "Failed to create checkout session");

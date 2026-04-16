@@ -1,73 +1,109 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, Zap, Users, Briefcase, MapPin, Gift, Clock, Rocket, BookOpen, UserCheck, TrendingUp, BarChart3 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Check, Zap, Users, Briefcase, MapPin, Clock, Rocket, BookOpen, UserCheck, BarChart3, Crown } from "lucide-react";
+import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
-import ChatbotTrigger from "./ui/ChatbotTrigger";
+import { useCountdown } from "@/hooks/useCountdown";
 
-const useCountdown = () => {
-  const getTarget = () => {
-    const stored = localStorage.getItem("promo_end");
-    if (stored) return new Date(stored).getTime();
-    const end = new Date();
-    end.setHours(end.getHours() + 48);
-    localStorage.setItem("promo_end", end.toISOString());
-    return end.getTime();
-  };
-
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const diff = getTarget() - Date.now();
-    return diff > 0 ? diff : 0;
-  });
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      const diff = getTarget() - Date.now();
-      setTimeLeft(diff > 0 ? diff : 0);
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const hours = Math.floor(timeLeft / 3600000);
-  const minutes = Math.floor((timeLeft % 3600000) / 60000);
-  const seconds = Math.floor((timeLeft % 60000) / 1000);
-
-  return { hours, minutes, seconds, expired: timeLeft <= 0 };
-};
-
-const included = [
-  "Site profissional (One Page estratégico)",
-  "Design moderno e personalizado",
-  "Copy pronta para vender",
-  "Integração com WhatsApp",
-  "SEO básico (para aparecer no Google)",
-  "Certificado SSL grátis",
-  "1 ano de hospedagem incluso",
-  "Entrega rápida",
-];
-
-const bonuses = [
-  "Entrega em até 7 dias",
-  "Setup prioritário",
-  "Suporte inicial incluso",
-];
-
-const growthIncluded = [
-  "Tudo do plano Site Profissional",
-  "Base de Conhecimento Interna exclusiva",
-  "Consultoria individual com especialista",
-  "Estratégia de captação de clientes",
-  "Programa de Parcerias (Indique e Ganhe)",
-  "Dashboard de indicações e comissões",
-  "Suporte prioritário por 3 meses",
-  "Relatórios de performance mensais",
-];
-
-const growthBonuses = [
-  "1 sessão de consultoria grátis",
-  "Acesso vitalício à base de conhecimento",
-  "Grupo exclusivo de membros Growth",
-  "Acesso ao grupo VIP no Telegram",
+const plans = [
+  {
+    id: "site_profissional",
+    name: "Site Profissional",
+    subtitle: "Ideal para começar",
+    implantacao: 997,
+    implantacaoOriginal: 1500,
+    mensal: 97,
+    featured: false,
+    badge: null,
+    icon: null,
+    included: [
+      "Site profissional (One Page estratégico)",
+      "Design moderno e personalizado",
+      "Copy pronta para vender",
+      "Integração com WhatsApp",
+      "SEO básico (para aparecer no Google)",
+      "Certificado SSL grátis",
+      "1 ano de hospedagem incluso",
+      "Entrega rápida",
+    ],
+    bonuses: [
+      "Entrega em até 7 dias",
+      "Setup prioritário",
+      "Suporte inicial incluso",
+    ],
+    highlights: null,
+    cta: "Quero meu site",
+    priceIds: "site_profissional_implantacao,site_profissional_mensal",
+  },
+  {
+    id: "esfera_growth",
+    name: "Esfera Growth",
+    subtitle: "Ecossistema completo de crescimento",
+    implantacao: 1997,
+    implantacaoOriginal: 3000,
+    mensal: 297,
+    featured: true,
+    badge: "🚀 Mais vendido",
+    icon: Rocket,
+    included: [
+      "Tudo do plano Site Profissional",
+      "Base de Conhecimento Interna exclusiva",
+      "Consultoria individual com especialista",
+      "Estratégia de captação de clientes",
+      "Programa de Parcerias (Indique e Ganhe)",
+      "Dashboard de indicações e comissões",
+      "Suporte prioritário por 3 meses",
+      "Relatórios de performance mensais",
+    ],
+    bonuses: [
+      "1 sessão de consultoria grátis",
+      "Acesso vitalício à base de conhecimento",
+      "Grupo exclusivo de membros Growth",
+      "Acesso ao grupo VIP no Telegram",
+    ],
+    highlights: [
+      { icon: BookOpen, label: "Base de Conhecimento" },
+      { icon: UserCheck, label: "Consultoria Individual" },
+      { icon: BarChart3, label: "Dashboard Growth" },
+    ],
+    cta: "Quero o Esfera Growth 🚀",
+    priceIds: "esfera_growth_implantacao,esfera_growth_mensal",
+    growthLink: true,
+  },
+  {
+    id: "esfera_scale",
+    name: "Esfera Scale",
+    subtitle: "Máxima performance e escala",
+    implantacao: 3997,
+    implantacaoOriginal: 5000,
+    mensal: 597,
+    featured: false,
+    badge: "👑 Premium",
+    icon: Crown,
+    included: [
+      "Tudo do Esfera Growth",
+      "Automação de marketing completa",
+      "Funil de vendas personalizado",
+      "Landing pages ilimitadas",
+      "Integração com CRM avançado",
+      "Gestão de tráfego pago assistida",
+      "Suporte dedicado por 6 meses",
+      "Relatórios avançados semanais",
+    ],
+    bonuses: [
+      "2 sessões de consultoria grátis",
+      "Setup completo de automações",
+      "Acesso a todos os grupos exclusivos",
+      "Mentoria 1:1 mensal",
+    ],
+    highlights: [
+      { icon: Rocket, label: "Automação Completa" },
+      { icon: UserCheck, label: "Mentoria 1:1" },
+      { icon: BarChart3, label: "Relatórios Avançados" },
+    ],
+    cta: "Quero o Esfera Scale 👑",
+    priceIds: "esfera_scale_implantacao,esfera_scale_mensal",
+  },
 ];
 
 const idealFor = [
@@ -102,168 +138,130 @@ const PricingSection = () => {
         />
 
         {/* Plans grid */}
-        <div className="grid md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
-          {/* Plan 1 - Site Profissional */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="relative rounded-3xl border border-border/50 bg-card p-6 md:p-8 h-full flex flex-col">
-              <div className="text-center mb-6">
-                <h3 className="text-lg font-bold font-sora mb-1">Site Profissional</h3>
-                <p className="text-xs text-muted-foreground mb-4">Ideal para começar</p>
-                <p className="text-muted-foreground line-through text-sm mb-1">De R$ 1.500</p>
-                <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-4xl md:text-5xl font-bold text-foreground">R$ 997</span>
-                </div>
-              </div>
+        <div className="grid md:grid-cols-3 gap-5 md:gap-4 max-w-6xl mx-auto">
+          {plans.map((plan, idx) => (
+            <motion.div
+              key={plan.id}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, delay: idx * 0.1 }}
+            >
+              <div className={`relative rounded-3xl ${plan.featured ? "border-2 border-primary glow-box-strong" : "border border-border/50"} bg-card p-5 md:p-6 h-full flex flex-col`}>
+                {plan.badge && (
+                  <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-lg whitespace-nowrap">
+                    {plan.badge}
+                  </span>
+                )}
 
-              <div className="mb-6 flex-1">
-                <ul className="space-y-2.5" role="list">
-                  {included.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-secondary-foreground">
-                      <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                        <Check size={10} className="text-primary" aria-hidden="true" />
-                      </div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Bonuses */}
-              <div className="glass rounded-xl p-3 mb-6 border border-border/30">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">🎁 Bônus</h4>
-                <ul className="space-y-1.5">
-                  {bonuses.map((b, i) => (
-                    <li key={i} className="flex items-center gap-2 text-xs text-secondary-foreground">
-                      <Check size={12} className="text-primary" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <Link
-                to="/checkout?price=site_profissional_unico&plan=Site%20Profissional"
-                className="w-full py-3 text-base inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
-              >
-                Quero meu site
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* Plan 2 - Esfera Growth */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-          >
-            <div className="relative rounded-3xl border-2 border-primary glow-box-strong bg-card p-6 md:p-8 h-full flex flex-col">
-              <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-lg whitespace-nowrap">
-                🚀 Mais vendido
-              </span>
-
-              <div className="text-center mb-6 mt-2">
-                <h3 className="text-lg font-bold font-sora mb-1 flex items-center justify-center gap-2">
-                  <Rocket size={20} className="text-primary" />
-                  Esfera Growth
-                </h3>
-                <p className="text-xs text-muted-foreground mb-4">Ecossistema completo de crescimento</p>
-                <p className="text-muted-foreground line-through text-sm mb-1">De R$ 3.000</p>
-                <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-4xl md:text-5xl font-bold text-gradient">R$ 1.997</span>
-                </div>
-              </div>
-
-              {/* Countdown Timer */}
-              {!expired && (
-                <div className="mb-6">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <Clock size={12} className="text-destructive animate-pulse" />
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-destructive">
-                      Oferta expira em
-                    </p>
+                <div className={`text-center mb-5 ${plan.badge ? "mt-2" : ""}`}>
+                  <h3 className="text-lg font-bold font-sora mb-1 flex items-center justify-center gap-2">
+                    {plan.icon && <plan.icon size={20} className="text-primary" />}
+                    {plan.name}
+                  </h3>
+                  <p className="text-xs text-muted-foreground mb-4">{plan.subtitle}</p>
+                  
+                  {/* Implementation fee */}
+                  <p className="text-muted-foreground line-through text-sm mb-1">
+                    De R$ {plan.implantacaoOriginal.toLocaleString("pt-BR")}
+                  </p>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className={`text-3xl md:text-4xl font-bold ${plan.featured ? "text-gradient" : "text-foreground"}`}>
+                      R$ {plan.implantacao.toLocaleString("pt-BR")}
+                    </span>
                   </div>
-                  <div className="flex justify-center gap-2">
-                    {[
-                      { value: hours, label: "Hrs" },
-                      { value: minutes, label: "Min" },
-                      { value: seconds, label: "Seg" },
-                    ].map((unit, i) => (
-                      <div key={i} className="flex flex-col items-center">
-                        <span className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-lg font-bold text-primary tabular-nums">
-                          {String(unit.value).padStart(2, "0")}
-                        </span>
-                        <span className="text-[9px] text-muted-foreground mt-0.5 uppercase tracking-wider">
-                          {unit.label}
-                        </span>
+                  <p className="text-xs text-muted-foreground mt-1">implantação</p>
+                  
+                  {/* Monthly fee */}
+                  <div className="mt-3 glass rounded-lg py-2 px-3 inline-block border border-primary/20">
+                    <span className="text-sm font-semibold text-primary">+ R$ {plan.mensal}/mês</span>
+                  </div>
+                </div>
+
+                {/* Countdown on featured */}
+                {plan.featured && !expired && (
+                  <div className="mb-5">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <Clock size={12} className="text-destructive animate-pulse" />
+                      <p className="text-[10px] font-semibold uppercase tracking-wider text-destructive">
+                        Oferta expira em
+                      </p>
+                    </div>
+                    <div className="flex justify-center gap-2">
+                      {[
+                        { value: hours, label: "Hrs" },
+                        { value: minutes, label: "Min" },
+                        { value: seconds, label: "Seg" },
+                      ].map((unit, i) => (
+                        <div key={i} className="flex flex-col items-center">
+                          <span className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-base font-bold text-primary tabular-nums">
+                            {String(unit.value).padStart(2, "0")}
+                          </span>
+                          <span className="text-[9px] text-muted-foreground mt-0.5 uppercase tracking-wider">
+                            {unit.label}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="mb-5 flex-1">
+                  <ul className="space-y-2" role="list">
+                    {plan.included.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-secondary-foreground">
+                        <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                          <Check size={10} className="text-primary" aria-hidden="true" />
+                        </div>
+                        {i === 0 && plan.featured ? <strong className="text-primary">{item}</strong> : item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Highlights */}
+                {plan.highlights && (
+                  <div className="grid grid-cols-3 gap-1.5 mb-3">
+                    {plan.highlights.map((h, i) => (
+                      <div key={i} className="glass rounded-lg p-2 text-center border border-primary/10">
+                        <h.icon size={14} className="text-primary mx-auto mb-1" />
+                        <p className="text-[9px] text-muted-foreground leading-tight">{h.label}</p>
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
+                )}
 
-              <div className="mb-6 flex-1">
-                <ul className="space-y-2.5" role="list">
-                  {growthIncluded.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-secondary-foreground">
-                      <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                        <Check size={10} className="text-primary" aria-hidden="true" />
-                      </div>
-                      {i === 0 ? <strong className="text-primary">{item}</strong> : item}
-                    </li>
-                  ))}
-                </ul>
+                {/* Bonuses */}
+                <div className={`glass rounded-xl p-3 mb-5 border ${plan.featured ? "border-primary/20" : "border-border/30"}`}>
+                  <h4 className={`text-xs font-bold uppercase tracking-wider mb-2 ${plan.featured ? "text-primary" : "text-muted-foreground"}`}>🎁 {plan.featured ? "Bônus exclusivos" : "Bônus"}</h4>
+                  <ul className="space-y-1.5">
+                    {plan.bonuses.map((b, i) => (
+                      <li key={i} className="flex items-center gap-2 text-xs text-secondary-foreground">
+                        <Check size={12} className="text-primary" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Link
+                  to={`/checkout?prices=${plan.priceIds}&plan=${encodeURIComponent(plan.name)}`}
+                  className="w-full py-3 text-sm inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+                >
+                  {plan.cta}
+                </Link>
+
+                {plan.growthLink && (
+                  <Link
+                    to="/growth-os"
+                    className="text-xs text-center text-primary hover:text-primary/80 transition-colors underline underline-offset-2 mt-3"
+                  >
+                    Saiba mais sobre o Growth OS →
+                  </Link>
+                )}
               </div>
-
-              {/* Growth highlights */}
-              <div className="grid grid-cols-3 gap-2 mb-4">
-                <div className="glass rounded-lg p-2 text-center border border-primary/10">
-                  <BookOpen size={16} className="text-primary mx-auto mb-1" />
-                  <p className="text-[10px] text-muted-foreground leading-tight">Base de Conhecimento</p>
-                </div>
-                <div className="glass rounded-lg p-2 text-center border border-primary/10">
-                  <UserCheck size={16} className="text-primary mx-auto mb-1" />
-                  <p className="text-[10px] text-muted-foreground leading-tight">Consultoria Individual</p>
-                </div>
-                <div className="glass rounded-lg p-2 text-center border border-primary/10">
-                  <BarChart3 size={16} className="text-primary mx-auto mb-1" />
-                  <p className="text-[10px] text-muted-foreground leading-tight">Dashboard Growth</p>
-                </div>
-              </div>
-
-              {/* Bonuses */}
-              <div className="glass rounded-xl p-3 mb-6 border border-primary/20">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-2">🎁 Bônus exclusivos</h4>
-                <ul className="space-y-1.5">
-                  {growthBonuses.map((b, i) => (
-                    <li key={i} className="flex items-center gap-2 text-xs text-secondary-foreground">
-                      <Check size={12} className="text-primary" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <Link
-                to="/checkout?price=esfera_growth_unico&plan=Esfera%20Growth"
-                className="w-full py-3 text-base mb-3 inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
-              >
-                Quero o Esfera Growth 🚀
-              </Link>
-
-              <Link
-                to="/growth-os"
-                className="text-xs text-center text-primary hover:text-primary/80 transition-colors underline underline-offset-2"
-              >
-                Saiba mais sobre o Growth OS →
-              </Link>
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
         </div>
 
         {/* Who is it for */}

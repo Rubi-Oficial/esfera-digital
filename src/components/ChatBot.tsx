@@ -79,8 +79,17 @@ const ChatBot = () => {
   // Listen for global chatbot open events
   useEffect(() => {
     return onChatbotOpen(() => {
+      setIsBubbleVisible(true);
       setIsOpen(true);
     });
+  }, []);
+
+  // Show chat bubble after 7s delay so user can explore the page first
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsBubbleVisible(true);
+    }, 7000);
+    return () => clearTimeout(timer);
   }, []);
 
   // Track referral code from URL

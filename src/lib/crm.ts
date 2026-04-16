@@ -47,7 +47,7 @@ export async function createLead(data: LeadInsert) {
     _dor_principal: data.dor_principal || null,
   });
   if (error) throw error;
-  return { id: leadId as string, ...data } as any;
+  return { id: leadId as string, ...data } as Lead;
 }
 
 export async function updateLeadStage(leadId: string, fromStage: PipelineStage, toStage: PipelineStage) {
@@ -115,7 +115,7 @@ export async function fetchSubscriptionsForUsers(userIds: string[]): Promise<Rec
   const { data, error } = await supabase.rpc("admin_get_subscriptions_for_users", { _user_ids: userIds });
   if (error) { console.error("fetchSubscriptionsForUsers", error); return {}; }
   const map: Record<string, SubscriptionInfo> = {};
-  (data || []).forEach((s: any) => { map[s.user_id] = s; });
+  (data || []).forEach((s: SubscriptionInfo) => { map[s.user_id] = s; });
   return map;
 }
 

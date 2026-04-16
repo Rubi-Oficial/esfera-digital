@@ -620,11 +620,22 @@ const CRMContent = () => {
                       </AnimatePresence>
                     </div>
                   ))}
-                  {leads.length === 0 && (
+                  {filteredLeads.length === 0 && (
                     <div className="px-6 py-12 text-center text-muted-foreground">
                       <Users size={40} className="mx-auto mb-3 opacity-40" />
-                      <p>Nenhum lead capturado ainda.</p>
-                      <p className="text-sm mt-1">Leads do chatbot aparecerão aqui automaticamente.</p>
+                      {activeFilters > 0 ? (
+                        <>
+                          <p>Nenhum lead encontrado com esses filtros.</p>
+                          <button onClick={() => { setTempFilter("all"); setStageFilter("all"); setSearchQuery(""); }} className="text-sm text-primary mt-2 hover:underline">
+                            Limpar filtros
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <p>Nenhum lead capturado ainda.</p>
+                          <p className="text-sm mt-1">Leads do chatbot aparecerão aqui automaticamente.</p>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>

@@ -57,7 +57,9 @@ type AIAnalysis = {
 };
 
 const CRMContent = () => {
-  const [view, setView] = useState<"pipeline" | "dashboard" | "indicacoes">("dashboard");
+  const [view, setView] = useState<"pipeline" | "dashboard" | "indicacoes" | "projetos">("dashboard");
+  const [projectForm, setProjectForm] = useState({ client_name: "", user_id: "", current_stage: "briefing", notes: "" });
+  const [editingProject, setEditingProject] = useState<string | null>(null);
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
@@ -153,6 +155,7 @@ const CRMContent = () => {
                 { key: "dashboard", label: "Dashboard" },
                 { key: "pipeline", label: "Pipeline" },
                 { key: "indicacoes", label: "Indicações" },
+                { key: "projetos", label: "Projetos" },
               ] as const).map(v => (
                 <button
                   key={v.key}

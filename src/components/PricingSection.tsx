@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Check, Zap, Users, Briefcase, MapPin, Gift, Clock, Rocket, BookOpen, UserCheck, TrendingUp, BarChart3 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
 import ChatbotTrigger from "./ui/ChatbotTrigger";
 
@@ -146,14 +146,12 @@ const PricingSection = () => {
                 </ul>
               </div>
 
-              <ChatbotTrigger
-                variant="primary"
-                size="lg"
-                ariaLabel="Quero meu site por R$ 997"
-                className="w-full py-3 text-base"
+              <Link
+                to="/checkout?price=site_profissional_unico&plan=Site%20Profissional"
+                className="w-full py-3 text-base inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
               >
                 Quero meu site
-              </ChatbotTrigger>
+              </Link>
             </div>
           </motion.div>
 
@@ -251,14 +249,12 @@ const PricingSection = () => {
                 </ul>
               </div>
 
-              <ChatbotTrigger
-                variant="primary"
-                size="lg"
-                ariaLabel="Quero o Esfera Growth por R$ 1.997"
-                className="w-full py-3 text-base mb-3"
+              <Link
+                to="/checkout?price=esfera_growth_unico&plan=Esfera%20Growth"
+                className="w-full py-3 text-base mb-3 inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
               >
                 Quero o Esfera Growth 🚀
-              </ChatbotTrigger>
+              </Link>
 
               <Link
                 to="/growth-os"

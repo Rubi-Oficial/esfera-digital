@@ -12,6 +12,8 @@ import GrowthOS from "./pages/GrowthOS.tsx";
 import CRM from "./pages/CRM.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import MeuProjeto from "./pages/MeuProjeto.tsx";
+import Checkout from "./pages/Checkout.tsx";
+import CheckoutReturn from "./pages/CheckoutReturn.tsx";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/meu-projeto" element={<MeuProjeto />} />
           <Route path="/indicacao" element={<Indicacao />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/return" element={<CheckoutReturn />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

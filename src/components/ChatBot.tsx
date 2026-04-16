@@ -127,13 +127,14 @@ const ChatBot = () => {
     setMessages((prev) => [...prev, { id, text, sender: "user" }]);
   }, []);
 
-  // Auto-open after 8s
+  // Auto-open chat after 15s total (7s bubble delay + 8s more)
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!isOpen && !hasGreeted) {
+        setIsBubbleVisible(true);
         setIsOpen(true);
       }
-    }, 8000);
+    }, 15000);
     return () => clearTimeout(timer);
   }, [isOpen, hasGreeted]);
 

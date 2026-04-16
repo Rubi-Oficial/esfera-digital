@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 
 const testimonials = [
@@ -96,7 +96,7 @@ const TestimonialsSection = () => {
     >
       <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-primary/6 blur-[150px] pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <SectionHeader
           label="Depoimentos"
           titleId="testimonials-heading"
@@ -109,21 +109,21 @@ const TestimonialsSection = () => {
           {/* Navigation buttons */}
           <button
             onClick={() => paginate(-1)}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-20 w-10 h-10 rounded-full border border-border/60 bg-card/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 md:-translate-x-14 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-border/60 bg-card/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
             aria-label="Depoimento anterior"
           >
             <ChevronLeft size={18} />
           </button>
           <button
             onClick={() => paginate(1)}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-20 w-10 h-10 rounded-full border border-border/60 bg-card/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-4 md:translate-x-14 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-border/60 bg-card/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
             aria-label="Próximo depoimento"
           >
             <ChevronRight size={18} />
           </button>
 
           {/* Card */}
-          <div className="relative min-h-[280px] md:min-h-[240px] flex items-center">
+          <div className="relative min-h-[300px] sm:min-h-[280px] md:min-h-[260px] flex items-center px-6 sm:px-4">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={activeIndex}
@@ -132,21 +132,21 @@ const TestimonialsSection = () => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="w-full rounded-2xl border border-border/60 bg-card p-8 md:p-10 relative group"
+                className="w-full glass rounded-2xl p-6 sm:p-8 md:p-10 relative group"
               >
-                <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06),transparent_70%)] pointer-events-none" />
+                <div className="absolute top-4 right-6 sm:top-6 sm:right-8">
+                  <Quote size={32} className="text-primary/10" aria-hidden="true" />
+                </div>
 
                 <div className="relative z-10">
-                  <span className="absolute -top-2 -left-1 text-5xl text-primary/20 font-serif leading-none select-none" aria-hidden="true">"</span>
-
                   <div className="flex gap-1 mb-4">
                     {Array.from({ length: t.rating }).map((_, si) => (
                       <Star key={si} className="w-4 h-4 fill-primary text-primary" />
                     ))}
                   </div>
 
-                  <p className="text-foreground/90 leading-relaxed mb-6 text-base md:text-lg italic">
-                    {t.text}
+                  <p className="text-foreground/90 leading-relaxed mb-6 text-base md:text-lg">
+                    "{t.text}"
                   </p>
 
                   <div className="flex items-center gap-4">
@@ -169,15 +169,17 @@ const TestimonialsSection = () => {
           </div>
 
           {/* Dots */}
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-2.5 mt-6" role="tablist" aria-label="Navegar depoimentos">
             {testimonials.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActiveIndex([i, i > activeIndex ? 1 : -1])}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                role="tab"
+                aria-selected={i === activeIndex}
+                className={`h-2 rounded-full transition-all duration-400 ${
                   i === activeIndex
-                    ? "bg-primary w-6"
-                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    ? "bg-primary w-7"
+                    : "bg-muted-foreground/30 w-2 hover:bg-muted-foreground/50"
                 }`}
                 aria-label={`Ir para depoimento ${i + 1}`}
               />

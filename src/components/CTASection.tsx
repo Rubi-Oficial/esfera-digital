@@ -21,13 +21,13 @@ const CTASection = () => {
         style={{ y: bgY, scale: glowScale }}
         aria-hidden="true"
       />
-      <div className="container px-4 md:px-8 relative z-10">
+      <div className="container px-4 sm:px-6 md:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.95, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative rounded-3xl overflow-hidden p-12 md:p-20 text-center"
+          className="relative rounded-3xl overflow-hidden p-8 sm:p-12 md:p-20 text-center"
           style={{ background: "var(--gradient-accent)" }}
         >
           <motion.div
@@ -42,9 +42,9 @@ const CTASection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-3xl md:text-5xl font-bold text-primary-foreground mb-4 leading-tight"
+              className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary-foreground mb-4 leading-tight"
             >
-              Sua empresa merece ser encontrada<br />por quem precisa dela.
+              Sua empresa merece ser encontrada<br className="hidden sm:block" />por quem precisa dela.
             </motion.h2>
 
             <motion.p
@@ -52,7 +52,7 @@ const CTASection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="text-primary-foreground/80 text-lg max-w-xl mx-auto mb-8 leading-relaxed"
+              className="text-primary-foreground/80 text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed"
             >
               Enquanto você avalia, outras empresas já estão sendo encontradas no Google e convertendo clientes que poderiam ser seus.
             </motion.p>

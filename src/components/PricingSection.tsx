@@ -85,7 +85,6 @@ const PricingSection = () => {
   const { hours, minutes, seconds, expired } = useCountdown();
   const [captureOpen, setCaptureOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<{ name: string; priceIds: string } | null>(null);
-  const { hours, minutes, seconds, expired } = useCountdown();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const orbY1 = useTransform(scrollYProgress, [0, 1], [120, -120]);
   const orbY2 = useTransform(scrollYProgress, [0, 1], [-60, 120]);
@@ -275,6 +274,15 @@ const PricingSection = () => {
           </div>
         </motion.div>
       </div>
+
+      {selectedPlan && (
+        <LeadCaptureCheckout
+          open={captureOpen}
+          onClose={() => setCaptureOpen(false)}
+          planName={selectedPlan.name}
+          priceIds={selectedPlan.priceIds}
+        />
+      )}
     </section>
   );
 };

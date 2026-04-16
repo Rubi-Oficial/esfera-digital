@@ -73,8 +73,6 @@ const ChatBot = () => {
   const [crmLeadId, setCrmLeadId] = useState<string | null>(null);
   const [refCodeData, setRefCodeData] = useState<ReferralCode | null>(null);
   const [isBubbleVisible, setIsBubbleVisible] = useState(false);
-  const [crmLeadId, setCrmLeadId] = useState<string | null>(null);
-  const [refCodeData, setRefCodeData] = useState<ReferralCode | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 

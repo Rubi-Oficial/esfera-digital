@@ -272,6 +272,52 @@ const CRMContent = () => {
     }));
   }, [grouped]);
 
+  // Chart data: cumulative leads over time
+  const cumulativeData = useMemo(() => {
+    if (leads.length === 0) return [];
+    const sorted = [...leads].sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+    const today = startOfDay(new Date());
+    const earliest = startOfDay(new Date(sorted[0].created_at));
+    const start = subDays(today, Math.min(89, Math.floor((today.getTime() - earliest.getTime()) / 86400000)));
+    const days = eachDayOfInterval({ start, end: today });
+    let cumTotal = leads.filter(l => new Date(l.created_at) < start).length;
+    let cumConvertidos = leads.filter(l => l.stage === "convertido" && new Date(l.created_at) < start).length;
+    return days.map(day => {
+      const dayStr = format(day, "yyyy-MM-dd");
+      const dayLeads = leads.filter(l => format(parseISO(l.created_at), "yyyy-MM-dd") === dayStr);
+      cumTotal += dayLeads.length;
+      cumConvertidos += dayLeads.filter(l => l.stage === "convertido").length;
+      return {
+        date: format(day, "dd/MM", { locale: ptBR }),
+        total: cumTotal,
+        convertidos: cumConvertidos,
+      };
+    });
+  }, [leads]);
+
+  // Chart data: weekly conversion rate
+  const weeklyConversionData = useMemo(() => {
+    if (leads.length === 0) return [];
+    const today = startOfDay(new Date());
+    const weeks: { label: string; total: number; convertidos: number; taxa: number }[] = [];
+    for (let w = 7; w >= 0; w--) {
+      const weekEnd = subDays(today, w * 7);
+      const weekStart = subDays(weekEnd, 6);
+      const weekLeads = leads.filter(l => {
+        const d = new Date(l.created_at);
+        return d >= weekStart && d <= new Date(weekEnd.getTime() + 86400000 - 1);
+      });
+      const convertidos = weekLeads.filter(l => l.stage === "convertido").length;
+      weeks.push({
+        label: format(weekStart, "dd/MM", { locale: ptBR }),
+        total: weekLeads.length,
+        convertidos,
+        taxa: weekLeads.length > 0 ? Math.round((convertidos / weekLeads.length) * 100) : 0,
+      });
+    }
+    return weeks;
+  }, [leads]);
+
   const chartTooltipStyle = {
     backgroundColor: "hsl(var(--card))",
     border: "1px solid hsl(var(--border))",

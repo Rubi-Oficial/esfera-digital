@@ -16,7 +16,7 @@ import dashboardImg from "@/assets/growth-os-dashboard.jpg";
 const WA_GROWTH = "Olá! Quero ativar meu Esfera Growth!";
 const WA_STARTER = "Olá! Quero começar com o plano Starter do Esfera Growth";
 const WA_GROWTH_PLAN = "Olá! Quero começar com o plano Growth do Esfera Growth";
-const WA_SCALE = "Olá! Quero começar com o plano Scale do Esfera Growth";
+
 const WA_GENERIC = "Olá! Quero saber mais sobre o Esfera Growth";
 
 const problems = [

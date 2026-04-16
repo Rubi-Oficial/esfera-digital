@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, Zap, Users, Briefcase, MapPin, Clock, Rocket, BookOpen, UserCheck, BarChart3, Crown } from "lucide-react";
+import { Check, Zap, Users, Briefcase, MapPin, Clock, Rocket, BookOpen, UserCheck, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
 import { useCountdown } from "@/hooks/useCountdown";

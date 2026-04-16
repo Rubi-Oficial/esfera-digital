@@ -6,6 +6,8 @@ import { PROJECT_STAGES, TOTAL_ESTIMATED_DAYS } from "./data";
 
 export function useMyProject() {
   const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
   const [stageNotification, setStageNotification] = useState<{ from: string; to: string } | null>(null);
   const hasShownToast = useRef(false);
 
@@ -16,6 +18,8 @@ export function useMyProject() {
         || data.user?.email?.split("@")[0]
         || "Cliente";
       setUserName(name);
+      setUserId(data.user?.id);
+      setUserEmail(data.user?.email || undefined);
     });
   }, []);
 
@@ -68,6 +72,8 @@ export function useMyProject() {
 
   return {
     userName,
+    userId,
+    userEmail,
     myProject,
     stageNotification,
     setStageNotification,

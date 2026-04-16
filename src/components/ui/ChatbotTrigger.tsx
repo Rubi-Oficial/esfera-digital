@@ -34,7 +34,7 @@ const ChatbotTrigger = ({
 }: ChatbotTriggerProps) => {
   return (
     <button
-      onClick={openChatbot}
+      onClick={() => openChatbot()}
       className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
       aria-label={ariaLabel}
       type="button"

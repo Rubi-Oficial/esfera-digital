@@ -19,7 +19,7 @@ const Footer = () => {
               Websites de alto impacto com inteligência artificial integrada. Transformamos sua presença digital em resultados reais.
             </p>
             <button
-              onClick={openChatbot}
+              onClick={() => openChatbot()}
               className="inline-flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-all mt-1 group w-fit py-1"
             >
               <span className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:shadow-[0_0_12px_hsl(var(--primary)/0.2)] transition-all">
@@ -56,7 +56,7 @@ const Footer = () => {
               Nosso sistema entende seu negócio e te mostra o melhor caminho.
             </p>
             <button
-              onClick={openChatbot}
+              onClick={() => openChatbot()}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/10 border border-primary/20 text-primary text-sm font-medium hover:bg-primary/15 hover:border-primary/30 active:bg-primary/20 transition-all group hover:shadow-[0_0_15px_hsl(var(--primary)/0.15)]"
             >
               Comece agora

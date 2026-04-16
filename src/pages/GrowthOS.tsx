@@ -1,5 +1,7 @@
+import { lazy, Suspense } from "react";
 import SEOHead from "@/components/SEOHead";
 import ScrollToTop from "@/components/ScrollToTop";
+import ChatBot from "@/components/ChatBot";
 import { openChatbot } from "@/lib/chatbot-events";
 
 import GrowthNavbar from "@/components/growth-os/GrowthNavbar";
@@ -16,6 +18,19 @@ import CTAFinalBlock from "@/components/growth-os/CTAFinalBlock";
 import GrowthFooter from "@/components/growth-os/GrowthFooter";
 import WhatsAppFAB from "@/components/growth-os/WhatsAppFAB";
 import type { Plan } from "@/components/growth-os/data";
+
+// Seções da home antiga (lazy)
+const ProblemSection = lazy(() => import("@/components/ProblemSection"));
+const AIServicesSection = lazy(() => import("@/components/AIServicesSection"));
+const AboutSection = lazy(() => import("@/components/AboutSection"));
+const MethodologySection = lazy(() => import("@/components/MethodologySection"));
+const PortfolioSection = lazy(() => import("@/components/PortfolioSection"));
+const StatsSection = lazy(() => import("@/components/StatsSection"));
+const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
+const BlogSection = lazy(() => import("@/components/BlogSection"));
+const FAQSection = lazy(() => import("@/components/FAQSection"));
+
+const SectionFallback = () => <div className="min-h-[200px]" aria-hidden="true" />;
 
 const GrowthOS = () => {
   const handleSelectPlan = (plan: Plan) => {
@@ -42,6 +57,20 @@ const GrowthOS = () => {
           <StepsBlock />
           <DashboardBlock />
           <FeaturesBlock />
+
+          {/* Seções da home antiga — entre Features e Planos */}
+          <Suspense fallback={<SectionFallback />}>
+            <ProblemSection />
+            <AIServicesSection />
+            <AboutSection />
+            <MethodologySection />
+            <PortfolioSection />
+            <StatsSection />
+            <TestimonialsSection />
+            <BlogSection />
+            <FAQSection />
+          </Suspense>
+
           <PlansBlock onSelectPlan={handleSelectPlan} />
           <AuthorityBlock />
           <CTAFinalBlock />
@@ -50,6 +79,7 @@ const GrowthOS = () => {
         <GrowthFooter />
         <WhatsAppFAB />
         <ScrollToTop />
+        <ChatBot />
       </div>
     </>
   );

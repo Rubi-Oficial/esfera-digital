@@ -65,7 +65,7 @@ const StatsSection = () => {
         >
           <div className="relative z-10">
             <h2 id="stats-heading" className="text-2xl md:text-3xl font-bold text-center mb-12">
-              Números <span className="text-gradient">Reais</span>
+              Resultados <span className="text-gradient">comprovados</span>
             </h2>
             <motion.div
               variants={staggerContainer(0.15, 0.2)}

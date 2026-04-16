@@ -6,15 +6,15 @@ import { staggerContainer, slideUp } from "@/lib/animations";
 import problemImg from "@/assets/problem-visual.jpg";
 
 const problems = [
-  { icon: X, text: "Acredita que Instagram é suficiente", detail: "Algoritmos mudam, alcance cai — você não controla essas plataformas." },
-  { icon: X, text: "Não tem um site profissional", detail: "87% dos consumidores pesquisam online antes de comprar." },
-  { icon: X, text: "Não aparece no Google", detail: "Quem aparece primeiro leva 75% dos cliques." },
+  { icon: X, text: "Depende exclusivamente do Instagram", detail: "Algoritmos mudam constantemente — você não controla o alcance dessas plataformas." },
+  { icon: X, text: "Não possui um site profissional", detail: "87% dos consumidores pesquisam online antes de tomar uma decisão de compra." },
+  { icon: X, text: "Não aparece nos resultados do Google", detail: "O primeiro resultado orgânico recebe 75% de todos os cliques." },
 ];
 
 const consequences = [
-  "Perde clientes todos os dias",
-  "Parece amador",
-  "Depende de algoritmo",
+  "Perda diária de oportunidades de negócio",
+  "Imagem amadora frente à concorrência",
+  "Dependência total de algoritmos que você não controla",
 ];
 
 const ProblemSection = () => {
@@ -38,15 +38,15 @@ const ProblemSection = () => {
         >
           <div className="inline-flex items-center gap-2 mb-6">
             <Search size={20} className="text-primary" />
-            <span className="text-sm font-medium text-primary uppercase tracking-widest">Deixa eu te perguntar</span>
+            <span className="text-sm font-medium text-primary uppercase tracking-widest">Uma reflexão importante</span>
           </div>
           <h2 className="text-2xl md:text-4xl font-bold mb-4 leading-tight">
-            Quando alguém procura pelo seu serviço no Google…<br />
-            <span className="text-primary">ela encontra você</span> ou encontra{" "}
+            Quando alguém pesquisa pelo seu serviço no Google,<br />
+            <span className="text-primary">ela encontra você</span> ou o{" "}
             <span className="text-destructive">seu concorrente</span>?
           </h2>
           <p className="text-lg text-muted-foreground">
-            A verdade é simples: <strong className="text-foreground">se você não tem um site profissional, você está invisível.</strong>
+            A realidade é direta: <strong className="text-foreground">sem presença digital profissional, sua empresa está invisível para quem mais importa.</strong>
           </p>
         </motion.div>
 
@@ -75,7 +75,7 @@ const ProblemSection = () => {
             <SectionHeader
               label="O Problema"
               titleId="problem-heading"
-              title={<>A maioria dos pequenos negócios cometem <span className="text-gradient">o mesmo erro</span></>}
+              title={<>A maioria dos negócios comete <span className="text-gradient">o mesmo erro</span></>}
               className="text-left mb-10"
             />
 
@@ -113,17 +113,18 @@ const ProblemSection = () => {
             >
               <div className="flex items-center gap-2 mb-3">
                 <AlertTriangle size={16} className="text-destructive" />
-                <span className="text-sm font-semibold text-destructive">Resultado?</span>
+                <span className="text-sm font-semibold text-destructive">O resultado disso?</span>
               </div>
               <ul className="space-y-2">
                 {consequences.map((c, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="text-destructive">👉</span> {c}
+                    <span className="w-1.5 h-1.5 rounded-full bg-destructive shrink-0" />
+                    {c}
                   </li>
                 ))}
               </ul>
               <p className="text-xs text-muted-foreground mt-3 italic">
-                E o pior: nem percebe quanto dinheiro está deixando na mesa.
+                E muitas vezes, sem perceber o quanto de receita está sendo perdida.
               </p>
             </motion.div>
           </div>

@@ -7,9 +7,9 @@ import heroImg from "@/assets/hero-workspace.jpg";
 import logoSphere from "@/assets/logo-sphere.png";
 
 const benefits = [
-  "Sem complicação",
-  "Sem depender de redes sociais",
-  "Pronto para gerar clientes",
+  "Processo simplificado",
+  "Independente de redes sociais",
+  "Geração contínua de clientes",
 ];
 
 const TYPEWRITER_TEXT = "Websites + I.A.";
@@ -78,10 +78,10 @@ const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-destructive/30 bg-destructive/5 text-destructive text-xs font-medium mb-6 md:mb-8 tracking-widest uppercase"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-medium mb-6 md:mb-8 tracking-widest uppercase"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-destructive animate-pulse" aria-hidden="true" />
-              Seu negócio está perdendo clientes
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden="true" />
+              Presença digital inteligente
             </motion.div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.05] tracking-tight mb-5 md:mb-6">
@@ -96,13 +96,13 @@ const HeroSection = () => {
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-3 md:mb-4 leading-relaxed lg:mx-0 mx-auto">
-              Enquanto você depende do Instagram…{" "}
-              <strong className="text-foreground font-semibold">seus concorrentes estão aparecendo no Google</strong> e fechando vendas.
+              Seus clientes pesquisam no Google antes de comprar.{" "}
+              <strong className="text-foreground font-semibold">Se não encontram você, encontram o concorrente.</strong>
             </p>
 
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-8 md:mb-10 leading-relaxed lg:mx-0 mx-auto">
-              Nós criamos seu site completo com inteligência artificial em poucos dias —{" "}
-              <strong className="text-foreground font-semibold">pronto para atrair clientes e vender automaticamente</strong>.
+              Criamos sites completos com inteligência artificial —{" "}
+              <strong className="text-foreground font-semibold">prontos para atrair, atender e converter clientes automaticamente</strong>.
             </p>
 
             <motion.ul
@@ -147,13 +147,13 @@ const HeroSection = () => {
                 href="#planos"
                 className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors group py-2"
               >
-                Ver oferta especial
+                Ver planos e preços
                 <ArrowDown size={16} className="group-hover:translate-y-1 transition-transform" aria-hidden="true" />
               </a>
             </motion.div>
           </motion.div>
 
-          {/* Hero mockup - now visible on tablet+ */}
+          {/* Hero mockup */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

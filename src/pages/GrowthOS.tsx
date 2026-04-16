@@ -19,11 +19,9 @@ import GrowthFooter from "@/components/growth-os/GrowthFooter";
 import WhatsAppFAB from "@/components/growth-os/WhatsAppFAB";
 import type { Plan } from "@/components/growth-os/data";
 
-// Seções da home antiga (lazy)
-const ProblemSection = lazy(() => import("@/components/ProblemSection"));
-const AIServicesSection = lazy(() => import("@/components/AIServicesSection"));
+// Seções da home antiga (lazy) — sem duplicar com blocos do Growth OS:
+// Removidos: ProblemSection (≈ ProblemBlock), AIServicesSection (≈ SolutionBlock), MethodologySection (≈ FeaturesBlock)
 const AboutSection = lazy(() => import("@/components/AboutSection"));
-const MethodologySection = lazy(() => import("@/components/MethodologySection"));
 const PortfolioSection = lazy(() => import("@/components/PortfolioSection"));
 const StatsSection = lazy(() => import("@/components/StatsSection"));
 const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
@@ -58,12 +56,9 @@ const GrowthOS = () => {
           <DashboardBlock />
           <FeaturesBlock />
 
-          {/* Seções da home antiga — entre Features e Planos */}
+          {/* Seções da home antiga — entre Features e Planos (sem duplicatas) */}
           <Suspense fallback={<SectionFallback />}>
-            <ProblemSection />
-            <AIServicesSection />
             <AboutSection />
-            <MethodologySection />
             <PortfolioSection />
             <StatsSection />
             <TestimonialsSection />

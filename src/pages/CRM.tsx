@@ -21,6 +21,7 @@ import CRMLeadsTable from "@/components/crm/CRMLeadsTable";
 import CRMPipeline from "@/components/crm/CRMPipeline";
 import CRMIndicacoes from "@/components/crm/CRMIndicacoes";
 import CRMProjetos from "@/components/crm/CRMProjetos";
+import CRMRoles from "@/components/crm/CRMRoles";
 import type { CRMView, AIAnalysis } from "@/components/crm/types";
 
 const CRMContent = () => {
@@ -186,6 +187,8 @@ const CRMContent = () => {
             <CRMIndicacoes refCodes={refCodes} allReferrals={allReferrals} indicacaoLeads={indicacaoLeads} />
           ) : view === "projetos" ? (
             <CRMProjetos clientProjects={clientProjects} registeredUsers={registeredUsers} onRefetch={() => refetchProjects()} />
+          ) : view === "roles" ? (
+            <CRMRoles registeredUsers={registeredUsers} />
           ) : null}
         </main>
       </div>

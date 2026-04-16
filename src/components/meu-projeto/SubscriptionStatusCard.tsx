@@ -77,7 +77,7 @@ const SubscriptionStatusCard = ({ subscription }: SubscriptionStatusCardProps) =
       </div>
 
       {subscription.status === "past_due" && (
-        <div className="text-xs p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-700 dark:text-yellow-400">
+        <div className="text-xs p-3 rounded-lg bg-destructive/10 border border-destructive/30 text-destructive">
           Houve uma falha na cobrança. Atualize sua forma de pagamento para manter o acesso.
         </div>
       )}

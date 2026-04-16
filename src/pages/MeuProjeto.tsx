@@ -11,11 +11,12 @@ import ProgressCard from "@/components/meu-projeto/ProgressCard";
 import StatsGrid from "@/components/meu-projeto/StatsGrid";
 import ReferralCTA from "@/components/meu-projeto/ReferralCTA";
 import RecentReferrals from "@/components/meu-projeto/RecentReferrals";
+import CheckoutSection from "@/components/meu-projeto/CheckoutSection";
 import { useMyProject } from "@/components/meu-projeto/useMyProject";
 
 const MeuProjetoContent = () => {
   const {
-    userName, myProject, stageNotification, setStageNotification,
+    userName, userId, userEmail, myProject, stageNotification, setStageNotification,
     currentStageIndex, progressPercent, daysSinceStart, estimatedDaysRemaining,
   } = useMyProject();
 
@@ -80,6 +81,8 @@ const MeuProjetoContent = () => {
             convertedCount={convertedCount}
             totalComissao={totalComissao}
           />
+
+          <CheckoutSection userId={userId} customerEmail={userEmail} />
 
           <ReferralCTA refCode={refCode} />
 

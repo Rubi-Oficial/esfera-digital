@@ -52,7 +52,18 @@ const GrowthOS = () => {
           <GrowthHero />
           <TrustBar />
           <ProblemBlock />
+          <InterCTA
+            text="Cansado de ver clientes irem pra concorrência?"
+            primaryLabel="Quero meu sistema"
+            primaryHref="#planos-growth"
+          />
           <SolutionBlock />
+          <InterCTA
+            text="Imagine ter um vendedor digital trabalhando 24h por você."
+            primaryLabel="Ver oferta especial"
+            primaryHref="#planos-growth"
+            variant="soft"
+          />
           <StepsBlock />
           <DashboardBlock />
           <FeaturesBlock />
@@ -61,8 +72,19 @@ const GrowthOS = () => {
           <Suspense fallback={<SectionFallback />}>
             <AboutSection />
             <PortfolioSection />
+            <InterCTA
+              text="Gostou do que viu? Seu projeto pode ser o próximo."
+              primaryLabel="Quero meu site"
+              primaryHref="#planos-growth"
+              variant="soft"
+            />
             <StatsSection />
             <TestimonialsSection />
+            <InterCTA
+              text="Junte-se a +87 empresas que já estão vendendo no automático."
+              primaryLabel="Garantir minha vaga"
+              primaryHref="#planos-growth"
+            />
             <BlogSection />
             <FAQSection />
           </Suspense>

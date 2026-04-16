@@ -77,12 +77,13 @@ const Navbar = () => {
           <AnimatedLogo size="sm" />
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {regularLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1.5px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              className="relative text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
             >
               {link.label}
             </a>
@@ -106,16 +107,34 @@ const Navbar = () => {
           </ChatbotTrigger>
         </div>
 
+        {/* Mobile hamburger with animated icon */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-foreground p-2 -mr-2 rounded-lg hover:bg-card/50 transition-colors"
+          className="md:hidden text-foreground p-2.5 -mr-2 rounded-xl hover:bg-card/50 active:bg-card/70 transition-colors"
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           aria-expanded={open}
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          <div className="relative w-6 h-6 flex items-center justify-center">
+            <motion.span
+              animate={open ? { rotate: 45, y: 0 } : { rotate: 0, y: -6 }}
+              className="absolute w-5 h-0.5 bg-foreground rounded-full"
+              transition={{ duration: 0.2 }}
+            />
+            <motion.span
+              animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+              className="absolute w-5 h-0.5 bg-foreground rounded-full"
+              transition={{ duration: 0.15 }}
+            />
+            <motion.span
+              animate={open ? { rotate: -45, y: 0 } : { rotate: 0, y: 6 }}
+              className="absolute w-5 h-0.5 bg-foreground rounded-full"
+              transition={{ duration: 0.2 }}
+            />
+          </div>
         </button>
       </div>
 
+      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <>
@@ -123,7 +142,8 @@ const Navbar = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="md:hidden fixed inset-0 top-16 bg-background/60 backdrop-blur-sm z-40"
+              transition={{ duration: 0.2 }}
+              className="md:hidden fixed inset-0 top-16 bg-background/70 backdrop-blur-sm z-40"
               onClick={() => setOpen(false)}
               aria-hidden="true"
             />
@@ -131,49 +151,54 @@ const Navbar = () => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
               className="md:hidden overflow-hidden bg-background/98 backdrop-blur-2xl border-t border-border/30 relative z-50"
             >
-              <div className="flex flex-col gap-1 p-6">
+              <div className="flex flex-col gap-1 p-5 pb-6">
                 {regularLinks.map((link, i) => (
                   <motion.a
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="text-muted-foreground hover:text-foreground hover:bg-card/50 transition-all px-4 py-3 rounded-xl text-base"
-                    initial={{ opacity: 0, x: -20 }}
+                    className="text-muted-foreground hover:text-foreground active:text-primary hover:bg-card/50 active:bg-card/70 transition-all px-4 py-3.5 rounded-xl text-base font-medium"
+                    initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.06 }}
+                    transition={{ delay: i * 0.05, ease: "easeOut" }}
                   >
                     {link.label}
                   </motion.a>
                 ))}
                 {specialLink && (
                   <motion.div
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: regularLinks.length * 0.06 }}
+                    transition={{ delay: regularLinks.length * 0.05 }}
                   >
                     <Link
                       to={specialLink.href}
                       onClick={() => setOpen(false)}
-                      className="flex items-center gap-2 text-primary hover:bg-primary/10 transition-all px-4 py-3 rounded-xl text-base font-semibold"
+                      className="flex items-center gap-2 text-primary hover:bg-primary/10 active:bg-primary/15 transition-all px-4 py-3.5 rounded-xl text-base font-semibold"
                     >
                       <Rocket size={18} />
                       {specialLink.label}
                     </Link>
                   </motion.div>
                 )}
-                <div className="pt-4 mt-2 border-t border-border/20">
+                <motion.div
+                  className="pt-4 mt-2 border-t border-border/20"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (regularLinks.length + 1) * 0.05 }}
+                >
                   <ChatbotTrigger
                     size="md"
                     showArrow={false}
                     ariaLabel="Falar com especialista agora"
-                    className="w-full text-center"
+                    className="w-full text-center justify-center"
                   >
                     Falar com Especialista
                   </ChatbotTrigger>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </>

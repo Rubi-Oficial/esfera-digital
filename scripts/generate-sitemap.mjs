@@ -19,12 +19,11 @@ const dateMap = {
 const blogDataPath = resolve(__dirname, "../src/lib/blog-data.ts");
 const blogData = readFileSync(blogDataPath, "utf-8");
 
-const articles = [];
 const slugRegex = /slug:\s*"([^"]+)"/g;
 const dateRegex = /date:\s*"([^"]+)"/g;
 
-let slugMatch;
 const slugs = [];
+let slugMatch;
 while ((slugMatch = slugRegex.exec(blogData)) !== null) {
   slugs.push(slugMatch[1]);
 }
@@ -44,10 +43,12 @@ function parseDate(dateStr) {
   return TODAY;
 }
 
-// Build entries
+// Build entries — static pages + blog articles
 const entries = [
   { loc: `${SITE_URL}/`, lastmod: TODAY, changefreq: "weekly", priority: "1.0" },
   { loc: `${SITE_URL}/blog`, lastmod: TODAY, changefreq: "daily", priority: "0.9" },
+  { loc: `${SITE_URL}/growth-os`, lastmod: TODAY, changefreq: "weekly", priority: "0.8" },
+  { loc: `${SITE_URL}/indicacao`, lastmod: TODAY, changefreq: "monthly", priority: "0.5" },
 ];
 
 for (let i = 0; i < slugs.length; i++) {
@@ -55,7 +56,7 @@ for (let i = 0; i < slugs.length; i++) {
     loc: `${SITE_URL}/blog/${slugs[i]}`,
     lastmod: dates[i] ? parseDate(dates[i]) : TODAY,
     changefreq: "monthly",
-    priority: "0.8",
+    priority: "0.7",
   });
 }
 
@@ -71,4 +72,4 @@ ${entries.map(e => `  <url>
 
 const outPath = resolve(__dirname, "../public/sitemap.xml");
 writeFileSync(outPath, xml);
-console.log(`✅ Sitemap generated: ${slugs.length} articles + 2 static pages = ${entries.length} URLs`);
+console.log(`✅ Sitemap generated: ${slugs.length} articles + ${entries.length - slugs.length} static pages = ${entries.length} URLs`);

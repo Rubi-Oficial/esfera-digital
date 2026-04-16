@@ -14,7 +14,10 @@ Allow: /
 
 User-agent: *
 Allow: /
-Disallow: /assets/
-Disallow: /src/
+Disallow: /crm
+Disallow: /meu-projeto
+Disallow: /reset-password
+Disallow: /checkout
+Disallow: /checkout/return
 
 Sitemap: https://criarmeusiteagora.esferamarketing.com/sitemap.xml

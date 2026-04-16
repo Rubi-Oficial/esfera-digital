@@ -75,7 +75,7 @@ const AboutSection = () => {
           transition={{ delay: 0.5 }}
           className="text-center text-lg text-muted-foreground mt-10"
         >
-          👉 Como se você tivesse um <strong className="text-foreground">funcionário trabalhando 24h</strong>
+          👉 Como se você tivesse um <strong className="text-foreground">funcionário trabalhando 24h.</strong>
         </motion.p>
       </div>
     </section>

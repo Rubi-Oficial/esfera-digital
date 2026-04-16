@@ -32,11 +32,11 @@ const faqs = [
   },
   {
     question: "Como funciona o pagamento?",
-    answer: "Entrada de 50% para iniciar e 50% na entrega. Aceitamos PIX, transferência bancária e cartão de crédito.",
+    answer: "O pagamento é feito online de forma segura. Você paga a implantação e uma mensalidade recorrente. Aceitamos cartão de crédito com parcelamento.",
   },
   {
     question: "Posso parcelar?",
-    answer: "Sim, em até 12x no cartão. Você também pode pagar via PIX com desconto especial. Fale conosco para encontrar a melhor condição para o seu caso!",
+    answer: "Sim! O pagamento pode ser parcelado no cartão de crédito. Fale conosco para encontrar a melhor condição para o seu caso!",
   },
   {
     question: "Vocês oferecem suporte após a entrega?",

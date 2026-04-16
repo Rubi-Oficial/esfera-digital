@@ -14,30 +14,30 @@ import ScrollToTop from "@/components/ScrollToTop";
 import LeadCaptureCheckout from "@/components/LeadCaptureCheckout";
 import dashboardImg from "@/assets/growth-os-dashboard.jpg";
 
-const WA_GROWTH = "Olá! Quero ativar meu Esfera Growth!";
-const WA_STARTER = "Olá! Quero começar com o plano Starter do Esfera Growth";
-const WA_GROWTH_PLAN = "Olá! Quero começar com o plano Growth do Esfera Growth";
+const WA_GROWTH = "Olá! Quero conhecer o Esfera Growth.";
+const WA_STARTER = "Olá! Tenho interesse no plano Site Profissional.";
+const WA_GROWTH_PLAN = "Olá! Tenho interesse no plano Esfera Growth.";
 
-const WA_GENERIC = "Olá! Quero saber mais sobre o Esfera Growth";
+const WA_GENERIC = "Olá! Gostaria de saber mais sobre o Esfera Growth.";
 
 const problems = [
-  { icon: Clock, text: "Você perde leads por demora no atendimento?", detail: "Cada minuto de atraso reduz 10% a chance de conversão. Enquanto você demora, o concorrente fecha." },
-  { icon: AlertCircle, text: "Seu WhatsApp vira bagunça?", detail: "Leads espalhados em conversas, sem organização. Você esquece de responder e perde vendas." },
-  { icon: HelpCircle, text: "Você não sabe de onde vêm suas vendas?", detail: "Sem dados, sem controle. Você investe e não sabe o que funciona." },
+  { icon: Clock, text: "Tempo de resposta lento custa vendas", detail: "Estudos mostram que a cada minuto de atraso, a chance de conversão diminui significativamente. A velocidade no atendimento é decisiva." },
+  { icon: AlertCircle, text: "Falta de organização no atendimento", detail: "Leads espalhados em conversas sem estrutura levam a oportunidades esquecidas e vendas perdidas." },
+  { icon: HelpCircle, text: "Sem visibilidade sobre resultados", detail: "Sem dados claros, é impossível saber quais canais geram retorno e onde otimizar o investimento." },
 ];
 
 const solution = [
-  { icon: Target, title: "Captação de leads", desc: "Site e landing pages que convertem visitantes em contatos qualificados automaticamente." },
-  { icon: BarChart3, title: "CRM organizado", desc: "Pipeline visual simples. Saiba exatamente onde cada lead está no processo de venda." },
-  { icon: Bot, title: "Automação com IA", desc: "WhatsApp responde, qualifica e agenda — 24h por dia, sem você precisar estar online." },
+  { icon: Target, title: "Captação inteligente", desc: "Sites e landing pages estratégicas que convertem visitantes em contatos qualificados de forma contínua." },
+  { icon: BarChart3, title: "CRM estruturado", desc: "Pipeline visual que mostra exatamente em que etapa cada lead se encontra no processo comercial." },
+  { icon: Bot, title: "Automação com IA", desc: "Atendimento automatizado via WhatsApp que responde, qualifica e agenda — disponível 24 horas." },
 ];
 
 const steps = [
-  { num: "01", title: "Visitante entra no site", desc: "Sua landing page otimizada captura o contato automaticamente." },
-  { num: "02", title: "Lead capturado automaticamente", desc: "Dados organizados no CRM. Sem planilha, sem bagunça." },
-  { num: "03", title: "WhatsApp inicia conversa automática", desc: "IA responde em segundos — não em horas." },
-  { num: "04", title: "Lead qualificado", desc: "A IA filtra e encaminha só quem está pronto para comprar." },
-  { num: "05", title: "Venda acontece", desc: "Acompanhamento automático até o fechamento." },
+  { num: "01", title: "Visitante acessa seu site", desc: "A landing page otimizada captura o contato de forma natural e estratégica." },
+  { num: "02", title: "Lead registrado no CRM", desc: "Os dados são organizados automaticamente no pipeline — sem planilhas manuais." },
+  { num: "03", title: "Primeiro contato automático", desc: "A IA inicia a conversa no WhatsApp em segundos, enquanto o interesse está no ponto alto." },
+  { num: "04", title: "Qualificação inteligente", desc: "O sistema filtra e prioriza os leads com maior potencial de conversão." },
+  { num: "05", title: "Conversão acompanhada", desc: "Follow-up automatizado garante que nenhuma oportunidade seja esquecida até o fechamento." },
 ];
 
 const dashboardMetrics = [
@@ -63,16 +63,16 @@ const plans = [
     price: "R$ 997",
     priceMonthly: "R$ 97/mês",
     priceOriginal: "R$ 1.500",
-    desc: "Ideal para começar",
+    desc: "Presença digital profissional",
     features: [
       "Site profissional (One Page estratégico)",
       "Design moderno e personalizado",
-      "Copy pronta para vender",
+      "Copy estratégica para conversão",
       "Integração com WhatsApp",
       "SEO básico (para aparecer no Google)",
-      "Certificado SSL grátis",
+      "Certificado SSL incluso",
       "1 ano de hospedagem incluso",
-      "Entrega rápida",
+      "Entrega em até 7 dias úteis",
     ],
     wa: WA_STARTER,
     popular: false,

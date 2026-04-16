@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Users, TrendingUp, DollarSign, BarChart3, ArrowRight,
   Phone, Building2, Target, Clock, ChevronDown, ChevronUp,
   Flame, Snowflake, Thermometer, Brain, MessageCircle, Zap,
-  AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2
+  AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2,
+  Filter, Download, Search, X
 } from "lucide-react";
-import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type Lead } from "@/lib/crm";
+import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type LeadTemperature, type Lead } from "@/lib/crm";
 import { fetchAllReferralCodes, fetchAllReferrals, type ReferralCode, type Referral } from "@/lib/referral";
 import SEOHead from "@/components/SEOHead";
 import AuthGuard from "@/components/AuthGuard";
@@ -61,6 +62,10 @@ const CRMContent = () => {
   const [projectForm, setProjectForm] = useState({ client_name: "", user_id: "", current_stage: "briefing", notes: "" });
   const [editingProject, setEditingProject] = useState<string | null>(null);
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
+  const [tempFilter, setTempFilter] = useState<LeadTemperature | "all">("all");
+  const [stageFilter, setStageFilter] = useState<PipelineStage | "all">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: leads = [], isLoading } = useQuery({
@@ -181,8 +186,26 @@ const CRMContent = () => {
   const quentes = leads.filter(l => l.temperatura === "quente").length;
   const emAtendimento = leads.filter(l => !["convertido", "perdido", "novo_lead"].includes(l.stage)).length;
 
+  // Filtered leads
+  const filteredLeads = useMemo(() => {
+    let result = leads;
+    if (tempFilter !== "all") result = result.filter(l => l.temperatura === tempFilter);
+    if (stageFilter !== "all") result = result.filter(l => l.stage === stageFilter);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(l =>
+        l.nome.toLowerCase().includes(q) ||
+        l.telefone.includes(q) ||
+        (l.tipo_negocio && l.tipo_negocio.toLowerCase().includes(q))
+      );
+    }
+    return result;
+  }, [leads, tempFilter, stageFilter, searchQuery]);
+
+  const activeFilters = (tempFilter !== "all" ? 1 : 0) + (stageFilter !== "all" ? 1 : 0) + (searchQuery.trim() ? 1 : 0);
+
   // Leads needing follow-up
-  const followUpLeads = leads.filter(l =>
+  const followUpLeads = filteredLeads.filter(l =>
     ["qualificado", "proposta_apresentada", "checkout_iniciado"].includes(l.stage)
   );
 
@@ -191,6 +214,24 @@ const CRMContent = () => {
     count: grouped?.[stage]?.length || 0,
     ...STAGE_CONFIG[stage],
   }));
+
+  const exportLeadsCSV = () => {
+    const headers = ["Nome", "Telefone", "Temperatura", "Etapa", "Score", "Tipo Negócio", "Interesse", "Urgência", "Objetivo", "Dor Principal", "Origem", "Criado em"];
+    const rows = filteredLeads.map(l => [
+      l.nome, l.telefone, l.temperatura, STAGE_CONFIG[l.stage].label, l.score,
+      l.tipo_negocio || "", l.interesse || "", l.urgencia || "", l.objetivo || "",
+      l.dor_principal || "", l.origem || "", format(new Date(l.created_at), "dd/MM/yyyy HH:mm", { locale: ptBR })
+    ]);
+    const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `leads-esfera-${format(new Date(), "yyyy-MM-dd")}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success(`${filteredLeads.length} leads exportados!`);
+  };
 
   return (
     <>
@@ -236,6 +277,109 @@ const CRMContent = () => {
             </div>
           ) : view === "dashboard" ? (
             <div className="space-y-6">
+              {/* Filter & Export Toolbar */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-card border border-border/30 rounded-xl p-4"
+              >
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="relative flex-1 min-w-[200px]">
+                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                    <input
+                      placeholder="Buscar por nome, telefone ou negócio..."
+                      value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)}
+                      className="w-full bg-background border border-border/50 rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    />
+                    {searchQuery && (
+                      <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                        <X size={14} />
+                      </button>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => setShowFilters(!showFilters)}
+                    className={`flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border transition-colors ${
+                      activeFilters > 0 ? "bg-primary/10 border-primary/30 text-primary" : "border-border/50 text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <Filter size={14} />
+                    Filtros
+                    {activeFilters > 0 && (
+                      <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">{activeFilters}</span>
+                    )}
+                  </button>
+                  <button
+                    onClick={exportLeadsCSV}
+                    disabled={filteredLeads.length === 0}
+                    className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors disabled:opacity-40"
+                  >
+                    <Download size={14} />
+                    Exportar CSV
+                  </button>
+                </div>
+
+                <AnimatePresence>
+                  {showFilters && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-wrap gap-3 pt-4 border-t border-border/20 mt-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs text-muted-foreground font-medium">Temperatura</label>
+                          <div className="flex gap-1">
+                            {(["all", "frio", "morno", "quente"] as const).map(t => (
+                              <button
+                                key={t}
+                                onClick={() => setTempFilter(t)}
+                                className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+                                  tempFilter === t ? "bg-primary/20 border-primary/40 text-primary" : "border-border/40 text-muted-foreground hover:text-foreground"
+                                }`}
+                              >
+                                {t === "all" ? "Todos" : `${TEMP_CONFIG[t].emoji} ${TEMP_CONFIG[t].label}`}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs text-muted-foreground font-medium">Etapa</label>
+                          <select
+                            value={stageFilter}
+                            onChange={e => setStageFilter(e.target.value as PipelineStage | "all")}
+                            className="bg-background border border-border/50 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+                          >
+                            <option value="all">Todas as etapas</option>
+                            {PIPELINE_ORDER.map(s => (
+                              <option key={s} value={s}>{STAGE_CONFIG[s].emoji} {STAGE_CONFIG[s].label}</option>
+                            ))}
+                          </select>
+                        </div>
+                        {activeFilters > 0 && (
+                          <div className="flex items-end">
+                            <button
+                              onClick={() => { setTempFilter("all"); setStageFilter("all"); setSearchQuery(""); }}
+                              className="text-xs px-3 py-1.5 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
+                            >
+                              Limpar filtros
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {activeFilters > 0 && (
+                  <p className="text-xs text-muted-foreground mt-3">
+                    Mostrando {filteredLeads.length} de {leads.length} leads
+                  </p>
+                )}
+              </motion.div>
+
               {/* Metrics */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
@@ -406,11 +550,14 @@ const CRMContent = () => {
                 transition={{ delay: 0.8 }}
                 className="bg-card border border-border/30 rounded-xl overflow-hidden"
               >
-                <div className="px-6 py-4 border-b border-border/30">
-                  <h2 className="text-lg font-semibold font-sora">Leads Recentes</h2>
+                <div className="px-6 py-4 border-b border-border/30 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold font-sora">
+                    Leads {activeFilters > 0 ? "Filtrados" : "Recentes"}
+                  </h2>
+                  <span className="text-xs text-muted-foreground">{filteredLeads.length} leads</span>
                 </div>
                 <div className="divide-y divide-border/20">
-                  {leads.slice(0, 20).map((lead) => (
+                  {filteredLeads.slice(0, 50).map((lead) => (
                     <div key={lead.id}>
                       <button
                         onClick={() => setExpandedLead(expandedLead === lead.id ? null : lead.id)}
@@ -473,11 +620,22 @@ const CRMContent = () => {
                       </AnimatePresence>
                     </div>
                   ))}
-                  {leads.length === 0 && (
+                  {filteredLeads.length === 0 && (
                     <div className="px-6 py-12 text-center text-muted-foreground">
                       <Users size={40} className="mx-auto mb-3 opacity-40" />
-                      <p>Nenhum lead capturado ainda.</p>
-                      <p className="text-sm mt-1">Leads do chatbot aparecerão aqui automaticamente.</p>
+                      {activeFilters > 0 ? (
+                        <>
+                          <p>Nenhum lead encontrado com esses filtros.</p>
+                          <button onClick={() => { setTempFilter("all"); setStageFilter("all"); setSearchQuery(""); }} className="text-sm text-primary mt-2 hover:underline">
+                            Limpar filtros
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <p>Nenhum lead capturado ainda.</p>
+                          <p className="text-sm mt-1">Leads do chatbot aparecerão aqui automaticamente.</p>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>

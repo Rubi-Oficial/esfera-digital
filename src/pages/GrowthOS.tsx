@@ -102,8 +102,8 @@ const plans = [
 
 const trustBadges = [
   { icon: Zap, text: "Sem necessidade de equipe técnica" },
-  { icon: Clock, text: "Implementação em até 7 dias" },
-  { icon: Building2, text: "Funciona para qualquer negócio" },
+  { icon: Clock, text: "Implementação em até 7 dias úteis" },
+  { icon: Building2, text: "Adaptado para qualquer segmento" },
 ];
 
 const GrowthOS = () => {
@@ -384,10 +384,10 @@ const GrowthOS = () => {
                 <Shield size={12} /> Autoridade
               </div>
               <h2 className="text-3xl md:text-5xl font-bold mb-5">
-                Criado <span className="text-gradient">para empresas brasileiras</span>
+                Desenvolvido <span className="text-gradient">para o mercado brasileiro</span>
               </h2>
               <p className="text-muted-foreground text-base mb-8 leading-relaxed max-w-xl mx-auto">
-                Foco em <strong className="text-foreground">pequenas e médias empresas</strong> que usam WhatsApp como principal canal de vendas. Solução pensada para a sua realidade.
+                Solução projetada para <strong className="text-foreground">pequenas e médias empresas</strong> que utilizam o WhatsApp como principal canal de relacionamento e vendas.
               </p>
               <div className="grid grid-cols-3 gap-3">
                 {[
@@ -402,7 +402,7 @@ const GrowthOS = () => {
                 ))}
               </div>
               {/* Future testimonials placeholder */}
-              <p className="text-xs text-muted-foreground/50 mt-8 italic">Em breve: depoimentos de clientes reais</p>
+              <p className="text-xs text-muted-foreground/50 mt-8 italic">Em breve: depoimentos de clientes</p>
             </motion.div>
           </Section>
 
@@ -418,10 +418,10 @@ const GrowthOS = () => {
                 <div className="relative z-10">
                   <Rocket size={28} className="text-primary-foreground mx-auto mb-6" />
                   <h2 className="text-2xl md:text-4xl font-bold text-primary-foreground mb-4 leading-tight">
-                    Comece hoje a vender mais<br />com automação
+                    Pronto para estruturar<br />suas vendas?
                   </h2>
                   <p className="text-primary-foreground/80 text-base max-w-lg mx-auto mb-8">
-                    Cada dia sem automação é dinheiro na mesa do concorrente.
+                    Empresas que automatizam o processo comercial convertem mais com menos esforço.
                   </p>
 
                   <div className="max-w-md mx-auto mb-6">
@@ -460,7 +460,7 @@ const GrowthOS = () => {
                           className="w-full px-4 py-3 rounded-xl bg-primary-foreground/10 border border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50 text-sm focus:outline-none focus:ring-2 focus:ring-primary-foreground/30"
                         />
                         <button type="submit" className="w-full bg-primary-foreground text-primary hover:brightness-95 shadow-xl font-bold rounded-xl px-6 py-4 text-base inline-flex items-center justify-center gap-2 transition-all">
-                          Ativar Esfera Growth agora <Send size={16} />
+                          Começar agora <Send size={16} />
                         </button>
                       </form>
                     )}

@@ -1,5 +1,5 @@
 import {
-  Instagram, Globe, Search,
+  Share2, Globe, Search,
   MessageCircle, Smartphone, CalendarCheck, TrendingUp,
   Send, Code2, Bot, Rocket,
   BarChart3, Target, Zap, Building2, Clock, RefreshCw,
@@ -13,7 +13,7 @@ export const WA_GENERIC = "Olá! Quero um site profissional que venda por mim.";
 // 🟥 Problemas (espelha "A maioria dos pequenos negócios cometem o mesmo erro")
 export const problems = [
   {
-    icon: Instagram,
+    icon: Share2,
     text: "Acredita que Instagram é suficiente",
     detail: "Algoritmos mudam, alcance cai — você não controla essas plataformas.",
   },

@@ -17,6 +17,7 @@ import PlansBlock from "@/components/growth-os/PlansBlock";
 import CTAFinalBlock from "@/components/growth-os/CTAFinalBlock";
 import GrowthFooter from "@/components/growth-os/GrowthFooter";
 import WhatsAppFAB from "@/components/growth-os/WhatsAppFAB";
+import InterCTA from "@/components/growth-os/InterCTA";
 import type { Plan } from "@/components/growth-os/data";
 
 // Seções da home antiga (lazy) — sem duplicar com blocos do Growth OS:

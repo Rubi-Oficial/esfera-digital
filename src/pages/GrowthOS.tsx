@@ -506,6 +506,15 @@ const GrowthOS = () => {
         </motion.a>
 
         <ScrollToTop />
+
+        {selectedPlan && (
+          <LeadCaptureCheckout
+            open={captureOpen}
+            onClose={() => setCaptureOpen(false)}
+            planName={selectedPlan.name}
+            priceIds={selectedPlan.priceIds}
+          />
+        )}
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, Zap, Users, Briefcase, MapPin, Clock, Rocket, BookOpen, UserCheck, BarChart3, Crown } from "lucide-react";
+import { Check, Zap, Users, Briefcase, MapPin, Clock, Rocket, BookOpen, UserCheck, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
 import { useCountdown } from "@/hooks/useCountdown";
@@ -70,40 +70,6 @@ const plans = [
     priceIds: "esfera_growth_implantacao,esfera_growth_mensal",
     growthLink: true,
   },
-  {
-    id: "esfera_scale",
-    name: "Esfera Scale",
-    subtitle: "Máxima performance e escala",
-    implantacao: 3997,
-    implantacaoOriginal: 5000,
-    mensal: 597,
-    featured: false,
-    badge: "👑 Premium",
-    icon: Crown,
-    included: [
-      "Tudo do Esfera Growth",
-      "Automação de marketing completa",
-      "Funil de vendas personalizado",
-      "Landing pages ilimitadas",
-      "Integração com CRM avançado",
-      "Gestão de tráfego pago assistida",
-      "Suporte dedicado por 6 meses",
-      "Relatórios avançados semanais",
-    ],
-    bonuses: [
-      "2 sessões de consultoria grátis",
-      "Setup completo de automações",
-      "Acesso a todos os grupos exclusivos",
-      "Mentoria 1:1 mensal",
-    ],
-    highlights: [
-      { icon: Rocket, label: "Automação Completa" },
-      { icon: UserCheck, label: "Mentoria 1:1" },
-      { icon: BarChart3, label: "Relatórios Avançados" },
-    ],
-    cta: "Quero o Esfera Scale 👑",
-    priceIds: "esfera_scale_implantacao,esfera_scale_mensal",
-  },
 ];
 
 const idealFor = [
@@ -138,7 +104,7 @@ const PricingSection = () => {
         />
 
         {/* Plans grid */}
-        <div className="grid md:grid-cols-3 gap-5 md:gap-4 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-5 md:gap-6 max-w-4xl mx-auto">
           {plans.map((plan, idx) => (
             <motion.div
               key={plan.id}

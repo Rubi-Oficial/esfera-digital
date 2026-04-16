@@ -6,9 +6,9 @@ import { problems } from "./data";
 const ProblemBlock = () => (
   <Section id="problema" className="section-divider">
     <SectionTitle
-      label="O Desafio"
-      title={<>Onde a maioria dos negócios <span className="text-destructive">perde oportunidades</span></>}
-      subtitle="Se algum desses cenários é familiar, existe uma solução estruturada para resolver."
+      label="O Problema"
+      title={<>A maioria dos pequenos negócios cometem o <span className="text-destructive">mesmo erro</span></>}
+      subtitle="Resultado? Perde clientes todos os dias, parece amador e depende do algoritmo. E o pior: nem percebe quanto dinheiro está deixando na mesa."
     />
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
       {problems.map((p, i) => (

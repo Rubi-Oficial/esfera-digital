@@ -6,17 +6,18 @@ import {
   Phone, Building2, Target, Clock, ChevronDown, ChevronUp,
   Flame, Snowflake, Thermometer, Brain, MessageCircle, Zap,
   AlertTriangle, CheckCircle2, Send, Gift, Trophy, Link2,
-  Filter, Download, Search, X
+  Filter, Download, Search, X, CalendarDays
 } from "lucide-react";
 import { fetchLeads, fetchLeadsByStage, updateLeadStage, STAGE_CONFIG, PIPELINE_ORDER, TEMP_CONFIG, type PipelineStage, type LeadTemperature, type Lead } from "@/lib/crm";
 import { fetchAllReferralCodes, fetchAllReferrals, type ReferralCode, type Referral } from "@/lib/referral";
 import SEOHead from "@/components/SEOHead";
 import AuthGuard from "@/components/AuthGuard";
-import { format } from "date-fns";
+import { format, subDays, startOfDay, eachDayOfInterval, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { WHATSAPP_PHONE } from "@/lib/constants";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 // Follow-up messages by stage
 const FOLLOWUP_MESSAGES: Record<string, { label: string; message: string }> = {
@@ -231,6 +232,52 @@ const CRMContent = () => {
     a.click();
     URL.revokeObjectURL(url);
     toast.success(`${filteredLeads.length} leads exportados!`);
+  };
+
+  // Chart data: leads per day (last 30 days)
+  const dailyLeadsData = useMemo(() => {
+    const today = startOfDay(new Date());
+    const start = subDays(today, 29);
+    const days = eachDayOfInterval({ start, end: today });
+    return days.map(day => {
+      const dayStr = format(day, "yyyy-MM-dd");
+      const dayLeads = leads.filter(l => format(parseISO(l.created_at), "yyyy-MM-dd") === dayStr);
+      return {
+        date: format(day, "dd/MM", { locale: ptBR }),
+        total: dayLeads.length,
+        quentes: dayLeads.filter(l => l.temperatura === "quente").length,
+        mornos: dayLeads.filter(l => l.temperatura === "morno").length,
+        frios: dayLeads.filter(l => l.temperatura === "frio").length,
+      };
+    });
+  }, [leads]);
+
+  // Chart data: temperature distribution
+  const tempDistribution = useMemo(() => {
+    const frios = leads.filter(l => l.temperatura === "frio").length;
+    const mornos = leads.filter(l => l.temperatura === "morno").length;
+    const quentes = leads.filter(l => l.temperatura === "quente").length;
+    return [
+      { name: "Frio 🧊", value: frios, color: "#60a5fa" },
+      { name: "Morno 🌡️", value: mornos, color: "#facc15" },
+      { name: "Quente 🔥", value: quentes, color: "#f87171" },
+    ].filter(d => d.value > 0);
+  }, [leads]);
+
+  // Chart data: leads per stage bar chart
+  const stageBarData = useMemo(() => {
+    return PIPELINE_ORDER.map(stage => ({
+      name: STAGE_CONFIG[stage].label,
+      count: grouped?.[stage]?.length || 0,
+    }));
+  }, [grouped]);
+
+  const chartTooltipStyle = {
+    backgroundColor: "hsl(var(--card))",
+    border: "1px solid hsl(var(--border))",
+    borderRadius: "8px",
+    color: "hsl(var(--foreground))",
+    fontSize: "12px",
   };
 
   return (
@@ -542,6 +589,105 @@ const CRMContent = () => {
                   })}
                 </div>
               </motion.div>
+
+              {/* Charts Section */}
+              {leads.length > 0 && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Daily Leads Area Chart */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="bg-card border border-border/30 rounded-xl p-6 lg:col-span-2"
+                  >
+                    <div className="flex items-center gap-2 mb-4">
+                      <CalendarDays size={18} className="text-primary" />
+                      <h2 className="text-lg font-semibold font-sora">Evolução de Leads (30 dias)</h2>
+                    </div>
+                    <div className="h-[280px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={dailyLeadsData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                          <defs>
+                            <linearGradient id="gradTotal" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                              <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                          <XAxis dataKey="date" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} />
+                          <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
+                          <Tooltip contentStyle={chartTooltipStyle} />
+                          <Area type="monotone" dataKey="total" name="Total" stroke="hsl(var(--primary))" fill="url(#gradTotal)" strokeWidth={2} />
+                          <Area type="monotone" dataKey="quentes" name="Quentes" stroke="#f87171" fill="#f8717120" strokeWidth={1.5} />
+                          <Area type="monotone" dataKey="mornos" name="Mornos" stroke="#facc15" fill="#facc1520" strokeWidth={1.5} />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </motion.div>
+
+                  {/* Temperature Pie Chart */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    className="bg-card border border-border/30 rounded-xl p-6"
+                  >
+                    <div className="flex items-center gap-2 mb-4">
+                      <Thermometer size={18} className="text-yellow-400" />
+                      <h2 className="text-lg font-semibold font-sora">Distribuição por Temperatura</h2>
+                    </div>
+                    <div className="h-[250px]">
+                      {tempDistribution.length > 0 ? (
+                        <ResponsiveContainer width="100%" height="100%">
+                          <PieChart>
+                            <Pie
+                              data={tempDistribution}
+                              cx="50%"
+                              cy="50%"
+                              innerRadius={55}
+                              outerRadius={90}
+                              paddingAngle={4}
+                              dataKey="value"
+                              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            >
+                              {tempDistribution.map((entry, idx) => (
+                                <Cell key={idx} fill={entry.color} stroke="transparent" />
+                              ))}
+                            </Pie>
+                            <Tooltip contentStyle={chartTooltipStyle} />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      ) : (
+                        <div className="h-full flex items-center justify-center text-sm text-muted-foreground">Sem dados</div>
+                      )}
+                    </div>
+                  </motion.div>
+
+                  {/* Stage Bar Chart */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9 }}
+                    className="bg-card border border-border/30 rounded-xl p-6"
+                  >
+                    <div className="flex items-center gap-2 mb-4">
+                      <BarChart3 size={18} className="text-cyan-400" />
+                      <h2 className="text-lg font-semibold font-sora">Leads por Etapa</h2>
+                    </div>
+                    <div className="h-[250px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={stageBarData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                          <XAxis dataKey="name" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} angle={-30} textAnchor="end" height={60} />
+                          <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} tickLine={false} axisLine={false} allowDecimals={false} />
+                          <Tooltip contentStyle={chartTooltipStyle} />
+                          <Bar dataKey="count" name="Leads" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
 
               {/* Leads Table */}
               <motion.div

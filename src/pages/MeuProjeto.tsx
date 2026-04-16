@@ -12,13 +12,17 @@ import StatsGrid from "@/components/meu-projeto/StatsGrid";
 import ReferralCTA from "@/components/meu-projeto/ReferralCTA";
 import RecentReferrals from "@/components/meu-projeto/RecentReferrals";
 import CheckoutSection from "@/components/meu-projeto/CheckoutSection";
+import SubscriptionStatusCard from "@/components/meu-projeto/SubscriptionStatusCard";
 import { useMyProject } from "@/components/meu-projeto/useMyProject";
+import { useSubscription } from "@/hooks/useSubscription";
 
 const MeuProjetoContent = () => {
   const {
     userName, userId, userEmail, myProject, stageNotification, setStageNotification,
     currentStageIndex, progressPercent, daysSinceStart, estimatedDaysRemaining,
   } = useMyProject();
+
+  const { subscription, isActive: hasActiveSubscription } = useSubscription(userId);
 
   const { data: refCode } = useQuery({
     queryKey: ["my-referral-code"],
@@ -82,7 +86,11 @@ const MeuProjetoContent = () => {
             totalComissao={totalComissao}
           />
 
-          <CheckoutSection userId={userId} customerEmail={userEmail} />
+          {hasActiveSubscription && subscription ? (
+            <SubscriptionStatusCard subscription={subscription} />
+          ) : (
+            <CheckoutSection userId={userId} customerEmail={userEmail} />
+          )}
 
           <ReferralCTA refCode={refCode} />
 

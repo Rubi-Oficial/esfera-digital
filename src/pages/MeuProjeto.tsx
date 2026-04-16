@@ -156,6 +156,8 @@ const MeuProjetoContent = () => {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {!myProject ? (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
               className="bg-card border border-border/30 rounded-xl p-8 text-center">
               <Clock size={32} className="text-muted-foreground mx-auto mb-3 opacity-50" />

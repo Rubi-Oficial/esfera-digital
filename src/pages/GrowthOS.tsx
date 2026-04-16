@@ -127,8 +127,8 @@ const GrowthOS = () => {
   return (
     <>
       <SEOHead
-        title="Esfera Growth — Sistema de Vendas com IA e WhatsApp"
-        description="Transforme seu WhatsApp em uma máquina de vendas automática. Site, CRM e automação com IA para gerar e converter clientes todos os dias."
+        title="Esfera Growth — Sistema Inteligente de Vendas"
+        description="Site, CRM e automação com IA integrados para captar, organizar e converter clientes de forma contínua via WhatsApp."
         path="/growth-os"
         type="website"
       />
@@ -172,12 +172,12 @@ const GrowthOS = () => {
                   </motion.div>
 
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5">
-                    Transforme seu WhatsApp em uma{" "}
-                    <span className="text-gradient">máquina de vendas automática</span>
+                    Site, CRM e IA em um{" "}
+                    <span className="text-gradient">sistema integrado de vendas</span>
                   </h1>
 
                   <p className="text-base md:text-lg text-muted-foreground max-w-xl mb-8 leading-relaxed lg:mx-0 mx-auto">
-                    Implemente um sistema com <strong className="text-foreground font-semibold">site, CRM e automação com IA</strong> para gerar e converter clientes todos os dias.
+                    Capte, organize e converta clientes de forma contínua com <strong className="text-foreground font-semibold">automação inteligente via WhatsApp</strong>.
                   </p>
 
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
@@ -186,7 +186,7 @@ const GrowthOS = () => {
                     <a href={whatsappUrl(WA_GROWTH)} target="_blank" rel="noopener noreferrer"
                       className="btn-premium px-7 py-4 text-base inline-flex items-center gap-2 font-bold w-full sm:w-auto justify-center"
                     >
-                      Quero mais clientes agora <ArrowRight size={18} />
+                      Começar agora <ArrowRight size={18} />
                     </a>
                     <a href={whatsappUrl(WA_GENERIC)} target="_blank" rel="noopener noreferrer"
                       className="border border-primary/40 text-primary hover:bg-primary/10 rounded-xl px-7 py-4 text-base inline-flex items-center gap-2 font-semibold transition-all w-full sm:w-auto justify-center"
@@ -230,7 +230,7 @@ const GrowthOS = () => {
 
           {/* ===== 3. PROBLEMA ===== */}
           <Section id="problema" className="section-divider">
-            <SectionTitle label="O Problema" title={<>Você está <span className="text-destructive">perdendo vendas</span> agora</>} subtitle="Se alguma dessas dores parece familiar, o Esfera Growth resolve." />
+            <SectionTitle label="O Desafio" title={<>Onde a maioria dos negócios <span className="text-destructive">perde oportunidades</span></>} subtitle="Se algum desses cenários é familiar, existe uma solução estruturada para resolver." />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
               {problems.map((p, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -248,7 +248,7 @@ const GrowthOS = () => {
 
           {/* ===== 4. SOLUÇÃO ===== */}
           <Section id="solucao">
-            <SectionTitle label="A Solução" title={<><span className="text-gradient">Esfera Growth</span> — Vendas no automático</>} subtitle="Simples, rápido e poderoso. Tudo que você precisa em um só lugar." />
+            <SectionTitle label="A Solução" title={<><span className="text-gradient">Esfera Growth</span> — Vendas estruturadas</>} subtitle="Um ecossistema completo que organiza e automatiza seu processo comercial." />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
               {solution.map((s, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }}
@@ -266,7 +266,7 @@ const GrowthOS = () => {
 
           {/* ===== 5. COMO FUNCIONA ===== */}
           <Section id="como-funciona" className="section-divider">
-            <SectionTitle label="Como Funciona" title={<>Do clique à venda em <span className="text-gradient">5 passos</span></>} subtitle="Automatize todo o processo — do primeiro contato à conversão." />
+            <SectionTitle label="Metodologia" title={<>Do primeiro contato à conversão em <span className="text-gradient">5 etapas</span></>} subtitle="Um processo claro e automatizado que acompanha o lead em cada fase." />
             <div className="max-w-3xl mx-auto space-y-3">
               {steps.map((step, i) => (
                 <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
@@ -286,7 +286,7 @@ const GrowthOS = () => {
 
           {/* ===== 6. DASHBOARD MVP ===== */}
           <Section id="dashboard">
-            <SectionTitle label="Dashboard" title={<>Seus números em <span className="text-gradient">tempo real</span></>} subtitle="Você acompanha tudo e sabe exatamente o que está gerando dinheiro." />
+            <SectionTitle label="Dashboard" title={<>Métricas em <span className="text-gradient">tempo real</span></>} subtitle="Acompanhe cada indicador do seu funil comercial com clareza e precisão." />
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="max-w-4xl mx-auto"
             >
@@ -306,14 +306,14 @@ const GrowthOS = () => {
                 <img src={dashboardImg} alt="Dashboard Esfera Growth completo" className="w-full h-auto object-cover" loading="lazy" width={1920} height={1080} />
               </div>
               <p className="text-center text-sm text-muted-foreground mt-4 max-w-lg mx-auto">
-                Acompanhe leads, conversas, vendas e receita em tempo real. Sem complicação.
+                Leads, conversas, vendas e receita — tudo centralizado em uma interface intuitiva.
               </p>
             </motion.div>
           </Section>
 
           {/* ===== 7. FUNCIONALIDADES ===== */}
           <Section id="funcionalidades" className="section-divider">
-            <SectionTitle label="Funcionalidades" title={<>Tudo que seu <span className="text-gradient">negócio precisa</span></>} subtitle="Ferramentas essenciais para vender mais, em um só sistema." />
+            <SectionTitle label="Funcionalidades" title={<>Ferramentas essenciais para <span className="text-gradient">crescer</span></>} subtitle="Tudo o que seu negócio precisa para captar e converter, em um só sistema." />
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl mx-auto">
               {features.map((f, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
@@ -330,7 +330,7 @@ const GrowthOS = () => {
 
           {/* ===== 8. PLANOS ===== */}
           <Section id="planos-growth">
-            <SectionTitle label="Planos" title={<>Escolha e <span className="text-gradient">comece agora</span></>} subtitle="Comece pequeno e escale conforme cresce." />
+            <SectionTitle label="Investimento" title={<>Escolha o plano ideal e <span className="text-gradient">comece agora</span></>} subtitle="Duas opções pensadas para diferentes momentos do seu negócio." />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
               {plans.map((plan, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -338,7 +338,7 @@ const GrowthOS = () => {
                 >
                   {plan.popular && (
                     <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-lg">
-                      🚀 Mais vendido
+                      Recomendado
                     </span>
                   )}
                   <div className="text-center mb-6 mt-2">
@@ -368,7 +368,7 @@ const GrowthOS = () => {
                       plan.popular ? "btn-premium" : "border border-primary/40 text-primary hover:bg-primary/10"
                     }`}
                   >
-                    {plan.popular ? "Quero o Esfera Growth 🚀" : "Quero meu site"} <ArrowRight size={14} />
+                    {plan.popular ? "Começar com Esfera Growth" : "Começar com Site Profissional"} <ArrowRight size={14} />
                   </button>
                 </motion.div>
               ))}

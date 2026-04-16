@@ -58,31 +58,44 @@ const features = [
 
 const plans = [
   {
-    name: "Starter",
+    name: "Site Profissional",
     price: "R$ 997",
-    period: "/mês",
-    desc: "Comece a captar leads",
-    features: ["Site otimizado para conversão", "Captura automática de leads", "Integração WhatsApp", "Relatório básico"],
+    priceMonthly: "R$ 97/mês",
+    priceOriginal: "R$ 1.500",
+    desc: "Ideal para começar",
+    features: [
+      "Site profissional (One Page estratégico)",
+      "Design moderno e personalizado",
+      "Copy pronta para vender",
+      "Integração com WhatsApp",
+      "SEO básico (para aparecer no Google)",
+      "Certificado SSL grátis",
+      "1 ano de hospedagem incluso",
+      "Entrega rápida",
+    ],
     wa: WA_STARTER,
     popular: false,
+    checkoutLink: "/checkout?prices=site_profissional_implantacao,site_profissional_mensal&plan=Site%20Profissional",
   },
   {
-    name: "Growth",
+    name: "Esfera Growth",
     price: "R$ 1.997",
-    period: "/mês",
-    desc: "Mais vendido",
-    features: ["Tudo do Starter", "CRM com pipeline visual", "Automação de WhatsApp com IA", "Follow-up automático", "Dashboard completo"],
+    priceMonthly: "R$ 297/mês",
+    priceOriginal: "R$ 3.000",
+    desc: "Ecossistema completo de crescimento",
+    features: [
+      "Tudo do plano Site Profissional",
+      "Base de Conhecimento Interna exclusiva",
+      "Consultoria individual com especialista",
+      "Estratégia de captação de clientes",
+      "Programa de Parcerias (Indique e Ganhe)",
+      "Dashboard de indicações e comissões",
+      "Suporte prioritário por 3 meses",
+      "Relatórios de performance mensais",
+    ],
     wa: WA_GROWTH_PLAN,
     popular: true,
-  },
-  {
-    name: "Scale",
-    price: "R$ 3.497",
-    period: "/mês",
-    desc: "Para escalar resultados",
-    features: ["Tudo do Growth", "IA avançada de qualificação", "Otimização contínua", "Múltiplos funis", "Suporte prioritário"],
-    wa: WA_SCALE,
-    popular: false,
+    checkoutLink: "/checkout?prices=esfera_growth_implantacao,esfera_growth_mensal&plan=Esfera%20Growth",
   },
 ];
 
@@ -315,20 +328,25 @@ const GrowthOS = () => {
           {/* ===== 8. PLANOS ===== */}
           <Section id="planos-growth">
             <SectionTitle label="Planos" title={<>Escolha e <span className="text-gradient">comece agora</span></>} subtitle="Comece pequeno e escale conforme cresce." />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
               {plans.map((plan, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                   className={`relative rounded-3xl p-7 flex flex-col ${plan.popular ? "border-2 border-primary glow-box-strong bg-card" : "glass"}`}
                 >
                   {plan.popular && (
                     <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold shadow-lg">
-                      🔥 Mais vendido
+                      🚀 Mais vendido
                     </span>
                   )}
                   <div className="text-center mb-6 mt-2">
                     <h3 className="text-xl font-bold mb-1">{plan.name}</h3>
                     <p className="text-xs text-muted-foreground mb-3">{plan.desc}</p>
-                    <p className="text-4xl font-extrabold text-gradient">{plan.price}<span className="text-sm text-muted-foreground font-normal">{plan.period}</span></p>
+                    <p className="text-muted-foreground line-through text-sm mb-1">De {plan.priceOriginal}</p>
+                    <p className="text-4xl font-extrabold text-gradient">{plan.price}</p>
+                    <p className="text-xs text-muted-foreground mt-1">implantação</p>
+                    <div className="mt-3 glass rounded-lg py-2 px-3 inline-block border border-primary/20">
+                      <span className="text-sm font-semibold text-primary">+ {plan.priceMonthly}</span>
+                    </div>
                   </div>
                   <ul className="space-y-2.5 mb-8 flex-1">
                     {plan.features.map((f, fi) => (
@@ -338,12 +356,12 @@ const GrowthOS = () => {
                       </li>
                     ))}
                   </ul>
-                  <a href={whatsappUrl(plan.wa)} target="_blank" rel="noopener noreferrer"
+                  <a href={plan.checkoutLink}
                     className={`w-full py-3.5 rounded-xl text-center font-semibold text-sm inline-flex items-center justify-center gap-2 transition-all ${
                       plan.popular ? "btn-premium" : "border border-primary/40 text-primary hover:bg-primary/10"
                     }`}
                   >
-                    Quero começar <ArrowRight size={14} />
+                    {plan.popular ? "Quero o Esfera Growth 🚀" : "Quero meu site"} <ArrowRight size={14} />
                   </a>
                 </motion.div>
               ))}

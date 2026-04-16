@@ -25,9 +25,9 @@ const GrowthOS = () => {
   return (
     <>
       <SEOHead
-        title="Esfera Growth — Sistema Inteligente de Vendas"
+        title="Esfera Marketing — Sistema Inteligente de Vendas"
         description="Site, CRM e automação com IA integrados para captar, organizar e converter clientes de forma contínua via WhatsApp."
-        path="/growth-os"
+        path="/"
         type="website"
       />
 

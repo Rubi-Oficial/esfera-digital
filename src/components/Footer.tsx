@@ -20,9 +20,9 @@ const Footer = () => {
             </p>
             <button
               onClick={openChatbot}
-              className="inline-flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-colors mt-1 group w-fit py-1"
+              className="inline-flex items-center gap-2.5 text-sm text-muted-foreground hover:text-primary transition-all mt-1 group w-fit py-1"
             >
-              <span className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <span className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:shadow-[0_0_12px_hsl(var(--primary)/0.2)] transition-all">
                 <MessageCircle size={16} className="text-primary" />
               </span>
               Falar com especialista
@@ -39,7 +39,7 @@ const Footer = () => {
                     <a
                       href={link.href}
                       title={link.title}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300 py-1 inline-block"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300 py-1 inline-block hover:translate-x-0.5 transition-transform"
                     >
                       {link.label}
                     </a>
@@ -57,7 +57,7 @@ const Footer = () => {
             </p>
             <button
               onClick={openChatbot}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/10 border border-primary/20 text-primary text-sm font-medium hover:bg-primary/15 hover:border-primary/30 active:bg-primary/20 transition-all group"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/10 border border-primary/20 text-primary text-sm font-medium hover:bg-primary/15 hover:border-primary/30 active:bg-primary/20 transition-all group hover:shadow-[0_0_15px_hsl(var(--primary)/0.15)]"
             >
               Comece agora
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />

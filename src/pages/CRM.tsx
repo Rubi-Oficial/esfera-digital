@@ -118,6 +118,17 @@ const CRMContent = () => {
     refetchInterval: 15000,
   });
 
+  // Registered users for selector
+  const { data: registeredUsers = [] } = useQuery({
+    queryKey: ["registered-users"],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("list_auth_users");
+      if (error) throw error;
+      return data as { id: string; email: string; created_at: string }[];
+    },
+    staleTime: 30000,
+  });
+
   const PROJECT_STAGES_OPTIONS = [
     { value: "briefing", label: "Briefing & Planejamento" },
     { value: "design", label: "Design & Protótipo" },
@@ -708,13 +719,17 @@ const CRMContent = () => {
                     onChange={e => setProjectForm(p => ({ ...p, client_name: e.target.value }))}
                     className="bg-background border border-border/50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
                   />
-                  <input
-                    placeholder="User ID (UUID do cliente)"
+                  <select
                     value={projectForm.user_id}
                     onChange={e => setProjectForm(p => ({ ...p, user_id: e.target.value }))}
                     disabled={!!editingProject}
                     className="bg-background border border-border/50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 disabled:opacity-50"
-                  />
+                  >
+                    <option value="">Selecione o cliente</option>
+                    {registeredUsers.map(u => (
+                      <option key={u.id} value={u.id}>{u.email}</option>
+                    ))}
+                  </select>
                   <select
                     value={projectForm.current_stage}
                     onChange={e => setProjectForm(p => ({ ...p, current_stage: e.target.value }))}

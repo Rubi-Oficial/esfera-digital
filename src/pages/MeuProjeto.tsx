@@ -51,7 +51,26 @@ const MeuProjetoContent = () => {
         .maybeSingle();
       return data;
     },
+    refetchInterval: 30000,
   });
+
+  // Detect stage changes and show notification
+  useEffect(() => {
+    if (!myProject) return;
+    const storageKey = `project_stage_${myProject.id}`;
+    const lastSeen = localStorage.getItem(storageKey);
+    if (lastSeen && lastSeen !== myProject.current_stage && !hasShownToast.current) {
+      const fromLabel = PROJECT_STAGES.find(s => s.key === lastSeen)?.label || lastSeen;
+      const toLabel = PROJECT_STAGES.find(s => s.key === myProject.current_stage)?.label || myProject.current_stage;
+      setStageNotification({ from: fromLabel, to: toLabel });
+      hasShownToast.current = true;
+      toast.success("Seu projeto avançou! 🎉", {
+        description: `De "${fromLabel}" para "${toLabel}"`,
+        duration: 8000,
+      });
+    }
+    localStorage.setItem(storageKey, myProject.current_stage);
+  }, [myProject?.current_stage, myProject?.id]);
 
   const currentStageIndex = myProject
     ? PROJECT_STAGES.findIndex(s => s.key === myProject.current_stage)

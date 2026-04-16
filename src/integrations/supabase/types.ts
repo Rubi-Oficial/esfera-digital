@@ -319,6 +319,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      list_auth_users: {
+        Args: never
+        Returns: {
+          created_at: string
+          email: string
+          id: string
+        }[]
+      }
       lookup_referral_code: {
         Args: { _code: string }
         Returns: {

@@ -1,10 +1,36 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionHeader from "./ui/SectionHeader";
-import { staggerContainer, blurFadeIn } from "@/lib/animations";
+import { staggerContainer } from "@/lib/animations";
 import { blogArticles } from "@/lib/blog-data";
+
+// Curadoria: 6 melhores matérias sobre Site + CRM + IA integrados
+const FEATURED_SLUGS = [
+  "por-que-todo-negocio-precisa-de-um-site-profissional",
+  "automacao-com-ia-para-empresas",
+  "chatbot-com-ia-para-atendimento",
+  "estrategias-de-conversao-para-sites",
+  "como-medir-roi-do-seu-site-metricas-essenciais",
+  "velocidade-do-site-impacto-nas-vendas",
+];
+
+const featuredArticles = FEATURED_SLUGS
+  .map((slug) => blogArticles.find((a) => a.slug === slug))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a));
+
+// Variant com rotação 3D ao entrar no viewport
+const cardRotate = {
+  hidden: { opacity: 0, rotateY: -45, y: 30, scale: 0.92 },
+  visible: {
+    opacity: 1,
+    rotateY: 0,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
 
 const BlogSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -22,19 +48,30 @@ const BlogSection = () => {
         <SectionHeader
           label="Conteúdo"
           titleId="blog-heading"
-          title={<>Insights sobre <span className="text-gradient">Marketing Digital</span></>}
-          subtitle="Artigos práticos para ajudar sua empresa a crescer no digital com estratégia e resultados reais."
+          title={<>Por que <span className="text-gradient">Site + CRM + IA</span> mudam o jogo</>}
+          subtitle="As 6 leituras essenciais para entender por que um ecossistema digital integrado é o caminho mais rápido para escalar vendas em 2026."
         />
 
         <motion.div
-          variants={staggerContainer(0.1, 0.2)}
+          variants={staggerContainer(0.12, 0.2)}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+          style={{ perspective: 1200 }}
         >
-          {blogArticles.map((article) => (
-            <motion.div key={article.slug} variants={blurFadeIn} whileHover={{ y: -6, transition: { duration: 0.25 } }}>
+          {featuredArticles.map((article) => (
+            <motion.div
+              key={article.slug}
+              variants={cardRotate}
+              whileHover={{
+                y: -8,
+                rotateY: 6,
+                rotateX: -3,
+                transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+              }}
+              style={{ transformStyle: "preserve-3d" }}
+            >
               <Link
                 to={`/blog/${article.slug}`}
                 className="group relative rounded-2xl border border-border/60 bg-card overflow-hidden hover:border-primary/30 transition-colors duration-300 flex flex-col h-full block"
@@ -96,9 +133,10 @@ const BlogSection = () => {
         >
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-primary/50 text-primary hover:bg-primary/10 hover:border-primary font-semibold transition-all group"
+            className="btn-premium px-7 py-3.5 text-base inline-flex items-center gap-2 font-bold group"
           >
-            Ver todos os artigos
+            <BookOpen size={18} />
+            Veja mais em nosso blog
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>

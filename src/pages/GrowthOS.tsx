@@ -1,7 +1,6 @@
-import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import ScrollToTop from "@/components/ScrollToTop";
-import LeadCaptureCheckout from "@/components/LeadCaptureCheckout";
+import { openChatbot } from "@/lib/chatbot-events";
 
 import GrowthNavbar from "@/components/growth-os/GrowthNavbar";
 import GrowthHero from "@/components/growth-os/GrowthHero";
@@ -19,15 +18,8 @@ import WhatsAppFAB from "@/components/growth-os/WhatsAppFAB";
 import type { Plan } from "@/components/growth-os/data";
 
 const GrowthOS = () => {
-  const [captureOpen, setCaptureOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<{ name: string; priceIds: string } | null>(null);
-
   const handleSelectPlan = (plan: Plan) => {
-    setSelectedPlan({
-      name: plan.name,
-      priceIds: plan.checkoutLink.split("prices=")[1]?.split("&")[0] || "",
-    });
-    setCaptureOpen(true);
+    openChatbot({ initialMessage: `Quero contratar o plano ${plan.name}` });
   };
 
   return (
@@ -58,15 +50,6 @@ const GrowthOS = () => {
         <GrowthFooter />
         <WhatsAppFAB />
         <ScrollToTop />
-
-        {selectedPlan && (
-          <LeadCaptureCheckout
-            open={captureOpen}
-            onClose={() => setCaptureOpen(false)}
-            planName={selectedPlan.name}
-            priceIds={selectedPlan.priceIds}
-          />
-        )}
       </div>
     </>
   );

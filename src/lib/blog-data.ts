@@ -24,6 +24,13 @@ import blogConversao from "@/assets/blog-conversao.webp";
 import blogChatbot from "@/assets/blog-chatbot.webp";
 import blogMarcaPessoal from "@/assets/blog-marca-pessoal.webp";
 import blogVelocidade from "@/assets/blog-velocidade.webp";
+import authorAvatar from "@/assets/blog-author-avatar.jpg";
+
+export const DEFAULT_AUTHOR = {
+  name: "Rafael Mendes",
+  role: "Especialista em Marketing Digital · Esfera Digital",
+  avatar: authorAvatar,
+};
 
 export interface BlogArticle {
   slug: string;
@@ -36,6 +43,7 @@ export interface BlogArticle {
   image: string;
   message: string;
   content: string[];
+  author?: { name: string; role: string; avatar: string };
 }
 
 export const blogArticles: BlogArticle[] = [
@@ -46,7 +54,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Presença Digital",
     icon: TrendingUp,
     readTime: "5 min",
-    date: "10 Abr 2026",
+    date: "10 de abril de 2026",
     image: blogMarketing,
     message: "Olá, quero saber mais sobre criação de sites profissionais",
     content: [
@@ -65,7 +73,7 @@ export const blogArticles: BlogArticle[] = [
     category: "SEO",
     icon: Search,
     readTime: "8 min",
-    date: "05 Abr 2026",
+    date: "5 de abril de 2026",
     image: blogSeo,
     message: "Olá, quero saber mais sobre SEO para minha empresa",
     content: [
@@ -85,7 +93,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Design & UX",
     icon: Palette,
     readTime: "6 min",
-    date: "28 Mar 2026",
+    date: "28 de março de 2026",
     image: blogDesign,
     message: "Olá, quero um site com design que converte",
     content: [
@@ -104,7 +112,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Marketing Digital",
     icon: Megaphone,
     readTime: "7 min",
-    date: "20 Mar 2026",
+    date: "20 de março de 2026",
     image: blogStrategy,
     message: "Olá, quero começar no marketing digital",
     content: [
@@ -124,7 +132,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Desenvolvimento Web",
     icon: Code,
     readTime: "4 min",
-    date: "15 Mar 2026",
+    date: "15 de março de 2026",
     image: blogCode,
     message: "Olá, quero entender a diferença entre landing page e site",
     content: [
@@ -143,7 +151,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Analytics",
     icon: BarChart3,
     readTime: "6 min",
-    date: "08 Mar 2026",
+    date: "8 de março de 2026",
     image: blogAnalytics,
     message: "Olá, quero entender o ROI do meu site",
     content: [
@@ -162,7 +170,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Redes Sociais",
     icon: Share2,
     readTime: "7 min",
-    date: "01 Mar 2026",
+    date: "1 de março de 2026",
     image: blogSocialMedia,
     message: "Olá, quero melhorar a presença da minha empresa nas redes sociais",
     content: [
@@ -182,7 +190,7 @@ export const blogArticles: BlogArticle[] = [
     category: "E-mail Marketing",
     icon: Mail,
     readTime: "8 min",
-    date: "22 Fev 2026",
+    date: "22 de fevereiro de 2026",
     image: blogEmail,
     message: "Olá, quero implementar e-mail marketing na minha empresa",
     content: [
@@ -202,7 +210,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Tráfego Pago",
     icon: DollarSign,
     readTime: "9 min",
-    date: "15 Fev 2026",
+    date: "15 de fevereiro de 2026",
     image: blogPaidTraffic,
     message: "Olá, quero investir em tráfego pago para minha empresa",
     content: [
@@ -223,7 +231,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Sites para Saúde",
     icon: Stethoscope,
     readTime: "7 min",
-    date: "12 Abr 2026",
+    date: "12 de abril de 2026",
     image: blogSiteMedicos,
     message: "Olá, sou médico e quero criar um site profissional para meu consultório",
     content: [
@@ -243,7 +251,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Sites Jurídicos",
     icon: Scale,
     readTime: "7 min",
-    date: "11 Abr 2026",
+    date: "11 de abril de 2026",
     image: blogSiteAdvogados,
     message: "Olá, sou advogado e quero criar um site para meu escritório",
     content: [
@@ -263,7 +271,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Agronegócio Digital",
     icon: Leaf,
     readTime: "6 min",
-    date: "10 Abr 2026",
+    date: "10 de abril de 2026",
     image: blogSiteAgronomos,
     message: "Olá, sou agrônomo e quero criar um site profissional",
     content: [
@@ -282,7 +290,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Indústria Digital",
     icon: Factory,
     readTime: "6 min",
-    date: "09 Abr 2026",
+    date: "9 de abril de 2026",
     image: blogSiteSiderurgicas,
     message: "Olá, preciso de um site corporativo para minha siderúrgica",
     content: [
@@ -301,7 +309,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Cannabis Medicinal",
     icon: Cannabis,
     readTime: "8 min",
-    date: "08 Abr 2026",
+    date: "8 de abril de 2026",
     image: blogSiteCannabis,
     message: "Olá, tenho uma clínica de cannabis medicinal e quero criar um site",
     content: [
@@ -321,7 +329,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Projetos Indie",
     icon: Rocket,
     readTime: "6 min",
-    date: "07 Abr 2026",
+    date: "7 de abril de 2026",
     image: blogLandingProjetos,
     message: "Olá, tenho um projeto independente e preciso de uma landing page",
     content: [
@@ -340,7 +348,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Turismo Digital",
     icon: Hotel,
     readTime: "7 min",
-    date: "06 Abr 2026",
+    date: "6 de abril de 2026",
     image: blogSitePousadas,
     message: "Olá, tenho uma pousada e quero criar um site para aumentar reservas",
     content: [
@@ -360,7 +368,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Gastronomia Digital",
     icon: UtensilsCrossed,
     readTime: "7 min",
-    date: "05 Abr 2026",
+    date: "5 de abril de 2026",
     image: blogSiteRestaurantes,
     message: "Olá, tenho um restaurante e quero criar um site com cardápio digital",
     content: [
@@ -380,7 +388,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Odontologia Digital",
     icon: SmilePlus,
     readTime: "6 min",
-    date: "04 Abr 2026",
+    date: "4 de abril de 2026",
     image: blogSiteDentistas,
     message: "Olá, sou dentista e quero um site para meu consultório",
     content: [
@@ -399,7 +407,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Imobiliário Digital",
     icon: Building2,
     readTime: "8 min",
-    date: "03 Abr 2026",
+    date: "3 de abril de 2026",
     image: blogSiteImobiliarias,
     message: "Olá, tenho uma imobiliária e preciso de um site profissional",
     content: [
@@ -419,7 +427,7 @@ export const blogArticles: BlogArticle[] = [
     category: "E-commerce",
     icon: ShoppingCart,
     readTime: "9 min",
-    date: "12 Abr 2026",
+    date: "12 de abril de 2026",
     image: blogEcommerce,
     message: "Olá, quero criar uma loja virtual profissional",
     content: [
@@ -439,7 +447,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Inteligência Artificial",
     icon: Bot,
     readTime: "8 min",
-    date: "13 Abr 2026",
+    date: "13 de abril de 2026",
     image: blogAutomacaoIA,
     message: "Olá, quero automatizar processos da minha empresa com IA",
     content: [
@@ -459,7 +467,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Conversão",
     icon: Target,
     readTime: "7 min",
-    date: "14 Abr 2026",
+    date: "14 de abril de 2026",
     image: blogConversao,
     message: "Olá, quero aumentar a taxa de conversão do meu site",
     content: [
@@ -479,7 +487,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Inteligência Artificial",
     icon: MessageCircle,
     readTime: "6 min",
-    date: "11 Abr 2026",
+    date: "11 de abril de 2026",
     image: blogChatbot,
     message: "Olá, quero um chatbot com IA para meu site",
     content: [
@@ -498,7 +506,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Marketing Digital",
     icon: User,
     readTime: "7 min",
-    date: "09 Abr 2026",
+    date: "9 de abril de 2026",
     image: blogMarcaPessoal,
     message: "Olá, quero construir minha marca pessoal na internet",
     content: [
@@ -518,7 +526,7 @@ export const blogArticles: BlogArticle[] = [
     category: "Desenvolvimento Web",
     icon: Zap,
     readTime: "6 min",
-    date: "07 Abr 2026",
+    date: "7 de abril de 2026",
     image: blogVelocidade,
     message: "Olá, meu site está lento e quero otimizar a velocidade",
     content: [

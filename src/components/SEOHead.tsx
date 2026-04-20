@@ -23,6 +23,7 @@ interface SEOHeadProps {
     image: string;
     datePublished: string;
     category: string;
+    authorName?: string;
   };
 }
 
@@ -95,7 +96,10 @@ const SEOHead = ({
         "image": articleSchema.image,
         "datePublished": articleSchema.datePublished,
         "dateModified": articleSchema.datePublished,
-        "author": { "@type": "Organization", "name": "Esfera Digital" },
+        "author": {
+          "@type": "Person",
+          "name": articleSchema.authorName || "Equipe Esfera Digital",
+        },
         "publisher": {
           "@type": "Organization",
           "name": "Esfera Digital",

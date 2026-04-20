@@ -57,12 +57,8 @@ export function useChatBot() {
     setMessages((prev) => [...prev, { id: crypto.randomUUID(), text, sender: "user" }]);
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isOpen && !hasGreeted) { setIsBubbleVisible(true); setIsOpen(true); }
-    }, 15000);
-    return () => clearTimeout(timer);
-  }, [isOpen, hasGreeted]);
+  // Auto-open removido — o ícone agora chama atenção via animação (ver ChatBubble)
+  // Mantemos apenas o pulse/bubble visível para instigar o clique
 
   useEffect(() => {
     if (isOpen && !hasGreeted) {

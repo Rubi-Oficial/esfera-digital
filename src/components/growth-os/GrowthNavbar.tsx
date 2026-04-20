@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import AnimatedLogo from "@/components/AnimatedLogo";
-import { whatsappUrl } from "@/lib/constants";
-import { WA_GENERIC } from "./data";
 
 const navLinks = [
   { href: "#portfolio", label: "Portfólio" },

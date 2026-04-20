@@ -39,15 +39,15 @@ const AIServicesSection = () => {
       ref={sectionRef}
       id="ia-services"
       className="section-padding section-divider relative overflow-hidden"
-      aria-label="O que o site faz por você"
+      aria-label="Site + CRM + IA + SEO para aparecer no Google"
     >
       <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/5 blur-[130px] -right-20 top-1/4 pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
 
       <div className="container relative z-10 px-4 md:px-8">
         <SectionHeader
-          label="Solução"
-          title={<>Site completo + <span className="text-gradient">I.A. integrada</span></>}
-          subtitle="Um sistema digital completo que trabalha por você 24 horas por dia."
+          label="Ecossistema completo"
+          title={<>Site + <span className="text-gradient">CRM + I.A. + SEO</span> no Google</>}
+          subtitle="Mais que um site bonito: um sistema comercial que aparece no Google, atende com IA e organiza cada lead no CRM."
         />
 
         <motion.div
@@ -58,7 +58,7 @@ const AIServicesSection = () => {
           className="text-center mb-12"
         >
           <p className="text-lg text-muted-foreground">
-            <strong className="text-foreground">O que seu site vai fazer:</strong>
+            <strong className="text-foreground">Os 4 pilares que vendem por você:</strong>
           </p>
         </motion.div>
 

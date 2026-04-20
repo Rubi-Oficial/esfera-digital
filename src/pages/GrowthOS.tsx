@@ -16,7 +16,7 @@ import PlansBlock from "@/components/growth-os/PlansBlock";
 // AuthorityBlock removido — duplicava StatsSection (3 stats) e o disclaimer de depoimentos foi suprido pela TestimonialsSection
 import CTAFinalBlock from "@/components/growth-os/CTAFinalBlock";
 import GrowthFooter from "@/components/growth-os/GrowthFooter";
-import WhatsAppFAB from "@/components/growth-os/WhatsAppFAB";
+
 import InterCTA from "@/components/growth-os/InterCTA";
 import ReflectionBlock from "@/components/growth-os/ReflectionBlock";
 import type { Plan } from "@/components/growth-os/data";
@@ -96,7 +96,6 @@ const GrowthOS = () => {
         </main>
 
         <GrowthFooter />
-        <WhatsAppFAB />
         <ScrollToTop />
         <ChatBot />
       </div>

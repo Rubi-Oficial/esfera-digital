@@ -7,12 +7,12 @@ import heroImg from "@/assets/hero-workspace.webp";
 import logoSphere from "@/assets/logo-sphere.png";
 
 const benefits = [
-  "Processo simplificado",
-  "Independente de redes sociais",
-  "Geração contínua de clientes",
+  "Sites que aparecem no Google",
+  "CRM comercial integrado",
+  "IA de atendimento 24/7",
 ];
 
-const TYPEWRITER_TEXT = "Websites + I.A.";
+const TYPEWRITER_TEXT = "Sites + CRM + I.A.";
 const TYPEWRITER_SPEED = 80;
 
 const useTypewriter = (text: string, speed: number, startDelay: number) => {
@@ -96,7 +96,7 @@ const HeroSection = () => {
                 )}
               </span>
               <br />
-              <span className="text-foreground/95">que vendem por você.</span>
+              <span className="text-foreground/95">que aparecem no Google.</span>
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-3 md:mb-4 leading-relaxed lg:mx-0 mx-auto">
@@ -105,8 +105,8 @@ const HeroSection = () => {
             </p>
 
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-8 md:mb-10 leading-relaxed lg:mx-0 mx-auto">
-              Criamos sites completos com inteligência artificial —{" "}
-              <strong className="text-foreground font-semibold">prontos para atrair, atender e converter clientes automaticamente</strong>.
+              Criamos sites com <strong className="text-foreground font-semibold">sistema comercial CRM</strong> e{" "}
+              <strong className="text-foreground font-semibold">IA de atendimento</strong> integrados — vendidos por módulos sob medida para o seu negócio.
             </p>
 
             <motion.ul
@@ -142,16 +142,16 @@ const HeroSection = () => {
             >
               <ChatbotTrigger
                 size="lg"
-                ariaLabel="Comece agora — nosso sistema entende seu negócio"
+                ariaLabel="Falar com especialista — receba uma proposta sob medida"
                 className="btn-premium w-full sm:w-auto"
               >
-                Comece agora
+                Falar com especialista
               </ChatbotTrigger>
               <a
                 href="#planos"
                 className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors group py-2"
               >
-                Ver planos e preços
+                Ver módulos
                 <ArrowDown size={16} className="group-hover:translate-y-1 transition-transform" aria-hidden="true" />
               </a>
             </motion.div>

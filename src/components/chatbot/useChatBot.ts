@@ -4,7 +4,7 @@ import { createLead, updateLeadStage } from "@/lib/crm";
 import { lookupRefCode, recordRefClick, createReferral, type ReferralCode } from "@/lib/referral";
 import { onChatbotOpen } from "@/lib/chatbot-events";
 import type { Message, LeadData, Step } from "./types";
-import { BOT_NAME, INTERESSE_OPTIONS, URGENCIA_OPTIONS, PLANO_OPTIONS } from "./types";
+import { BOT_NAME, INTERESSE_OPTIONS, URGENCIA_OPTIONS } from "./types";
 
 export function useChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -142,35 +142,16 @@ export function useChatBot() {
 
       case "objetivo":
         setLead((prev) => ({ ...prev, objetivo: userInput }));
+        { const lid = crmLeadIdRef.current; if (lid) updateLeadStage(lid, "qualificado", "proposta_apresentada").catch(console.error); }
         setTimeout(() => {
           const currentLead = { ...leadRef.current, objetivo: userInput };
-          const highIntent = isHighIntent(currentLead);
-          if (highIntent) {
-            addBotMessage(`Já entendi seu cenário, **${currentLead.nome}**! 👍\n\nCom base no que você me disse, seu perfil é de alguém que precisa de **resultados rápidos**.\n\nTemos 2 opções para você:\n\n🚀 **Esfera Growth** — R$ 1.997 ⭐ *Recomendado pra você*\nSite + ecossistema de crescimento + consultoria + programa de indicações\n\n⚡ **Site Profissional** — R$ 997\nSite completo com IA, SEO e design personalizado\n\nQual faz mais sentido pro seu negócio?`, PLANO_OPTIONS);
-          } else {
-            addBotMessage(`Maravilha, **${currentLead.nome}**! 🎉\n\nCom base no que você me contou, preparei as melhores opções:\n\n🚀 **Esfera Growth** — R$ 1.997 ⭐ *Mais vendido*\nSite + ecossistema de crescimento + consultoria individual + programa de indicações\n\n⚡ **Site Profissional** — R$ 997\nSite completo com IA, SEO, design personalizado e entrega em 7 dias\n\nQual opção combina mais com o momento do seu negócio?`, PLANO_OPTIONS);
-          }
-          setStep("planos");
-        }, 600);
-        break;
-
-      case "planos": {
-        const lid = crmLeadIdRef.current;
-        if (lid) updateLeadStage(lid, "qualificado", "proposta_apresentada").catch(console.error);
-        const currentLead = leadRef.current;
-        let planoMsg = "";
-        if (userInput.includes("1.997") || userInput.includes("Growth")) {
-          planoMsg = `Ótima decisão, **${currentLead.nome}**! 🚀\n\nO **Esfera Growth** é o nosso carro-chefe — site profissional + ecossistema completo de crescimento com consultoria, programa de indicações e dashboard exclusivo.\n\n📱 **Contato:** ${currentLead.telefone}\n💼 **Interesse:** ${currentLead.interesse}\n🏢 **Negócio:** ${currentLead.tipoNegocio}\n💰 **Plano:** Esfera Growth — R$ 1.997`;
-        } else {
-          planoMsg = `Perfeito, **${currentLead.nome}**! ⚡\n\nO **Site Profissional** é ideal pra começar com o pé direito — site completo com IA, SEO otimizado, design personalizado e entrega em até 7 dias!\n\n📱 **Contato:** ${currentLead.telefone}\n💼 **Interesse:** ${currentLead.interesse}\n🏢 **Negócio:** ${currentLead.tipoNegocio}\n💰 **Plano:** Site Profissional — R$ 997`;
-        }
-        setTimeout(() => {
-          addBotMessage(planoMsg + `\n\nClique abaixo para falar com nosso especialista e garantir sua vaga! 👇`);
+          addBotMessage(
+            `Perfeito, **${currentLead.nome}**! 🎉\n\nJá registrei suas informações e nosso **especialista** entrará em contato em breve com uma proposta sob medida para o seu negócio.\n\n📱 **Contato:** ${currentLead.telefone}\n💼 **Interesse:** ${currentLead.interesse}\n🏢 **Negócio:** ${currentLead.tipoNegocio}\n\nSe preferir, você pode iniciar a conversa agora pelo WhatsApp 👇`
+          );
           setStep("finalizar");
-          if (isHighIntent(leadRef.current)) setTimeout(() => sendToWhatsApp(leadRef.current), 3000);
+          if (isHighIntent(currentLead)) setTimeout(() => sendToWhatsApp(currentLead), 3000);
         }, 600);
         break;
-      }
     }
   }, [addBotMessage, addUserMessage, refCodeData, sendToWhatsApp]);
 

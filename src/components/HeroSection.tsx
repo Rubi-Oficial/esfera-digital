@@ -89,6 +89,7 @@ const HeroSection = () => {
             </motion.div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.05] tracking-tight mb-5 md:mb-6">
+              <span className="text-foreground/95 block mb-2">Mais que sites:</span>
               <span className="text-gradient inline-block min-h-[1.2em] drop-shadow-[0_0_30px_hsl(152_100%_50%/0.3)]">
                 {displayed}
                 {showCursor && (
@@ -96,7 +97,7 @@ const HeroSection = () => {
                 )}
               </span>
               <br />
-              <span className="text-foreground/95">que aparecem no Google.</span>
+              <span className="text-foreground/95">que vendem por você no Google.</span>
             </h1>
 
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-3 md:mb-4 leading-relaxed lg:mx-0 mx-auto">

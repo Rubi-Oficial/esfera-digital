@@ -18,7 +18,7 @@ const AuthorityBlock = () => (
         Desenvolvido <span className="text-gradient">para o mercado brasileiro</span>
       </h2>
       <p className="text-muted-foreground text-base mb-8 leading-relaxed max-w-xl mx-auto">
-        Solução projetada para <strong className="text-foreground">pequenas e médias empresas</strong> que utilizam o WhatsApp como principal canal de relacionamento e vendas.
+        Solução desenvolvida para <strong className="text-foreground">pequenas e médias empresas</strong> brasileiras que utilizam o WhatsApp como principal canal de relacionamento e vendas.
       </p>
       <div className="grid grid-cols-3 gap-3">
         {authorityStats.map((s, i) => (
@@ -28,7 +28,6 @@ const AuthorityBlock = () => (
           </div>
         ))}
       </div>
-      <p className="text-xs text-muted-foreground/50 mt-8 italic">Em breve: depoimentos de clientes</p>
     </motion.div>
   </Section>
 );

@@ -12,8 +12,8 @@ interface InterCTAProps {
 }
 
 const InterCTA = ({
-  text = "Pronto para parar de perder clientes?",
-  primaryLabel = "Quero meu sistema",
+  text = "Pronto para profissionalizar a captação de clientes da sua empresa?",
+  primaryLabel = "Conhecer os planos",
   primaryHref = "#planos-growth",
   secondaryLabel = "Falar no WhatsApp",
   secondaryHref = whatsappUrl(WA_GENERIC),

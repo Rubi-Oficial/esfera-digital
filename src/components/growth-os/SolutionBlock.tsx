@@ -6,9 +6,9 @@ import { solution } from "./data";
 const SolutionBlock = () => (
   <Section id="solucao">
     <SectionTitle
-      label="🤖 A Solução"
-      title={<>Site completo + <span className="text-gradient">I.A. integrada</span></>}
-      subtitle="Um verdadeiro vendedor digital que trabalha por você 24 horas por dia."
+      label="A Solução"
+      title={<>Site completo com <span className="text-gradient">IA integrada</span></>}
+      subtitle="Um ecossistema digital que atende, qualifica e converte clientes 24 horas por dia, com a consistência que sua equipe não consegue manter sozinha."
     />
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
       {solution.map((s, i) => (

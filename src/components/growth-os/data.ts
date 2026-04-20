@@ -53,27 +53,27 @@ export const solution = [
   },
 ];
 
-// ⚙️ Como Funciona — 4 passos como na página publicada
+// Como Funciona — 4 passos do processo de implantação
 export const steps = [
   {
-    num: "1️⃣",
-    title: "Envie informações do seu negócio",
-    desc: "Preencha um breve formulário com os dados essenciais da sua empresa.",
+    num: "01",
+    title: "Diagnóstico do seu negócio",
+    desc: "Você preenche um briefing objetivo com os dados essenciais da operação e dos clientes.",
   },
   {
-    num: "2️⃣",
-    title: "Criamos site + design + estrutura de vendas",
-    desc: "Nossa equipe desenvolve tudo: copy persuasiva, design moderno e otimização.",
+    num: "02",
+    title: "Construção do site e da estrutura comercial",
+    desc: "Nossa equipe desenvolve copy, design e arquitetura de conversão sob medida para o seu segmento.",
   },
   {
-    num: "3️⃣",
-    title: "Integramos IA e WhatsApp",
-    desc: "Conectamos chatbot inteligente, formulários e botão de WhatsApp.",
+    num: "03",
+    title: "Integração de IA, CRM e WhatsApp",
+    desc: "Conectamos chatbot, formulários e pipeline de vendas — tudo centralizado em um só painel.",
   },
   {
-    num: "4️⃣",
-    title: "Publicamos tudo pronto pra você",
-    desc: "Seu site vai ao ar 100% funcional — pronto para gerar clientes.",
+    num: "04",
+    title: "Publicação e acompanhamento inicial",
+    desc: "Seu sistema entra no ar testado e monitorado, com suporte ativo nas primeiras semanas.",
   },
 ];
 
@@ -138,9 +138,9 @@ export const plans = [
 ];
 
 export const trustBadges = [
-  { icon: Zap, text: "Sem complicação" },
-  { icon: Clock, text: "Sem depender de redes sociais" },
-  { icon: Building2, text: "Pronto para gerar clientes" },
+  { icon: Zap, text: "Implantação guiada do início ao fim" },
+  { icon: Clock, text: "Independência das redes sociais" },
+  { icon: Building2, text: "Estrutura pronta para captar e converter" },
 ];
 
 export const authorityStats = [

@@ -25,11 +25,18 @@ import blogChatbot from "@/assets/blog-chatbot.webp";
 import blogMarcaPessoal from "@/assets/blog-marca-pessoal.webp";
 import blogVelocidade from "@/assets/blog-velocidade.webp";
 import authorAvatar from "@/assets/blog-author-avatar.jpg";
+import authorDiego from "@/assets/blog-author-diego.jpg";
 
 export const DEFAULT_AUTHOR = {
   name: "Rafael Mendes",
   role: "Especialista em Marketing Digital · Esfera Digital",
   avatar: authorAvatar,
+};
+
+export const AUTHOR_DIEGO = {
+  name: "Diego Siqueira",
+  role: "Consultor de Tecnologia · Esfera Digital",
+  avatar: authorDiego,
 };
 
 export interface BlogArticle {
@@ -85,6 +92,7 @@ export const blogArticles: BlogArticle[] = [
       "Backlinks — links de outros sites apontando para o seu — são um dos fatores mais importantes de ranqueamento. Busque parcerias, publique conteúdo relevante e apareça em diretórios do seu segmento para construir autoridade.",
       "SEO é um investimento de médio a longo prazo, mas os resultados são duradouros. Enquanto anúncios param de gerar tráfego quando você para de pagar, um bom SEO continua trazendo visitantes qualificados por meses e até anos.",
     ],
+    author: AUTHOR_DIEGO,
   },
   {
     slug: "design-que-converte-como-estetica-influencia-vendas",

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import AnimatedLogo from "@/components/AnimatedLogo";
-import { whatsappUrl } from "@/lib/constants";
-import { WA_GENERIC } from "./data";
 
 const navLinks = [
   { href: "#portfolio", label: "Portfólio" },
@@ -91,18 +89,6 @@ const GrowthNavbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <a
-            href={whatsappUrl(WA_GENERIC)}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Falar conosco no WhatsApp"
-            className="btn-premium px-4 md:px-5 py-2.5 text-sm inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            <span className="hidden sm:inline">Falar no WhatsApp</span>
-            <span className="sm:hidden">WhatsApp</span>
-            <ArrowRight size={14} aria-hidden="true" />
-          </a>
-
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}

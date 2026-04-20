@@ -30,8 +30,9 @@ const GrowthHero = () => {
             </motion.div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5">
-              Sistema integrado de vendas que{" "}
-              <span className="text-gradient">trabalha por você 24h.</span>
+              <span className="block text-foreground/95 mb-2">Mais que sites:</span>
+              <span className="text-gradient">Site + CRM + IA</span>
+              <span className="block text-foreground/95 mt-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">que vendem por você no Google 24h.</span>
             </h1>
 
             <p className="text-base md:text-lg text-muted-foreground max-w-xl mb-8 leading-relaxed lg:mx-0 mx-auto">

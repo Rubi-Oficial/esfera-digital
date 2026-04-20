@@ -52,7 +52,15 @@ export async function createLead(data: LeadInsert) {
 
 export async function updateChatbotLeadFields(
   leadId: string,
-  fields: { interesse?: string; tipo_negocio?: string; urgencia?: string; objetivo?: string; dor_principal?: string }
+  fields: {
+    interesse?: string;
+    tipo_negocio?: string;
+    urgencia?: string;
+    objetivo?: string;
+    dor_principal?: string;
+    to_stage?: PipelineStage;
+    score_increment?: number;
+  }
 ) {
   const { error } = await supabase.rpc("update_chatbot_lead_fields", {
     _lead_id: leadId,
@@ -61,6 +69,8 @@ export async function updateChatbotLeadFields(
     _urgencia: fields.urgencia ?? null,
     _objetivo: fields.objetivo ?? null,
     _dor_principal: fields.dor_principal ?? null,
+    _to_stage: fields.to_stage ?? null,
+    _score_increment: fields.score_increment ?? 0,
   });
   if (error) throw error;
 }

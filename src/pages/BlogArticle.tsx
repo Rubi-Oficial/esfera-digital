@@ -1,7 +1,7 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
-import { blogArticles, getRelatedArticles, type BlogArticle } from "@/lib/blog-data";
+import { blogArticles, getRelatedArticles, DEFAULT_AUTHOR, type BlogArticle } from "@/lib/blog-data";
 import ChatbotTrigger from "@/components/ui/ChatbotTrigger";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -50,15 +50,16 @@ const BlogArticlePage = () => {
   }
 
   const related = getRelatedArticles(article.slug, 3);
+  const author = article.author ?? DEFAULT_AUTHOR;
 
-  // Parse date string to ISO format
-  const dateMap: Record<string, string> = {
-    "Jan": "01", "Fev": "02", "Mar": "03", "Abr": "04", "Mai": "05", "Jun": "06",
-    "Jul": "07", "Ago": "08", "Set": "09", "Out": "10", "Nov": "11", "Dez": "12",
+  // Parse "DD de mês de AAAA" para ISO (YYYY-MM-DD)
+  const monthMap: Record<string, string> = {
+    janeiro: "01", fevereiro: "02", março: "03", abril: "04", maio: "05", junho: "06",
+    julho: "07", agosto: "08", setembro: "09", outubro: "10", novembro: "11", dezembro: "12",
   };
-  const dateParts = article.date.split(" ");
-  const isoDate = dateParts.length === 3
-    ? `${dateParts[2]}-${dateMap[dateParts[1]] || "01"}-${dateParts[0].padStart(2, "0")}`
+  const dateMatch = article.date.match(/^(\d{1,2})\s+de\s+(\w+)\s+de\s+(\d{4})$/i);
+  const isoDate = dateMatch
+    ? `${dateMatch[3]}-${monthMap[dateMatch[2].toLowerCase()] || "01"}-${dateMatch[1].padStart(2, "0")}`
     : "2026-01-01";
 
   return (
@@ -80,6 +81,7 @@ const BlogArticlePage = () => {
           image: article.image,
           datePublished: isoDate,
           category: article.category,
+          authorName: author.name,
         }}
       />
       <Navbar />
@@ -113,7 +115,7 @@ const BlogArticlePage = () => {
               {article.title}
             </h1>
 
-            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-8">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
               <span className="flex items-center gap-1.5">
                 <Calendar size={14} aria-hidden="true" />
                 {article.date}
@@ -122,6 +124,21 @@ const BlogArticlePage = () => {
                 <Clock size={14} aria-hidden="true" />
                 {article.readTime} de leitura
               </span>
+            </div>
+
+            <div className="flex items-center gap-3 pb-8 mb-2 border-b border-border/40">
+              <img
+                src={author.avatar}
+                alt={`Foto de ${author.name}`}
+                className="w-11 h-11 rounded-full object-cover border border-border/60"
+                width={44}
+                height={44}
+                loading="lazy"
+              />
+              <div className="leading-tight">
+                <p className="text-sm font-semibold text-foreground">Por {author.name}</p>
+                <p className="text-xs text-muted-foreground">{author.role}</p>
+              </div>
             </div>
 
             <div className="rounded-2xl overflow-hidden border border-border/40 mb-10">

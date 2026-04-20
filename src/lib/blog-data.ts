@@ -24,6 +24,13 @@ import blogConversao from "@/assets/blog-conversao.webp";
 import blogChatbot from "@/assets/blog-chatbot.webp";
 import blogMarcaPessoal from "@/assets/blog-marca-pessoal.webp";
 import blogVelocidade from "@/assets/blog-velocidade.webp";
+import authorAvatar from "@/assets/blog-author-avatar.jpg";
+
+export const DEFAULT_AUTHOR = {
+  name: "Rafael Mendes",
+  role: "Especialista em Marketing Digital · Esfera Digital",
+  avatar: authorAvatar,
+};
 
 export interface BlogArticle {
   slug: string;
@@ -36,6 +43,7 @@ export interface BlogArticle {
   image: string;
   message: string;
   content: string[];
+  author?: { name: string; role: string; avatar: string };
 }
 
 export const blogArticles: BlogArticle[] = [

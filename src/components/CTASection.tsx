@@ -44,7 +44,7 @@ const CTASection = () => {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary-foreground mb-4 leading-tight"
             >
-              Sua empresa merece ser encontrada<br className="hidden sm:block" />por quem precisa dela.
+              Apareça no Google com um site<br className="hidden sm:block" />que vende por você.
             </motion.h2>
 
             <motion.p
@@ -54,7 +54,7 @@ const CTASection = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="text-primary-foreground/80 text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed"
             >
-              Enquanto você avalia, outras empresas já estão sendo encontradas no Google e convertendo clientes que poderiam ser seus.
+              Site profissional com sistema comercial CRM e IA de atendimento integrados. Fale com nosso especialista e receba uma proposta sob medida.
             </motion.p>
 
             <motion.div
@@ -65,10 +65,10 @@ const CTASection = () => {
             >
               <ChatbotTrigger
                 size="lg"
-                ariaLabel="Comece agora — fale com nosso sistema"
+                ariaLabel="Falar com especialista"
                 className="bg-primary-foreground text-primary hover:brightness-95 shadow-xl font-bold rounded-xl"
               >
-                Comece agora
+                Falar com especialista
                 <ArrowRight size={18} className="ml-2" />
               </ChatbotTrigger>
             </motion.div>

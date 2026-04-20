@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { WHATSAPP_PHONE } from "@/lib/constants";
-import { createLead, updateLeadStage } from "@/lib/crm";
+import { createLead, updateChatbotLeadFields } from "@/lib/crm";
 import { lookupRefCode, recordRefClick, createReferral, type ReferralCode } from "@/lib/referral";
 import { onChatbotOpen } from "@/lib/chatbot-events";
 import type { Message, LeadData, Step } from "./types";
@@ -125,24 +125,31 @@ export function useChatBot() {
 
       case "interesse":
         setLead((prev) => ({ ...prev, interesse: userInput }));
-        { const lid = crmLeadIdRef.current; if (lid) updateLeadStage(lid, "novo_lead", "engajado").catch(console.error); }
+        { const lid = crmLeadIdRef.current; if (lid) {
+          updateChatbotLeadFields(lid, { interesse: userInput, to_stage: "engajado", score_increment: 10 }).catch(console.error);
+        } }
         setTimeout(() => { addBotMessage(`Ótima escolha! 🎯\n\nPara te atender melhor, qual é o **tipo do seu negócio**? (ex: clínica, restaurante, loja, consultoria, etc.)`); setStep("tipoNegocio"); }, 600);
         break;
 
       case "tipoNegocio":
         setLead((prev) => ({ ...prev, tipoNegocio: userInput }));
-        { const lid = crmLeadIdRef.current; if (lid) updateLeadStage(lid, "engajado", "qualificado").catch(console.error); }
+        { const lid = crmLeadIdRef.current; if (lid) {
+          updateChatbotLeadFields(lid, { tipo_negocio: userInput, to_stage: "qualificado", score_increment: 20 }).catch(console.error);
+        } }
         setTimeout(() => { addBotMessage(`Entendi! 📋\n\nQual a sua **urgência** para o projeto?`, URGENCIA_OPTIONS); setStep("urgencia"); }, 600);
         break;
 
       case "urgencia":
         setLead((prev) => ({ ...prev, urgencia: userInput }));
+        { const lid = crmLeadIdRef.current; if (lid) updateChatbotLeadFields(lid, { urgencia: userInput }).catch(console.error); }
         setTimeout(() => { addBotMessage(`Beleza! ⚡\n\nPor último, qual o **principal objetivo** que você quer alcançar com o site? (ex: vender mais, aparecer no Google, ter presença online, captar clientes, etc.)`); setStep("objetivo"); }, 600);
         break;
 
       case "objetivo":
         setLead((prev) => ({ ...prev, objetivo: userInput }));
-        { const lid = crmLeadIdRef.current; if (lid) updateLeadStage(lid, "qualificado", "proposta_apresentada").catch(console.error); }
+        { const lid = crmLeadIdRef.current; if (lid) {
+          updateChatbotLeadFields(lid, { objetivo: userInput, to_stage: "proposta_apresentada", score_increment: 15 }).catch(console.error);
+        } }
         setTimeout(() => {
           const currentLead = { ...leadRef.current, objetivo: userInput };
           addBotMessage(

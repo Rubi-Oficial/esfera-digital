@@ -420,6 +420,31 @@ export type Database = {
         }[]
       }
       normalize_phone: { Args: { _phone: string }; Returns: string }
+      update_chatbot_lead_fields:
+        | {
+            Args: {
+              _dor_principal?: string
+              _interesse?: string
+              _lead_id: string
+              _objetivo?: string
+              _tipo_negocio?: string
+              _urgencia?: string
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              _dor_principal?: string
+              _interesse?: string
+              _lead_id: string
+              _objetivo?: string
+              _score_increment?: number
+              _tipo_negocio?: string
+              _to_stage?: Database["public"]["Enums"]["pipeline_stage"]
+              _urgencia?: string
+            }
+            Returns: undefined
+          }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"

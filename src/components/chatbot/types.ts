@@ -22,26 +22,19 @@ export type Step =
   | "tipoNegocio"
   | "urgencia"
   | "objetivo"
-  | "planos"
   | "finalizar";
 
 export const BOT_NAME = "Genius AI";
 
 export const INTERESSE_OPTIONS = [
-  "Criação de Site",
-  "Loja Virtual",
-  "Landing Page",
-  "Site com IA",
-  "Reformular site existente",
+  "Site Básico (1 página)",
+  "Site Intermediário (até 10 páginas)",
+  "Site Avançado (até 50 páginas + blog)",
+  "Ainda não sei, quero conversar",
 ];
 
 export const URGENCIA_OPTIONS = [
   "Preciso para ontem! 🔥",
   "Nas próximas semanas",
   "Estou pesquisando ainda",
-];
-
-export const PLANO_OPTIONS = [
-  "🚀 Esfera Growth — R$ 1.997",
-  "⚡ Site Profissional — R$ 997",
 ];

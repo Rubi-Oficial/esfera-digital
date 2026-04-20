@@ -125,24 +125,34 @@ export function useChatBot() {
 
       case "interesse":
         setLead((prev) => ({ ...prev, interesse: userInput }));
-        { const lid = crmLeadIdRef.current; if (lid) updateLeadStage(lid, "novo_lead", "engajado").catch(console.error); }
+        { const lid = crmLeadIdRef.current; if (lid) {
+          updateChatbotLeadFields(lid, { interesse: userInput }).catch(console.error);
+          updateLeadStage(lid, "novo_lead", "engajado").catch(console.error);
+        } }
         setTimeout(() => { addBotMessage(`Ótima escolha! 🎯\n\nPara te atender melhor, qual é o **tipo do seu negócio**? (ex: clínica, restaurante, loja, consultoria, etc.)`); setStep("tipoNegocio"); }, 600);
         break;
 
       case "tipoNegocio":
         setLead((prev) => ({ ...prev, tipoNegocio: userInput }));
-        { const lid = crmLeadIdRef.current; if (lid) updateLeadStage(lid, "engajado", "qualificado").catch(console.error); }
+        { const lid = crmLeadIdRef.current; if (lid) {
+          updateChatbotLeadFields(lid, { tipo_negocio: userInput }).catch(console.error);
+          updateLeadStage(lid, "engajado", "qualificado").catch(console.error);
+        } }
         setTimeout(() => { addBotMessage(`Entendi! 📋\n\nQual a sua **urgência** para o projeto?`, URGENCIA_OPTIONS); setStep("urgencia"); }, 600);
         break;
 
       case "urgencia":
         setLead((prev) => ({ ...prev, urgencia: userInput }));
+        { const lid = crmLeadIdRef.current; if (lid) updateChatbotLeadFields(lid, { urgencia: userInput }).catch(console.error); }
         setTimeout(() => { addBotMessage(`Beleza! ⚡\n\nPor último, qual o **principal objetivo** que você quer alcançar com o site? (ex: vender mais, aparecer no Google, ter presença online, captar clientes, etc.)`); setStep("objetivo"); }, 600);
         break;
 
       case "objetivo":
         setLead((prev) => ({ ...prev, objetivo: userInput }));
-        { const lid = crmLeadIdRef.current; if (lid) updateLeadStage(lid, "qualificado", "proposta_apresentada").catch(console.error); }
+        { const lid = crmLeadIdRef.current; if (lid) {
+          updateChatbotLeadFields(lid, { objetivo: userInput }).catch(console.error);
+          updateLeadStage(lid, "qualificado", "proposta_apresentada").catch(console.error);
+        } }
         setTimeout(() => {
           const currentLead = { ...leadRef.current, objetivo: userInput };
           addBotMessage(

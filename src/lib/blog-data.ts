@@ -394,8 +394,8 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "site-para-imobiliarias-mercado-digital",
-    title: "Site para imobiliárias: transforme leads digitais em vendas milionárias",
-    excerpt: "Descubra como um site imobiliário com busca avançada, tours virtuais e integração com portais pode acelerar vendas e locações.",
+    title: "Site para imobiliárias: como transformar tráfego digital em vendas e locações",
+    excerpt: "Veja como um site imobiliário com busca avançada, tours virtuais e integração com portais pode acelerar negociações e qualificar melhor cada lead.",
     category: "Imobiliário Digital",
     icon: Building2,
     readTime: "8 min",

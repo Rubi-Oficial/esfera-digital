@@ -36,8 +36,8 @@ const GrowthHero = () => {
             </h1>
 
             <p className="text-base md:text-lg text-muted-foreground max-w-xl mb-8 leading-relaxed lg:mx-0 mx-auto">
-              Capte, organize e converta clientes de forma contínua com{" "}
-              <strong className="text-foreground font-semibold">automação inteligente via WhatsApp</strong>.
+              Capte, organize e converta clientes de forma contínua, com{" "}
+              <strong className="text-foreground font-semibold">automação inteligente integrada ao WhatsApp</strong>.
             </p>
 
             <motion.div

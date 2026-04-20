@@ -6,9 +6,9 @@ import { steps } from "./data";
 const StepsBlock = () => (
   <Section id="como-funciona" className="section-divider">
     <SectionTitle
-      label="⚙️ Como Funciona"
-      title={<>Simples, rápido e <span className="text-gradient">sem dor de cabeça</span></>}
-      subtitle="Em 4 passos simples você tem um site profissional pronto para vender."
+      label="Como Funciona"
+      title={<>Um processo claro, em <span className="text-gradient">quatro etapas</span></>}
+      subtitle="Do briefing à publicação, cada etapa é conduzida pela nossa equipe com prazos definidos e total transparência."
     />
     <div className="max-w-3xl mx-auto space-y-3">
       {steps.map((step, i) => (

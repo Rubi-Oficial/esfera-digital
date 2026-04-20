@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { WHATSAPP_PHONE } from "@/lib/constants";
-import { createLead, updateLeadStage, updateChatbotLeadFields } from "@/lib/crm";
+import { createLead, updateChatbotLeadFields } from "@/lib/crm";
 import { lookupRefCode, recordRefClick, createReferral, type ReferralCode } from "@/lib/referral";
 import { onChatbotOpen } from "@/lib/chatbot-events";
 import type { Message, LeadData, Step } from "./types";

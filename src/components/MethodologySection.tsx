@@ -4,10 +4,10 @@ import SectionHeader from "./ui/SectionHeader";
 import { staggerContainer, slideUp } from "@/lib/animations";
 
 const steps = [
-  { num: "01", title: "Envie as informações do seu negócio", desc: "Preencha um breve formulário com os dados essenciais da sua empresa." },
-  { num: "02", title: "Criamos site, design e estrutura de vendas", desc: "Nossa equipe desenvolve tudo: copy estratégica, design moderno e otimização completa." },
-  { num: "03", title: "Integramos I.A. e WhatsApp", desc: "Conectamos chatbot inteligente, formulários de captação e botão de WhatsApp." },
-  { num: "04", title: "Publicamos tudo pronto para você", desc: "Seu site vai ao ar 100% funcional — otimizado para gerar clientes desde o primeiro dia." },
+  { num: "01", title: "Briefing comercial e SEO", desc: "Mapeamos seu negócio, palavras-chave estratégicas e jornada do cliente para que o site nasça pronto para ranquear no Google." },
+  { num: "02", title: "Site + conteúdo otimizado para SEO", desc: "Desenvolvemos design, copy persuasiva e estrutura técnica (Core Web Vitals, schema, sitemap) para aparecer nas primeiras posições." },
+  { num: "03", title: "I.A. de atendimento + CRM integrado", desc: "Conectamos o chatbot inteligente que qualifica leads 24/7 e envia cada contato direto para o seu CRM comercial organizado por temperatura." },
+  { num: "04", title: "Lançamento, indexação e monitoramento", desc: "Publicamos, indexamos no Google Search Console e entregamos um dashboard com tráfego, leads e conversões em tempo real." },
 ];
 
 const MethodologySection = () => {
@@ -24,8 +24,8 @@ const MethodologySection = () => {
         <SectionHeader
           label="Como Funciona"
           titleId="methodology-heading"
-          title={<>Processo simples, <span className="text-gradient">resultado rápido</span></>}
-          subtitle="Em 4 etapas, você tem um site profissional pronto para gerar resultados."
+          title={<>Do briefing ao <span className="text-gradient">topo do Google</span></>}
+          subtitle="Em 4 etapas, seu site sai do papel já com SEO, IA de atendimento e CRM comercial integrados."
           className="mb-14"
         />
 

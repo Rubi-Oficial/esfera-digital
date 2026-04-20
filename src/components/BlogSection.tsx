@@ -46,10 +46,10 @@ const BlogSection = () => {
       <motion.div className="absolute w-2 h-2 rounded-full bg-primary/50 animate-float left-12 top-20 pointer-events-none" style={{ y: dotY }} aria-hidden="true" />
       <div className="container px-4 md:px-8 relative z-10">
         <SectionHeader
-          label="Conteúdo"
+          label="Conteúdo & SEO"
           titleId="blog-heading"
-          title={<>Por que <span className="text-gradient">Site + CRM + IA</span> mudam o jogo</>}
-          subtitle="As 6 leituras essenciais para entender por que um ecossistema digital integrado é o caminho mais rápido para escalar vendas em 2026."
+          title={<>Por que <span className="text-gradient">CRM + IA + SEO</span> mudam o jogo</>}
+          subtitle="6 leituras essenciais para entender como aparecer no Google, atender com IA e organizar leads num CRM — o tripé que escala vendas em 2026."
         />
 
         <motion.div

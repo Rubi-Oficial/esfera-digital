@@ -1,29 +1,29 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { MessageSquare, Smartphone, CalendarDays, TrendingUp } from "lucide-react";
+import { Search, Bot, Users, BarChart3 } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import ChatbotTrigger from "./ui/ChatbotTrigger";
 
 const benefits = [
   {
-    icon: MessageSquare,
-    title: "Atendimento automatizado 24h",
-    description: "Inteligência artificial integrada que atende, qualifica e responde seus clientes em tempo real — a qualquer hora.",
+    icon: Search,
+    title: "SEO para aparecer no Google",
+    description: "Estrutura técnica, conteúdo otimizado e blog estratégico para seu site ranquear nas primeiras posições e atrair tráfego qualificado todos os dias.",
   },
   {
-    icon: Smartphone,
-    title: "Direcionamento para WhatsApp",
-    description: "Botões estratégicos, formulários e chatbot que encaminham leads qualificados direto para o seu WhatsApp.",
+    icon: Bot,
+    title: "I.A. de atendimento 24/7",
+    description: "Chatbot inteligente integrado ao site que conversa, qualifica e captura leads automaticamente — direcionando os melhores para o WhatsApp do seu time.",
   },
   {
-    icon: CalendarDays,
-    title: "Captação contínua de leads",
-    description: "Estrutura de captação com formulários inteligentes e chamadas para ação posicionadas estrategicamente.",
+    icon: Users,
+    title: "CRM comercial integrado",
+    description: "Cada lead capturado entra no funil do seu CRM com histórico, temperatura e estágio — pronto para o time comercial fechar mais vendas.",
   },
   {
-    icon: TrendingUp,
-    title: "Credibilidade profissional",
-    description: "Design de alto nível que transmite autoridade, confiança e diferencia sua marca da concorrência.",
+    icon: BarChart3,
+    title: "Dashboards e métricas em tempo real",
+    description: "Acompanhe tráfego, conversões, leads quentes e receita estimada em um painel único — decisões baseadas em dados, não em achismo.",
   },
 ];
 
@@ -39,15 +39,15 @@ const AIServicesSection = () => {
       ref={sectionRef}
       id="ia-services"
       className="section-padding section-divider relative overflow-hidden"
-      aria-label="O que o site faz por você"
+      aria-label="Site + CRM + IA + SEO para aparecer no Google"
     >
       <motion.div className="absolute w-[500px] h-[500px] rounded-full bg-primary/5 blur-[130px] -right-20 top-1/4 pointer-events-none" style={{ y: orbY, opacity: orbOpacity, scale: orbScale }} aria-hidden="true" />
 
       <div className="container relative z-10 px-4 md:px-8">
         <SectionHeader
-          label="Solução"
-          title={<>Site completo + <span className="text-gradient">I.A. integrada</span></>}
-          subtitle="Um sistema digital completo que trabalha por você 24 horas por dia."
+          label="Ecossistema completo"
+          title={<>Site + <span className="text-gradient">CRM + I.A. + SEO</span> no Google</>}
+          subtitle="Mais que um site bonito: um sistema comercial que aparece no Google, atende com IA e organiza cada lead no CRM."
         />
 
         <motion.div
@@ -58,7 +58,7 @@ const AIServicesSection = () => {
           className="text-center mb-12"
         >
           <p className="text-lg text-muted-foreground">
-            <strong className="text-foreground">O que seu site vai fazer:</strong>
+            <strong className="text-foreground">Os 4 pilares que vendem por você:</strong>
           </p>
         </motion.div>
 

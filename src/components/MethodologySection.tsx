@@ -24,8 +24,8 @@ const MethodologySection = () => {
         <SectionHeader
           label="Como Funciona"
           titleId="methodology-heading"
-          title={<>Processo simples, <span className="text-gradient">resultado rápido</span></>}
-          subtitle="Em 4 etapas, você tem um site profissional pronto para gerar resultados."
+          title={<>Do briefing ao <span className="text-gradient">topo do Google</span></>}
+          subtitle="Em 4 etapas, seu site sai do papel já com SEO, IA de atendimento e CRM comercial integrados."
           className="mb-14"
         />
 

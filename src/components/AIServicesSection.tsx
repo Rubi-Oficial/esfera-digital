@@ -1,29 +1,29 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { MessageSquare, Smartphone, CalendarDays, TrendingUp } from "lucide-react";
+import { Search, Bot, Users, BarChart3 } from "lucide-react";
 import SectionHeader from "./ui/SectionHeader";
 import ChatbotTrigger from "./ui/ChatbotTrigger";
 
 const benefits = [
   {
-    icon: MessageSquare,
-    title: "Atendimento automatizado 24h",
-    description: "Inteligência artificial integrada que atende, qualifica e responde seus clientes em tempo real — a qualquer hora.",
+    icon: Search,
+    title: "SEO para aparecer no Google",
+    description: "Estrutura técnica, conteúdo otimizado e blog estratégico para seu site ranquear nas primeiras posições e atrair tráfego qualificado todos os dias.",
   },
   {
-    icon: Smartphone,
-    title: "Direcionamento para WhatsApp",
-    description: "Botões estratégicos, formulários e chatbot que encaminham leads qualificados direto para o seu WhatsApp.",
+    icon: Bot,
+    title: "I.A. de atendimento 24/7",
+    description: "Chatbot inteligente integrado ao site que conversa, qualifica e captura leads automaticamente — direcionando os melhores para o WhatsApp do seu time.",
   },
   {
-    icon: CalendarDays,
-    title: "Captação contínua de leads",
-    description: "Estrutura de captação com formulários inteligentes e chamadas para ação posicionadas estrategicamente.",
+    icon: Users,
+    title: "CRM comercial integrado",
+    description: "Cada lead capturado entra no funil do seu CRM com histórico, temperatura e estágio — pronto para o time comercial fechar mais vendas.",
   },
   {
-    icon: TrendingUp,
-    title: "Credibilidade profissional",
-    description: "Design de alto nível que transmite autoridade, confiança e diferencia sua marca da concorrência.",
+    icon: BarChart3,
+    title: "Dashboards e métricas em tempo real",
+    description: "Acompanhe tráfego, conversões, leads quentes e receita estimada em um painel único — decisões baseadas em dados, não em achismo.",
   },
 ];
 

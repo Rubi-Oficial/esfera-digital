@@ -126,8 +126,7 @@ export function useChatBot() {
       case "interesse":
         setLead((prev) => ({ ...prev, interesse: userInput }));
         { const lid = crmLeadIdRef.current; if (lid) {
-          updateChatbotLeadFields(lid, { interesse: userInput }).catch(console.error);
-          updateLeadStage(lid, "novo_lead", "engajado").catch(console.error);
+          updateChatbotLeadFields(lid, { interesse: userInput, to_stage: "engajado", score_increment: 10 }).catch(console.error);
         } }
         setTimeout(() => { addBotMessage(`Ótima escolha! 🎯\n\nPara te atender melhor, qual é o **tipo do seu negócio**? (ex: clínica, restaurante, loja, consultoria, etc.)`); setStep("tipoNegocio"); }, 600);
         break;
@@ -135,8 +134,7 @@ export function useChatBot() {
       case "tipoNegocio":
         setLead((prev) => ({ ...prev, tipoNegocio: userInput }));
         { const lid = crmLeadIdRef.current; if (lid) {
-          updateChatbotLeadFields(lid, { tipo_negocio: userInput }).catch(console.error);
-          updateLeadStage(lid, "engajado", "qualificado").catch(console.error);
+          updateChatbotLeadFields(lid, { tipo_negocio: userInput, to_stage: "qualificado", score_increment: 20 }).catch(console.error);
         } }
         setTimeout(() => { addBotMessage(`Entendi! 📋\n\nQual a sua **urgência** para o projeto?`, URGENCIA_OPTIONS); setStep("urgencia"); }, 600);
         break;
@@ -150,8 +148,7 @@ export function useChatBot() {
       case "objetivo":
         setLead((prev) => ({ ...prev, objetivo: userInput }));
         { const lid = crmLeadIdRef.current; if (lid) {
-          updateChatbotLeadFields(lid, { objetivo: userInput }).catch(console.error);
-          updateLeadStage(lid, "qualificado", "proposta_apresentada").catch(console.error);
+          updateChatbotLeadFields(lid, { objetivo: userInput, to_stage: "proposta_apresentada", score_increment: 15 }).catch(console.error);
         } }
         setTimeout(() => {
           const currentLead = { ...leadRef.current, objetivo: userInput };

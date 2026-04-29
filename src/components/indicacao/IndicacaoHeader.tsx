@@ -1,7 +1,7 @@
 import AnimatedLogo from "@/components/AnimatedLogo";
 
 const IndicacaoHeader = () => (
-  <header className="sticky top-0 z-40 border-b border-border/30 bg-background/80 backdrop-blur-xl">
+  <header className="sticky top-16 md:top-[72px] z-40 border-b border-border/30 bg-background/80 backdrop-blur-xl">
     <div className="container mx-auto px-4 py-3 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <a href="/" className="flex items-center">

@@ -159,7 +159,9 @@ const CRMContent = () => {
       <SEOHead title="CRM Esfera Growth | Gestão de Leads" description="CRM inteligente para gestão de leads e pipeline de vendas" path="/crm" />
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />
-        <CRMHeader view={view} onViewChange={setView} />
+        <div className="pt-16 md:pt-[72px]">
+          <CRMHeader view={view} onViewChange={setView} />
+        </div>
 
         <main className="container mx-auto px-4 py-6">
           {isLoading ? (

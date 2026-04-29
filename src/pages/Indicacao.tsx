@@ -40,7 +40,9 @@ const IndicacaoContent = () => {
       />
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />
-        <IndicacaoHeader />
+        <div className="pt-16 md:pt-[72px]">
+          <IndicacaoHeader />
+        </div>
         <main className="container mx-auto px-4 py-6 max-w-4xl">
           {!refCode ? (
             <Onboarding onCreated={() => refetch()} />

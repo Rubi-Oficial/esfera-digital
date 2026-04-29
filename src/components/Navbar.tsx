@@ -72,12 +72,12 @@ const Navbar = () => {
       aria-label="Navegação principal"
     >
       <div className="container flex items-center justify-between h-16 md:h-18 px-4 md:px-8">
-        <a href="#" aria-label="Esfera Soluções Digitais - Página inicial" className="flex items-center group">
+        <Link to="/" aria-label="Esfera Soluções Digitais - Página inicial" className="flex items-center group">
           <span className="text-lg font-bold tracking-tight" style={{ letterSpacing: "-0.02em" }}>
             <span className="text-foreground group-hover:text-foreground/90 transition-colors">ESFERA</span>
             <span className="text-primary ml-1.5 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.4)] transition-all" style={{ letterSpacing: "0.15em" }}>DIGITAL</span>
           </span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">

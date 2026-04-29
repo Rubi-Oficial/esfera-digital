@@ -17,7 +17,9 @@ const BlogCard = ({ article, index }: { article: BlogArticle; index: number }) =
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <img
-          src={article.image}
+          src={typeof article.image === 'string' ? article.image : article.image.src}
+          srcSet={typeof article.image === 'string' ? undefined : article.image.srcSet}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           alt={`Ilustração sobre ${article.category} - ${article.title}`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading={index < 2 ? "eager" : "lazy"}

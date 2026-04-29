@@ -16,7 +16,9 @@ const RelatedCard = ({ article }: { article: BlogArticle }) => (
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <img
-          src={article.image}
+          src={typeof article.image === 'string' ? article.image : article.image.src}
+          srcSet={typeof article.image === 'string' ? undefined : article.image.srcSet}
+          sizes="(max-width: 640px) 100vw, 400px"
           alt={`Ilustração: ${article.title}`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
@@ -68,7 +70,7 @@ const BlogArticlePage = () => {
         title={article.title}
         description={article.excerpt}
         path={`/blog/${article.slug}`}
-        image={article.image}
+        image={typeof article.image === 'string' ? article.image : article.image.src}
         type="article"
         breadcrumbs={[
           { name: "Início", url: "https://criarmeusiteagora.esferamarketing.com/" },
@@ -78,7 +80,7 @@ const BlogArticlePage = () => {
         articleSchema={{
           title: article.title,
           description: article.excerpt,
-          image: article.image,
+          image: typeof article.image === 'string' ? article.image : article.image.src,
           datePublished: isoDate,
           category: article.category,
           authorName: author.name,
@@ -143,7 +145,9 @@ const BlogArticlePage = () => {
 
             <div className="rounded-2xl overflow-hidden border border-border/40 mb-10">
               <img
-                src={article.image}
+                src={typeof article.image === 'string' ? article.image : article.image.src}
+                srcSet={typeof article.image === 'string' ? undefined : article.image.srcSet}
+                sizes="(max-width: 800px) 100vw, 800px"
                 alt={`Ilustração: ${article.title}`}
                 className="w-full h-auto object-cover"
                 width={800}

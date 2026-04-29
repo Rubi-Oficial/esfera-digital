@@ -25,10 +25,23 @@ import blogChatbot from "@/assets/blog-chatbot.webp";
 import blogMarcaPessoal from "@/assets/blog-marca-pessoal.webp";
 import blogVelocidade from "@/assets/blog-velocidade.webp";
 import blogCoreWebVitals from "@/assets/blog-core-web-vitals.webp";
+import blogCoreWebVitals800 from "@/assets/blog-core-web-vitals-800.webp";
+import blogCoreWebVitals400 from "@/assets/blog-core-web-vitals-400.webp";
 import blogSchemaOrg from "@/assets/blog-schema-org.webp";
+import blogSchemaOrg800 from "@/assets/blog-schema-org-800.webp";
+import blogSchemaOrg400 from "@/assets/blog-schema-org-400.webp";
 import blogWordpressSeo from "@/assets/blog-wordpress-seo.webp";
+import blogWordpressSeo800 from "@/assets/blog-wordpress-seo-800.webp";
+import blogWordpressSeo400 from "@/assets/blog-wordpress-seo-400.webp";
 import authorAvatar from "@/assets/blog-author-avatar.jpg";
 import authorDiego from "@/assets/blog-author-diego.jpg";
+
+export interface ResponsiveImage {
+  src: string;
+  srcSet?: string;
+}
+
+export type BlogImage = string | ResponsiveImage;
 
 export const DEFAULT_AUTHOR = {
   name: "Rafael Mendes",
@@ -50,10 +63,14 @@ export interface BlogArticle {
   icon: LucideIcon;
   readTime: string;
   date: string;
-  image: string;
+  image: BlogImage;
   message: string;
+  author?: {
+    name: string;
+    role: string;
+    avatar: string;
+  };
   content: string[];
-  author?: { name: string; role: string; avatar: string };
 }
 
 export const blogArticles: BlogArticle[] = [
@@ -557,7 +574,10 @@ export const blogArticles: BlogArticle[] = [
     icon: Zap,
     readTime: "10 min",
     date: "25 de abril de 2026",
-    image: blogCoreWebVitals,
+    image: {
+      src: blogCoreWebVitals,
+      srcSet: `${blogCoreWebVitals400} 400w, ${blogCoreWebVitals800} 800w, ${blogCoreWebVitals} 1200w`
+    },
     message: "Olá, quero otimizar os Core Web Vitals do meu site",
     author: AUTHOR_DIEGO,
     content: [
@@ -577,7 +597,10 @@ export const blogArticles: BlogArticle[] = [
     icon: Code,
     readTime: "9 min",
     date: "22 de abril de 2026",
-    image: blogSchemaOrg,
+    image: {
+      src: blogSchemaOrg,
+      srcSet: `${blogSchemaOrg400} 400w, ${blogSchemaOrg800} 800w, ${blogSchemaOrg} 1200w`
+    },
     message: "Olá, quero implementar dados estruturados no meu site",
     author: AUTHOR_DIEGO,
     content: [
@@ -597,7 +620,10 @@ export const blogArticles: BlogArticle[] = [
     icon: Search,
     readTime: "12 min",
     date: "18 de abril de 2026",
-    image: blogWordpressSeo,
+    image: {
+      src: blogWordpressSeo,
+      srcSet: `${blogWordpressSeo400} 400w, ${blogWordpressSeo800} 800w, ${blogWordpressSeo} 1200w`
+    },
     message: "Olá, quero ajuda com o SEO do meu site WordPress",
     author: AUTHOR_DIEGO,
     content: [

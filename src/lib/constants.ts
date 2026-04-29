@@ -23,6 +23,7 @@ export const NAV_LINKS = [
   { label: "Oferta", href: "#planos" },
   { label: "Blog", href: "/blog" },
   { label: "Dicas", href: "/blog" },
+  { label: "FAQ", href: "#faq" },
   { label: "Start Esfera Growth", href: "/growth-os", isSpecial: true },
 ] as const;
 

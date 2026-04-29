@@ -9,7 +9,7 @@ interface PlansBlockProps {
 }
 
 const PlansBlock = ({ onSelectPlan }: PlansBlockProps) => (
-  <Section id="planos-growth">
+  <Section id="planos">
     <SectionTitle
       label="Investimento"
       title={<>Escolha o plano ideal e <span className="text-gradient">comece agora</span></>}

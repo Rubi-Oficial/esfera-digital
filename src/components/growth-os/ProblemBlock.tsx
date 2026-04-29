@@ -4,7 +4,7 @@ import SectionTitle from "./SectionTitle";
 import { problems } from "./data";
 
 const ProblemBlock = () => (
-  <Section id="problema" className="section-divider">
+  <Section id="solucoes" className="section-divider">
     <SectionTitle
       label="O Problema"
       title={<>A maioria dos negócios comete o <span className="text-destructive">mesmo erro</span></>}

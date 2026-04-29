@@ -28,10 +28,10 @@ export const NAV_LINKS = [
 ] as const;
 
 export const FOOTER_LINKS = [
-  { label: "O Problema", href: "#solucoes", title: "Por que você precisa de um site profissional" },
-  { label: "Como Funciona", href: "#metodologia", title: "Nosso processo simples em 4 passos" },
-  { label: "Portfólio", href: "#portfolio", title: "Projetos reais que geraram resultados" },
-  { label: "Oferta Especial", href: "#planos", title: "Site profissional completo a partir de R$ 997" },
-  { label: "Blog", href: "#blog", title: "Artigos sobre marketing digital e criação de sites" },
-  { label: "Depoimentos", href: "#depoimentos", title: "O que nossos clientes dizem sobre nosso trabalho" },
+  { label: "O Problema", href: "/#solucoes", title: "Por que você precisa de um site profissional" },
+  { label: "Como Funciona", href: "/#metodologia", title: "Nosso processo simples em 4 passos" },
+  { label: "Portfólio", href: "/#portfolio", title: "Projetos reais que geraram resultados" },
+  { label: "Oferta Especial", href: "/#planos", title: "Site profissional completo a partir de R$ 997" },
+  { label: "Blog", href: "/blog", title: "Artigos sobre marketing digital e criação de sites" },
+  { label: "Depoimentos", href: "/#depoimentos", title: "O que nossos clientes dizem sobre nosso trabalho" },
 ] as const;

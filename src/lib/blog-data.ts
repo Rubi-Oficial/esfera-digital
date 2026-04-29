@@ -577,7 +577,7 @@ export const blogArticles: BlogArticle[] = [
     icon: Code,
     readTime: "9 min",
     date: "22 de abril de 2026",
-    image: blogSeo,
+    image: blogSchemaOrg,
     message: "Olá, quero implementar dados estruturados no meu site",
     author: AUTHOR_DIEGO,
     content: [

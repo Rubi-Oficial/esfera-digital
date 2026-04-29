@@ -597,7 +597,7 @@ export const blogArticles: BlogArticle[] = [
     icon: Search,
     readTime: "12 min",
     date: "18 de abril de 2026",
-    image: blogCode,
+    image: blogWordpressSeo,
     message: "Olá, quero ajuda com o SEO do meu site WordPress",
     author: AUTHOR_DIEGO,
     content: [

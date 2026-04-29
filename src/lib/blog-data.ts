@@ -557,7 +557,7 @@ export const blogArticles: BlogArticle[] = [
     icon: Zap,
     readTime: "10 min",
     date: "25 de abril de 2026",
-    image: blogVelocidade,
+    image: blogCoreWebVitals,
     message: "Olá, quero otimizar os Core Web Vitals do meu site",
     author: AUTHOR_DIEGO,
     content: [

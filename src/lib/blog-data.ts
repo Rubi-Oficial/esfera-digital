@@ -597,7 +597,6 @@ export const blogArticles: BlogArticle[] = [
     image: blogCode,
     message: "Olá, quero ajuda com o SEO do meu site WordPress",
     author: AUTHOR_DIEGO,
-    author: AUTHOR_DIEGO,
     content: [
       "O WordPress é a plataforma mais popular do mundo, mas instalá-lo não garante SEO automático. Uma configuração técnica robusta é necessária para transformar o WordPress em uma máquina de gerar tráfego orgânico no Google.",
       "A escolha do tema é o primeiro passo técnico. Fuja de temas pesados e cheios de recursos que você não usará. Escolha temas focados em performance e que sigam os padrões de acessibilidade. Um tema lento destruirá seus esforços de SEO antes mesmo de você começar.",

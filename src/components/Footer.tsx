@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AnimatedLogo from "./AnimatedLogo";
 import { FOOTER_LINKS } from "@/lib/constants";
 import { openChatbot } from "@/lib/chatbot-events";
@@ -12,9 +13,9 @@ const Footer = () => {
         <div className="py-12 md:py-16 lg:py-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 md:gap-8">
           {/* Brand column */}
           <div className="sm:col-span-2 md:col-span-5 flex flex-col gap-4">
-            <a href="#" aria-label="Voltar ao topo - Esfera Soluções Digitais">
+            <Link to="/" aria-label="Voltar ao topo - Esfera Soluções Digitais">
               <AnimatedLogo size="sm" className="opacity-80 hover:opacity-100 transition-opacity" />
-            </a>
+            </Link>
             <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
               Websites de alto impacto com inteligência artificial integrada. Transformamos sua presença digital em resultados reais.
             </p>
@@ -36,13 +37,13 @@ const Footer = () => {
               <ul className="grid grid-cols-2 gap-x-4 gap-y-2.5">
                 {FOOTER_LINKS.map((link) => (
                   <li key={link.href}>
-                    <a
-                      href={link.href}
+                    <Link
+                      to={link.href}
                       title={link.title}
                       className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300 py-1 inline-block hover:translate-x-0.5 transition-transform"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

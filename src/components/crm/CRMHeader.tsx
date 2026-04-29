@@ -15,7 +15,7 @@ interface CRMHeaderProps {
 }
 
 const CRMHeader = ({ view, onViewChange }: CRMHeaderProps) => (
-  <header className="sticky top-0 z-40 border-b border-border/40 bg-background/85 backdrop-blur-xl">
+  <header className="sticky top-16 md:top-[72px] z-40 border-b border-border/40 bg-background/85 backdrop-blur-xl">
     <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <div className="flex items-center gap-3">
         <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-primary/30 to-primary/5 flex items-center justify-center ring-1 ring-primary/20">

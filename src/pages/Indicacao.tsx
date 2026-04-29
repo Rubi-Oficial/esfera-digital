@@ -3,6 +3,7 @@ import SEOHead from "@/components/SEOHead";
 import AuthGuard from "@/components/AuthGuard";
 import { getMyReferralCode, getMyReferrals, getSiteUrl } from "@/lib/referral";
 
+import Navbar from "@/components/Navbar";
 import IndicacaoHeader from "@/components/indicacao/IndicacaoHeader";
 import Onboarding from "@/components/indicacao/Onboarding";
 import ReferralDashboard from "@/components/indicacao/ReferralDashboard";
@@ -38,7 +39,10 @@ const IndicacaoContent = () => {
         path="/indicacao"
       />
       <div className="min-h-screen bg-background text-foreground">
-        <IndicacaoHeader />
+        <Navbar />
+        <div className="pt-16 md:pt-[72px]">
+          <IndicacaoHeader />
+        </div>
         <main className="container mx-auto px-4 py-6 max-w-4xl">
           {!refCode ? (
             <Onboarding onCreated={() => refetch()} />

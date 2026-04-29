@@ -3,8 +3,7 @@ import SEOHead from "@/components/SEOHead";
 import ScrollToTop from "@/components/ScrollToTop";
 import ChatBot from "@/components/ChatBot";
 import { openChatbot } from "@/lib/chatbot-events";
-
-import GrowthNavbar from "@/components/growth-os/GrowthNavbar";
+import Navbar from "@/components/Navbar";
 import GrowthHero from "@/components/growth-os/GrowthHero";
 import TrustBar from "@/components/growth-os/TrustBar";
 import ProblemBlock from "@/components/growth-os/ProblemBlock";
@@ -47,9 +46,9 @@ const GrowthOS = () => {
       />
 
       <div className="min-h-screen bg-background text-foreground">
-        <GrowthNavbar />
+        <Navbar />
 
-        <main>
+        <main className="pt-16 md:pt-[72px]">
           <GrowthHero />
           <TrustBar />
           <ReflectionBlock />

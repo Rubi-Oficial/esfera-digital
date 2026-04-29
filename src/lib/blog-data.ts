@@ -24,6 +24,9 @@ import blogConversao from "@/assets/blog-conversao.webp";
 import blogChatbot from "@/assets/blog-chatbot.webp";
 import blogMarcaPessoal from "@/assets/blog-marca-pessoal.webp";
 import blogVelocidade from "@/assets/blog-velocidade.webp";
+import blogCoreWebVitals from "@/assets/blog-core-web-vitals.webp";
+import blogSchemaOrg from "@/assets/blog-schema-org.webp";
+import blogWordpressSeo from "@/assets/blog-wordpress-seo.webp";
 import authorAvatar from "@/assets/blog-author-avatar.jpg";
 import authorDiego from "@/assets/blog-author-diego.jpg";
 

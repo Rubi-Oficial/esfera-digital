@@ -12,7 +12,8 @@ import StepsBlock from "@/components/growth-os/StepsBlock";
 import DashboardBlock from "@/components/growth-os/DashboardBlock";
 import FeaturesBlock from "@/components/growth-os/FeaturesBlock";
 import PlansBlock from "@/components/growth-os/PlansBlock";
-// AuthorityBlock removido — duplicava StatsSection (3 stats) e o disclaimer de depoimentos foi suprido pela TestimonialsSection
+// AuthorityBlock removido
+import FAQSection from "@/components/FAQSection";
 import CTAFinalBlock from "@/components/growth-os/CTAFinalBlock";
 import Footer from "@/components/Footer";
 
@@ -27,7 +28,6 @@ const PortfolioSection = lazy(() => import("@/components/PortfolioSection"));
 const StatsSection = lazy(() => import("@/components/StatsSection"));
 const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
 const BlogSection = lazy(() => import("@/components/BlogSection"));
-const FAQSection = lazy(() => import("@/components/FAQSection"));
 
 const SectionFallback = () => <div className="min-h-[200px]" aria-hidden="true" />;
 
@@ -87,7 +87,6 @@ const GrowthOS = () => {
               primaryHref="#planos"
             />
             <BlogSection />
-            <FAQSection />
           </Suspense>
 
           <PlansBlock onSelectPlan={handleSelectPlan} />

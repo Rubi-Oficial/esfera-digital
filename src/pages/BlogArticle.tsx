@@ -150,6 +150,7 @@ const BlogArticlePage = () => {
                 height={500}
                 loading="eager"
                 fetchPriority="high"
+                decoding="async"
               />
             </div>
           </motion.header>

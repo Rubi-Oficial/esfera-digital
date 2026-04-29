@@ -20,8 +20,8 @@ const BlogCard = ({ article, index }: { article: BlogArticle; index: number }) =
           src={article.image}
           alt={`Ilustração sobre ${article.category} - ${article.title}`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading={index < 3 ? "eager" : "lazy"}
-          {...(index < 3 ? { fetchPriority: "high" } : {})}
+          loading={index < 2 ? "eager" : "lazy"}
+          {...(index < 2 ? { fetchPriority: "high" } : {})}
           width={400}
           height={256}
         />

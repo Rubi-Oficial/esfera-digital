@@ -1,11 +1,4 @@
 import { TrendingUp, Search, Palette, Megaphone, Code, BarChart3, Share2, Mail, DollarSign, Stethoscope, Scale, Leaf, Factory, Cannabis, Rocket, Hotel, UtensilsCrossed, SmilePlus, Building2, ShoppingCart, Bot, Target, MessageCircle, User, Zap, type LucideIcon } from "lucide-react";
-
-export interface ResponsiveImage {
-  src: string;
-  srcSet?: string;
-}
-
-export type BlogImage = string | ResponsiveImage;
 import blogMarketing from "@/assets/blog-marketing.webp";
 import blogSeo from "@/assets/blog-seo.webp";
 import blogDesign from "@/assets/blog-design.webp";
@@ -43,6 +36,13 @@ import blogWordpressSeo400 from "@/assets/blog-wordpress-seo-400.webp";
 import authorAvatar from "@/assets/blog-author-avatar.jpg";
 import authorDiego from "@/assets/blog-author-diego.jpg";
 
+export interface ResponsiveImage {
+  src: string;
+  srcSet?: string;
+}
+
+export type BlogImage = string | ResponsiveImage;
+
 export const DEFAULT_AUTHOR = {
   name: "Rafael Mendes",
   role: "Especialista em Marketing Digital · Esfera Digital",
@@ -63,10 +63,14 @@ export interface BlogArticle {
   icon: LucideIcon;
   readTime: string;
   date: string;
-  image: string;
+  image: BlogImage;
   message: string;
+  author?: {
+    name: string;
+    role: string;
+    avatar: string;
+  };
   content: string[];
-  author?: { name: string; role: string; avatar: string };
 }
 
 export const blogArticles: BlogArticle[] = [

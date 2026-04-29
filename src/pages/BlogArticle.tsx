@@ -148,6 +148,8 @@ const BlogArticlePage = () => {
                 className="w-full h-auto object-cover"
                 width={800}
                 height={500}
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
           </motion.header>

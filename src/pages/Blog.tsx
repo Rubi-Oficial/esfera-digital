@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 
-const BlogCard = ({ article }: { article: BlogArticle }) => (
+const BlogCard = ({ article, index }: { article: BlogArticle; index: number }) => (
   <motion.div variants={fadeInUp} layout>
     <Link
       to={`/blog/${article.slug}`}
@@ -20,7 +20,8 @@ const BlogCard = ({ article }: { article: BlogArticle }) => (
           src={article.image}
           alt={`Ilustração sobre ${article.category} - ${article.title}`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
+          loading={index < 3 ? "eager" : "lazy"}
+          {...(index < 3 ? { fetchPriority: "high" } : {})}
           width={400}
           height={256}
         />
@@ -203,7 +204,7 @@ const Blog = () => {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
             >
               {paginatedArticles.map((article) => (
-                <BlogCard key={article.slug} article={article} />
+                <BlogCard key={article.slug} article={article} index={filteredArticles.indexOf(article)} />
               ))}
             </motion.div>
           </AnimatePresence>

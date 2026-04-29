@@ -10,6 +10,7 @@ import { ptBR } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
+import Navbar from "@/components/Navbar";
 import CRMHeader from "@/components/crm/CRMHeader";
 import CRMMetrics from "@/components/crm/CRMMetrics";
 import CRMFilters from "@/components/crm/CRMFilters";
@@ -157,6 +158,7 @@ const CRMContent = () => {
     <>
       <SEOHead title="CRM Esfera Growth | Gestão de Leads" description="CRM inteligente para gestão de leads e pipeline de vendas" path="/crm" />
       <div className="min-h-screen bg-background text-foreground">
+        <Navbar />
         <CRMHeader view={view} onViewChange={setView} />
 
         <main className="container mx-auto px-4 py-6">

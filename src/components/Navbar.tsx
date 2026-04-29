@@ -41,6 +41,11 @@ const Navbar = () => {
       if (!target) return;
       const href = target.getAttribute("href");
       if (href?.startsWith("#") && href.length > 1) {
+        if (window.location.pathname !== "/") {
+          // If not on home page, let the default Link behavior or full reload happen
+          // but we can also use window.location = "/"+href
+          return;
+        }
         const el = document.querySelector(href);
         if (el) {
           e.preventDefault();
@@ -82,13 +87,13 @@ const Navbar = () => {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {regularLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
+              to={link.href.startsWith("#") ? `/${link.href}` : link.href}
               className="relative text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           {specialLink && (
             <Link
@@ -158,17 +163,20 @@ const Navbar = () => {
             >
               <div className="flex flex-col gap-1 p-5 pb-6">
                 {regularLinks.map((link, i) => (
-                  <motion.a
+                  <motion.div
                     key={link.href}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="text-muted-foreground hover:text-foreground active:text-primary hover:bg-card/50 active:bg-card/70 transition-all px-4 py-3.5 rounded-xl text-base font-medium"
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04, ease: "easeOut" }}
                   >
-                    {link.label}
-                  </motion.a>
+                    <Link
+                      to={link.href.startsWith("#") ? `/${link.href}` : link.href}
+                      onClick={() => setOpen(false)}
+                      className="text-muted-foreground hover:text-foreground active:text-primary block hover:bg-card/50 active:bg-card/70 transition-all px-4 py-3.5 rounded-xl text-base font-medium"
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
                 ))}
                 {specialLink && (
                   <motion.div

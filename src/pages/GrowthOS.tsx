@@ -87,6 +87,7 @@ const GrowthOS = () => {
               primaryHref="#planos"
             />
             <BlogSection />
+            <FAQSection />
           </Suspense>
 
           <PlansBlock onSelectPlan={handleSelectPlan} />
